@@ -1,0 +1,10 @@
+
+
+body {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("../media/background.jpg");
+    background-size: cover;
+}
+
+#login-box {
+    opacity: 0.9;
+}
