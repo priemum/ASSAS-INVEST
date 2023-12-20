@@ -1,0 +1,109 @@
+<button
+  id="item2"
+  type="button"
+  class="btn btn-outline-success"
+  data-bs-toggle="modal"
+  data-bs-target="#newannouncement"
+>
+  <i class="bi bi-person-plus-fill me-2"></i>إعلان جديد
+</button>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="newannouncement"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div
+    class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg"
+  >
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">إضافة إعلان</h5>
+
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+
+      <div class="modal-body">
+        <form
+          class="row g-3 needs-validation"
+          action="/announcement"
+          id="announcement"
+          method="POST"
+          autocomplete="on"
+          novalidate
+        >
+          <div class="form-floating col-md-12">
+            <input class="form-control" type="date" id="creationdate"
+            name="announcement[creationDate]" placeholder="تاريخ الإعلان" required
+            value="<%= moment().format("YYYY-MM-DD") %>" />
+            <label for="creationdate" class="form-label fs-6">التاريخ</label>
+            <div class="valid-feedback">صحيح</div>
+          </div>
+
+          <div class="form-floating">
+            <input
+              id="idtitle"
+              name="announcement[title]"
+              type="text"
+              class="form-control"
+              style="text-transform: capitalize"
+              autofocus
+              required
+            />
+            <label for="idtitle" class="form-label">العنوان</label>
+            <div class="valid-feedback">صحيح</div>
+          </div>
+
+          <div class="">
+            <textarea
+              class="form-control"
+              name="announcement[resume]"
+              id="resume"
+              rows="2"
+              placeholder="اكتب  ملخص الإعلان هنا"
+            ></textarea>
+          </div>
+
+          <div class="">
+            <textarea
+              class="form-control"
+              name="announcement[description]"
+              id="description"
+              rows="4"
+              placeholder="اكتب محتوى الإعلان"
+              style="text-transform: capitalize"
+            ></textarea>
+          </div>
+
+         
+
+          <div class="modal-footer mt-4">
+            <button
+              type="button"
+              class="btn btn-outline-danger bg-gradient"
+              data-bs-dismiss="modal"
+            >
+              إلغاء
+            </button>
+            <button class="btn btn-outline-success">إضافة</button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  $("#newaannouncement").on("shown.bs.modal", function () {
+    $(this).find("[autofocus]").focus();
+  });
+</script>

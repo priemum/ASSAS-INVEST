@@ -17,10 +17,10 @@
         <th scope="col">الرقم</th>
         <th scope="col">اسم الباقة</th>
         <th scope="col">المدة</th>
-        <th scope="col">الوصف</th>
-        <th scope="col"> الحالة</th>
-       
-        <th id="hide" scope="col">Action</th>
+        <th scope="col">التفاصيل</th>
+        <th scope="col"> الحالة الباقة</th>
+       <th scope="col"> العمليات</th>
+
       </tr>
     </thead>
     <tbody id="tablebody">
@@ -30,26 +30,28 @@
         <th 
           
           scope="row" scope="row"><%= i%> <% i=i+1; %></th>
+          
         <td
           
           scope="row" ><%= pack.title%></td>
-        <td
-          
-          scope="row"><%=pack.period %> <%=pack.unite %></td>
           <td
           
+          scope="row" ><%= pack.period%></td>
+          <td
           scope="row" ><%= pack.description %></td>
-          <% if(pack.state == true){ %>
-        <td scope="row">مفعل</td>
-        <% }else{ %>
-        <td scope="row">غير مفعل</td>
-        <% } %>
-        
+          <% if (pack.state === true){%>
+            <td
+            scope="row">مفعلة</td>
+            
+            <%}else{%>
+              <td
+            scope="row">غير مفعلة</td>
+            <%}%>
+          
        
-        <th>
-         add
-         
-        </th>
+        <td>
+          <%- include("./delete") %>
+        </td>
       </tr>
       <%}%>
     </tbody>

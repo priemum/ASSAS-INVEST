@@ -25,10 +25,11 @@ const Case = new Schema({
     type: Number,
     required: true,
   },
+  description: String,
   state: {
     //value = active, end 
     type: String,
-    default: "Pending",
+    default: "Active",
   },
   startDate: {
     //we get the timeleft

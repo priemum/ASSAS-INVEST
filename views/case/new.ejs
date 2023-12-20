@@ -1,43 +1,95 @@
 <% layout('layouts/boilerplate')%>
+<div
+  class=" d-flex justify-content-center align-items-center mx-3"
+  id="register-box"
+>
+  <div class=" p-2 shadow-sm border rounded-3 bg-light">
 
-<div class="row mt-3">
-  <h1 class="card-title text-center mb-3">New Investment</h1>
-  <div class="col-6 offset-3 mb-3">
-    <form action="/investments" method="POST"  class="needs-validation" enctype="multipart/form-data" novalidate>
-      <div class="modal-body">
-        <div class="form-floating mb-3">
-          <select
-            class="form-select"
-            name="packname"
-            id="pack"
-            aria-label="Floating label"
-          >
-            <option selected disabled>Select</option>
-            <% for (pack of packs) {%>
-            <option value="<%= pack.id %>"><%= pack.title %></option>
-            <%} %>
-          </select>
-          <label for="pack"><%= t('pack') %></label>
-        </div>
+  <h1 class="display-6 text-success text-center mb-3">إضافة باقة لمستثمر</h1>
+  
+    <form class="row g-3 m-2 needs-validation" action="/case" method="POST">
+      
+      <div class="form-floating col-4 mb-2">
+        <input
+          
+          class="form-control border border-success"
+          type="text"
+          id="reference"
+          name="casee[reference]"
+          placeholder=""
+          required
+        />
+        <label for="reference" class="form-labelfs-6">رقم المرجع:</label>
+        <div class="valid-feedback">صحيح</div>
+      </div>
 
-        <div class="input-group mb-3">
-          <input
-            type="file"
-            class="form-control"
-            id="picture"
-            name="picture"
-            required
-          />
-          <label class="input-group-text" for="picture"
-            ><%= t('cover') %> <%= t('picture') %></label
-          >
-        </div>
-      <div class="mb-3">
-        <button class="w-100 btn btn-lg btn-outline-success">
-          <%= t('add') %>
+      <div class="form-floating mb-2 col-4">
+        <input
+          class="form-control border border-success"
+          type="number"
+          id="initAmount"
+          name="casee[initAmount]"
+          placeholder=""
+          required
+        />
+        <label for="initAmount" class="form-labelfs-6">المبلغ:</label>
+        <div class="valid-feedback">صحيح</div>
+      </div>
+
+      <div class="form-floating mb-2 col-4">
+        <input
+          class="form-control border border-success"
+          type="date"
+          id="startdate"
+          name="casee[startdate]"
+          placeholder=""
+          value="<%=moment().format("YYYY-MM-DD")%>"
+          required
+        />
+        <label for="startdate" class="form-labelfs-6">تاريخ البداية:</label>
+        <div class="valid-feedback">صحيح</div>
+      </div>
+      
+
+      <div class="form-floating col-6 mb-2">
+        <select id="user" name="casee[user]" class="form-select border border-success">
+          <option selected disabled value="">المستثمر</option>
+          <% for (user of users){%>
+          <option class="option" value="<%= user.id%>"><%= user.email%> <%= user.fullname%> <%= user.phone%></option>
+          <%}%>
+        </select>
+        <label for="user" class="form-label">المستثمر</label>
+        <div class="valid-feedback">صحيح</div>
+      </div>
+      <div class="form-floating col-6 mb-2">
+        <select id="pack" name="casee[pack]" class="form-select border border-success">
+          <option selected disabled value="">الباقة</option>
+          <% for (pack of packs){%>
+          <option class="option" value="<%= pack.id%>"><%= pack.title%> <%= pack.period%> <%= pack.unite%></option>
+          <%}%>
+        </select>
+        <label for="pack" class="form-label">المستثمر</label>
+        <div class="valid-feedback">صحيح</div>
+      </div>
+
+      <div class="mb-2">
+        <textarea
+          class="form-control border border-success"
+          type="text"
+          id="description"
+          name="casee[description]"
+          placeholder="تفاصيل الباقة"
+          rows="4"
+          required
+        ></textarea>
+        <div class="valid-feedback">صحيح</div>
+      </div>
+      <div class="mb-2">
+        <button class="w-100 btn btn-lg btn-success">
+          إضافة الباقة
         </button>
       </div>
     </form>
-    <a href="/investments"><%= t('all') %> <%= t('investments') %></a>
-  </div>
+  
+</div>
 </div>

@@ -27,5 +27,8 @@ module.exports.updatePack = async (req, res) => {
   res.send("Update Pack");
 };
 module.exports.deletePack = async (req, res) => {
-  res.send("Delete Pack");
+  const { id } = req.params;
+  await Pack.findByIdAndDelete(id);
+  req.flash("success", "تم الحذف بنجاح");
+  res.redirect("/pack");
 };

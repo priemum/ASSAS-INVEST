@@ -32,9 +32,11 @@ const cookieParser = require("cookie-parser");
 const i18nextMiddleware = require("i18next-http-middleware");
 const Packs = require("./models/pack");
 const userRoutes = require("./routes/user");
+const announcementRoutes = require("./routes/announcement");
 const packRoutes = require("./routes/pack");
 const caseRoutes = require("./routes/case");
 const User = require("./models/user");
+const Announcement = require("./models/announcement");
 const ExpressError = require("./utils/ExpressError");
 const DBConnection = require("./database/connection");
 const { errorPage } = require("./middleware/middleware");
@@ -43,13 +45,13 @@ const { sessionConfig } = require("./config/sessionConfig");
 const i18next = require("./config/i18next");
 const { locals } = require("./config/local");
 const app = express();
-const helmet = require("helmet");
+//const helmet = require("helmet");
 
 // =========================== App Configuration =========================
 app.set("trust proxy", true);
 app.disable("x-powered-by");
 app.use(i18nextMiddleware.handle(i18next));
-app.use(helmet());
+//app.use(helmet());
 app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -89,6 +91,7 @@ passport.deserializeUser((user, done) => {
 app.use(locals);
 app.use(cors());
 app.use("/case", caseRoutes);
+app.use("/announcement", announcementRoutes);
 app.use("/pack", packRoutes);
 app.use("/user", userRoutes);
 // app.use("/user/:id/transaction", userRoutes);

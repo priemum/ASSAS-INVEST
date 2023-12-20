@@ -12,11 +12,10 @@ const {
   updateCase,
   deleteCase,
 } = require("../controllers/case");
-router.route("/").get(isLoggedIn, catchAsync(caseList));
-router.route("/new").get(isLoggedIn, catchAsync(showCreationForm));
+router.route("/").get(catchAsync(caseList)).post(catchAsync(createCase));
+router.route("/new").get(catchAsync(showCreationForm));
 router
   .route("/:id")
-  .post(catchAsync(createCase))
   .get(isLoggedIn, isAuthor, catchAsync(showCase))
   .put(isLoggedIn, isAuthor, catchAsync(updateCase))
   .delete(isLoggedIn, isAuthor, catchAsync(deleteCase));

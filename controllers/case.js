@@ -1,36 +1,44 @@
 const moment = require("moment");
 const Case = require("../models/case");
 const Pack = require("../models/pack");
+const User = require("../models/user");
 
 module.exports.caseList = async (req, res) => {
-  const invests = await Case.find({});
-  res.send(invests);
+   const cases = await Case.find({}).populate(
+    ["user", "pack"]
+  );
+  res.render("case/index", { cases, moment });
 };
 module.exports.createCase = async (req, res) => {
-  const { picture, packname } = req.body;
-  const user = req.user.id;
-  const invest = new Case({ user, packname });
-  (invest.payment_picture = {
-    url: req.file.path,
-    filename: req.file.filename,
-  }),
-    await invest.save();
-  res.redirect("/case/users");
+  let { casee } = req.body;
+  const newCase = new Case({
+    reference: casee.reference,
+    user: casee.user,
+    pack: casee.pack,
+    initAmount: casee.initAmount,
+    description: casee.description,
+    startDate: casee.startDate,
+  });
+
+  await newCase.save();
+  res.redirect("/case");
 };
 module.exports.showCreationForm = async (req, res) => {
   const packs = await Pack.find({});
-  res.render("case/new", { packs });
+  const users = await User.find({});
+  res.render("case/new", { packs, users, moment });
 };
 module.exports.showUpdateForm = async (req, res) => {
   const { id } = req.params;
-  const invest = await Case.findById(id).populate(["packname"]);;
+  const invest = await Case.findById(id).populate(["packname"]);
   const packs = await Pack.find({});
   if (!invest) {
     req.flash("error", "Cannot find that investment!");
     return res.redirect("/case");
   }
   res.render("case/edit", {
-    invest,packs
+    invest,
+    packs,
   });
 };
 module.exports.showCase = async (req, res) => {

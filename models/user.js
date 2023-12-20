@@ -17,12 +17,12 @@ const User = new Schema(
   {
     firstname: String,
     lastname: String,
-    birthday: String,
+    birthdate: String,
     phone: String,
     accounts: [accountSchema],
 
     gender: String,
-    address: {
+    adress: {
       type: String,
     },
     role: [String], // a user could be an admin or normal user

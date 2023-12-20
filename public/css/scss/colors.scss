@@ -3,12 +3,20 @@ $mediumTurquoise: #16a7ba;
 $greenSea: #66b0a7;
 $pearlAqua: #0dac5c9e;
 $crystalBlue: #afd9ea;
-$pistachio: #c7e7d2 ;
+$pistachio: #c7e7d24f ;
 $antiqueSteel : #5d6b0d ;
 $tealdeer : #476145 ;
-$menthol : #faf9d8 ;
-$citrine : #a89d39  ;
+$menthol : #faf9d877 ;
+$citrine : #7f7836  ;
+$lotion : #e6ebe54e  ;
+$poseidon  : #133955   ;
 
+.bg-lotion {
+  background-color: $lotion;
+}
+.bg-poseidon {
+  background-color: $poseidon;
+}
 .bg-pistachio {
   background-color: $pistachio;
 }
@@ -42,6 +50,12 @@ $citrine : #a89d39  ;
 }
 .bg-tealdeer {
     background-color: $tealdeer;
+  }
+  .text-lotion {
+    color: $lotion;
+  }
+  .text-poseidon {
+    color: $poseidon;
   }
   .text-tealdeer {
     color: $tealdeer;
@@ -77,6 +91,11 @@ $citrine : #a89d39  ;
   color: #fff;
   background-color: $greenSea;
   border-color: $greenSea;
+}
+.btn-poseidon {
+  color: #fff;
+  background-color: $poseidon;
+  border-color: $poseidon;
 }
 .btn-outline-greenSea {
   color: $greenSea;
@@ -194,4 +213,9 @@ $citrine : #a89d39  ;
   --bs-table-hover-color: #000;
   color: #555353;
   border-color: #bcd0c7;
+}
+
+  .border-poseidon {
+    --bs-border-opacity: 1;
+    border-color: rgba($poseidon,var(--bs-border-opacity))!important;
 }

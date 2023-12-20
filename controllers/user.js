@@ -28,17 +28,17 @@ module.exports.showRegisterForm = async (req, res) => {
 // ==================== Register ==============================
 module.exports.register = async (req, res) => {
   try {
-    const { email, password, firstname, lastname, birthday, phone, gender, adress, role } = req.body.user;
+    const { email, password, firstname, lastname, birthdate, phone, gender, adress, role } = req.body.user;
 
     const user = new User({
       email: email.toLowerCase(),
       password: password,
-      firstname: firstname,
-      lastname: lastname,
-      birthday: birthday,
+      firstname: firstname.toLowerCase(),
+      lastname: lastname.toLowerCase(),
+      birthdate: birthdate,
       phone: phone,
       gender: gender,
-      adress: adress,
+      adress: adress.toLowerCase(),
       role: role,
     });
     User.register(user, password, function (err, user) {
@@ -61,7 +61,7 @@ module.exports.login = async (req, res) => {
   req.flash("success", `Welcome Back ${req.user.firstname}`);
   // update the recently logged in user
   await User.findByIdAndUpdate({ _id: req.user.id }, { loggedIn: moment() });
-  const redirectUrl = req.session.returnTo || "/patient";
+  const redirectUrl = req.session.returnTo || "/user";
   delete req.session.returnTo;
   res.redirect(redirectUrl);
 };
@@ -89,13 +89,13 @@ module.exports.updateUser = async (req, res) => {
     { new: true }
   );
   res.redirect(`/user/${updatedUser._id}/profile`);
-  // res.send(updatedUser);
+  // 
 };
 // =============== deleteUser ==============================
 module.exports.deleteUser = async (req, res) => {
-  const { userid } = req.params;
-  await User.findByIdAndDelete(userid);
-  req.flash("success", "Utilisateur a été supprimé");
+  const { id } = req.params;
+  await User.findByIdAndDelete(id);
+  req.flash("success", "تم الحذف بنجاح");
   res.redirect("/user");
 };
 // =============== showProfile ==============================

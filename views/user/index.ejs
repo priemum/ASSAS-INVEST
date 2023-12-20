@@ -22,7 +22,7 @@
         <th scope="col"> العنوان</th>
         <th scope="col">الجنس</th>
         <th scope="col"> الحسابات</th>
-        <th scope="col"> action</th>
+        <th scope="col"> العمليات</th>
 
       </tr>
     </thead>
@@ -38,7 +38,7 @@
           scope="row" ><%= user.fullname%></td>
         <td
           
-          scope="row"><%=user.birthday %></td>
+          scope="row"><%=user.birthdate %></td>
           <td
           
           scope="row" ><%= user.phone %></td>
@@ -53,12 +53,13 @@
           scope="row" ><%= user.gender %></td>
           <td
           
-          scope="row" ><button type="button" class="btn btn-light">Info</button></td>
+          scope="row" ><%-include("./accounts")%>
+        </td>
         
        
-        <th>
-        edit
-        </th>
+        <td>
+          <%- include("./delete") %>
+        </td>
       </tr>
       <%}%>
     </tbody>
