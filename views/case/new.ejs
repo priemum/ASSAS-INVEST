@@ -1,21 +1,19 @@
 <% layout('layouts/boilerplate')%>
 <div
-  class=" d-flex justify-content-center align-items-center mx-3"
+  class="d-flex justify-content-center align-items-center mx-3"
   id="register-box"
 >
-  <div class=" p-2 shadow-sm border rounded-3 bg-light">
+  <div class="p-2 shadow-sm border rounded-3 bg-light">
+    <h1 class="display-6 text-success text-center mb-3">إضافة باقة لمستثمر</h1>
 
-  <h1 class="display-6 text-success text-center mb-3">إضافة باقة لمستثمر</h1>
-  
     <form class="row g-3 m-2 needs-validation" action="/case" method="POST">
-      
       <div class="form-floating col-4 mb-2">
         <input
-          
           class="form-control border border-success"
           type="text"
           id="reference"
           name="casee[reference]"
+          value="<%= ref_id%>"
           placeholder=""
           required
         />
@@ -37,36 +35,41 @@
       </div>
 
       <div class="form-floating mb-2 col-4">
-        <input
-          class="form-control border border-success"
-          type="date"
-          id="startdate"
-          name="casee[startdate]"
-          placeholder=""
-          value="<%=moment().format("YYYY-MM-DD")%>"
-          required
-        />
-        <label for="startdate" class="form-labelfs-6">تاريخ البداية:</label>
+        <input class="form-control border border-success" type="date"
+        id="startDate" name="casee[startDate]" placeholder=""
+        value="<%=moment().format(" YYYY-MM-DD")%>" required />
+        <label for="startDate" class="form-labelfs-6">تاريخ البداية:</label>
         <div class="valid-feedback">صحيح</div>
       </div>
-      
 
       <div class="form-floating col-6 mb-2">
-        <select id="user" name="casee[user]" class="form-select border border-success">
+        <select
+          id="user"
+          name="casee[user]"
+          class="form-select border border-success"
+        >
           <option selected disabled value="">المستثمر</option>
           <% for (user of users){%>
-          <option class="option" value="<%= user.id%>"><%= user.email%> <%= user.fullname%> <%= user.phone%></option>
+          <option class="option" value="<%= user.id%>">
+            <%= user.email%> <%= user.fullname%> <%= user.phone%>
+          </option>
           <%}%>
         </select>
         <label for="user" class="form-label">المستثمر</label>
         <div class="valid-feedback">صحيح</div>
       </div>
       <div class="form-floating col-6 mb-2">
-        <select id="pack" name="casee[pack]" class="form-select border border-success">
+        <select
+          id="pack"
+          name="casee[pack]"
+          class="form-select border border-success"
+        >
           <option selected disabled value="">الباقة</option>
-          <% for (pack of packs){%>
-          <option class="option" value="<%= pack.id%>"><%= pack.title%> <%= pack.period%> <%= pack.unite%></option>
-          <%}%>
+          <% for (pack of packs){%> <% if (pack.state===true){%>
+          <option class="option" value="<%= pack.id%>">
+            <%= pack.title%> <%= pack.period%> <%= pack.unite%>
+          </option>
+          <%}}%>
         </select>
         <label for="pack" class="form-label">المستثمر</label>
         <div class="valid-feedback">صحيح</div>
@@ -85,11 +88,8 @@
         <div class="valid-feedback">صحيح</div>
       </div>
       <div class="mb-2">
-        <button class="w-100 btn btn-lg btn-success">
-          إضافة الباقة
-        </button>
+        <button class="w-100 btn btn-lg btn-success">إضافة الباقة</button>
       </div>
     </form>
-  
-</div>
+  </div>
 </div>

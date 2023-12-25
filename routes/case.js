@@ -18,6 +18,6 @@ router
   .route("/:id")
   .get(isLoggedIn, isAuthor, catchAsync(showCase))
   .put(isLoggedIn, isAuthor, catchAsync(updateCase))
-  .delete(isLoggedIn, isAuthor, catchAsync(deleteCase));
+  .delete( catchAsync(deleteCase));
 router.route("/:id/edit").get(catchAsync(showUpdateForm));
 module.exports = router;

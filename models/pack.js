@@ -11,14 +11,15 @@ const Pack = new Schema({
   description: String,
   period: Number,
   unite: String,
-  state:{ //show or hide the pack to the users
+  state: {
+    //show or hide the pack to the users
     type: Boolean, //
     default: false,
   },
-  creationDate:{
+  creationDate: {
     type: Date,
     default: Date.now,
-  }
+  },
 });
 
 module.exports = mongoose.model("Pack", Pack);

@@ -11,7 +11,6 @@ const Schema = mongoose.Schema;
 const accountSchema = {
   accounttype: String,
   accountNumber: String,
-  
 };
 const User = new Schema(
   {
@@ -38,7 +37,7 @@ const User = new Schema(
 // creating a virtual field named fullname and it's made of firstname and lastname
 // this virtual property is not stored in the mongo DB
 User.virtual("fullname").get(function () {
-  return this.firstname + " " + this.lastname;
+  return this.lastname + " " + this.firstname;
 });
 
 User.index({

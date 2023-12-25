@@ -8,6 +8,7 @@ const Announcement = new Schema({
   title: String,
   description: String,
   resume: String,
+  announcementPicture: String,
   state:{ //show or hide the announcement to the users
     type: Boolean, //
     default: false,

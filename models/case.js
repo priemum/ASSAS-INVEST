@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const moment = require("moment");
 const Schema = mongoose.Schema;
 /* 
 سجل الاستثمار
@@ -7,7 +8,8 @@ const Schema = mongoose.Schema;
   
 */
 const Case = new Schema({
-  reference:{ // an id used to uniquely identify the investment used in the contract
+  reference: {
+    // an id used to uniquely identify the investment used in the contract
     type: String,
     required: true,
   },
@@ -21,13 +23,14 @@ const Case = new Schema({
     type: Schema.Types.ObjectId,
     ref: "Pack",
   },
-  initAmount: { //initial invested amount
+  initAmount: {
+    //initial invested amount
     type: Number,
     required: true,
   },
   description: String,
   state: {
-    //value = active, end 
+    //value = active, end
     type: String,
     default: "Active",
   },
@@ -36,20 +39,37 @@ const Case = new Schema({
     type: Date,
     default: Date.now,
   },
-  withdraws:[{ // withdraw happends in the investment
-   date:{ 
-    type: Date,
-    default: Date.now,
-   },
-   amount:{
-    type: Number,
-    default: 0,
-   },
-   state:{ // state of the withdraw accepted, pending, or rejected
-    type: String,
-    default: "Pending",
-   }
-  }]
-});
+  endDate: Date,
 
+  withdraws: [
+    {
+      // withdraw happends in the investment
+      date: {
+        type: Date,
+        default: Date.now,
+      },
+      amount: {
+        type: Number,
+        default: 0,
+      },
+      state: {
+        // state of the withdraw accepted, pending, or rejected
+        type: String,
+        default: "Pending",
+      },
+    },
+  ],
+});
+Case.virtual("nbrDays").get(function () {
+  return moment(this.endDate).diff(this.startDate, "days");
+});
+Case.virtual("pastDays").get(function () {
+  return moment().diff(this.startDate, "days");
+});
+Case.virtual("restDays").get(function () {
+  return moment(this.endDate).diff(moment(), "days");
+});
+Case.virtual("daysPersent").get(function () {
+  return (this.pastDays * 100) / this.nbrDays;
+});
 module.exports = mongoose.model("Case", Case);

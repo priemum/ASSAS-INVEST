@@ -36,16 +36,16 @@
           scope="row" ><%= pack.title%></td>
           <td
           
-          scope="row" ><%= pack.period%></td>
+          scope="row" ><%= pack.period%> <%= pack.unite%></td>
           <td
           scope="row" ><%= pack.description %></td>
           <% if (pack.state === true){%>
             <td
-            scope="row">مفعلة</td>
+            scope="row"><div class="rounded-3 bg-success progress-bar-striped text-white">مفعلة</div></td>
             
             <%}else{%>
               <td
-            scope="row">غير مفعلة</td>
+            scope="row"> <div class="rounded-3 bg-danger progress-bar-striped text-white">غير مفعلة</div></td>
             <%}%>
           
        

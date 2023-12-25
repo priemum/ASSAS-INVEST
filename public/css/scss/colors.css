@@ -2,6 +2,10 @@
   background-color: rgba(230, 235, 229, 0.3058823529);
 }
 
+.bg-desertSand {
+  background-color: #11794c;
+}
+
 .bg-poseidon {
   background-color: #133955;
 }
@@ -60,6 +64,10 @@
 
 .text-tealdeer {
   color: #476145;
+}
+
+.text-desertSand {
+  color: #11794c;
 }
 
 .text-antiqueSteel {
@@ -238,12 +246,12 @@
 }
 
 .table-greenSea {
-  --bs-table-bg:#5bb8ad91;
-  --bs-table-striped-bg: #CAEDE9;
+  --bs-table-bg: #5bb8ad91;
+  --bs-table-striped-bg: #caede9;
   --bs-table-striped-color: #000;
   --bs-table-active-bg: #bbd8d5;
   --bs-table-active-color: #000;
-  --bs-table-hover-bg: #CAEDE9;
+  --bs-table-hover-bg: #caede9;
   --bs-table-hover-color: #000;
   color: #555353;
   border-color: #bcd0c7;
@@ -252,4 +260,9 @@
 .border-poseidon {
   --bs-border-opacity: 1;
   border-color: rgba(19, 57, 85, var(--bs-border-opacity)) !important;
+}
+
+.border-tealdeer {
+  --bs-border-opacity: 1;
+  border-color: rgba(71, 97, 69, var(--bs-border-opacity)) !important;
 }/*# sourceMappingURL=colors.css.map */

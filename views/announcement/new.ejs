@@ -43,8 +43,8 @@
         >
           <div class="form-floating col-md-12">
             <input class="form-control" type="date" id="creationdate"
-            name="announcement[creationDate]" placeholder="تاريخ الإعلان" required
-            value="<%= moment().format("YYYY-MM-DD") %>" />
+            name="announcement[creationDate]" placeholder="تاريخ الإعلان"
+            required value="<%= moment().format("YYYY-MM-DD") %>" />
             <label for="creationdate" class="form-label fs-6">التاريخ</label>
             <div class="valid-feedback">صحيح</div>
           </div>
@@ -64,29 +64,37 @@
           </div>
 
           <div class="">
-            <textarea
-              class="form-control"
-              name="announcement[resume]"
-              id="resume"
-              rows="2"
-              placeholder="اكتب  ملخص الإعلان هنا"
-            ></textarea>
+            <input class="form-control" 
+            type="file" 
+            id="announcementPicture" 
+            name="announcement[announcementPicture]"
+            placeholder="حمل الصورة" 
+            required
+            />
           </div>
 
           <div class="">
             <textarea
               class="form-control"
+              name="announcement[resume]"
+              id="resume"
+              rows="1"
+              placeholder="اكتب  ملخص الإعلان هنا"
+            ></textarea>
+          </div>
+          
+          <div class="">
+            <textarea
+              class="form-control"
               name="announcement[description]"
               id="description"
-              rows="4"
+              rows="2"
               placeholder="اكتب محتوى الإعلان"
               style="text-transform: capitalize"
             ></textarea>
           </div>
 
-         
-
-          <div class="modal-footer mt-4">
+          <div class="modal-footer mt-2">
             <button
               type="button"
               class="btn btn-outline-danger bg-gradient"
@@ -96,7 +104,6 @@
             </button>
             <button class="btn btn-outline-success">إضافة</button>
           </div>
-
         </form>
       </div>
     </div>

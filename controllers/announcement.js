@@ -9,18 +9,15 @@ module.exports.showAnnouncements = async (req, res) => {
 };
 module.exports.addAnnouncement = async (req, res) => {
   // get the Announcement id from the materiels table
-  const { creationDate, title, resume, description } = req.body.announcement;
+  const { creationDate, title, resume, description, announcementPicture } = req.body.announcement;
 
   const announcement = new Announcement({
     creationDate,
     title,
     resume,
     description,
+    announcementPicture
   });
-//   announcement.picture = {
-//     url: req.file.path,
-//     filename: req.file.filename,
-//   };
   await announcement.save();
   req.flash("success", "تم الإضافة بنجاح");
   res.redirect("/announcement");

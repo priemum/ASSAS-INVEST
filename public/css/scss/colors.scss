@@ -3,16 +3,20 @@ $mediumTurquoise: #16a7ba;
 $greenSea: #66b0a7;
 $pearlAqua: #0dac5c9e;
 $crystalBlue: #afd9ea;
-$pistachio: #c7e7d24f ;
-$antiqueSteel : #5d6b0d ;
-$tealdeer : #476145 ;
-$menthol : #faf9d877 ;
-$citrine : #7f7836  ;
-$lotion : #e6ebe54e  ;
-$poseidon  : #133955   ;
+$pistachio: #c7e7d24f;
+$antiqueSteel: #5d6b0d;
+$tealdeer: #476145;
+$menthol: #faf9d877;
+$citrine: #7f7836;
+$lotion: #e6ebe54e;
+$poseidon: #133955;
+$desertSand: #11794c;
 
 .bg-lotion {
   background-color: $lotion;
+}
+.bg-desertSand {
+  background-color: $desertSand;
 }
 .bg-poseidon {
   background-color: $poseidon;
@@ -27,8 +31,8 @@ $poseidon  : #133955   ;
   background-color: $menthol;
 }
 .bg-tealdeer {
-    background-color: $tealdeer;
-  }
+  background-color: $tealdeer;
+}
 .bg-greenSea {
   background-color: $greenSea;
 }
@@ -49,17 +53,20 @@ $poseidon  : #133955   ;
   background-color: $antiqueSteel;
 }
 .bg-tealdeer {
-    background-color: $tealdeer;
-  }
-  .text-lotion {
-    color: $lotion;
-  }
-  .text-poseidon {
-    color: $poseidon;
-  }
-  .text-tealdeer {
-    color: $tealdeer;
-  }
+  background-color: $tealdeer;
+}
+.text-lotion {
+  color: $lotion;
+}
+.text-poseidon {
+  color: $poseidon;
+}
+.text-tealdeer {
+  color: $tealdeer;
+}
+.text-desertSand {
+  color: $desertSand;
+}
 .text-antiqueSteel {
   color: $antiqueSteel;
 }
@@ -204,18 +211,22 @@ $poseidon  : #133955   ;
   border-color: $pistachio;
 }
 .table-greenSea {
-  --bs-table-bg:#5bb8ad91;
-  --bs-table-striped-bg: #CAEDE9;
+  --bs-table-bg: #5bb8ad91;
+  --bs-table-striped-bg: #caede9;
   --bs-table-striped-color: #000;
   --bs-table-active-bg: #bbd8d5;
   --bs-table-active-color: #000;
-  --bs-table-hover-bg: #CAEDE9;
+  --bs-table-hover-bg: #caede9;
   --bs-table-hover-color: #000;
   color: #555353;
   border-color: #bcd0c7;
 }
 
-  .border-poseidon {
-    --bs-border-opacity: 1;
-    border-color: rgba($poseidon,var(--bs-border-opacity))!important;
+.border-poseidon {
+  --bs-border-opacity: 1;
+  border-color: rgba($poseidon, var(--bs-border-opacity)) !important;
+}
+.border-tealdeer {
+  --bs-border-opacity: 1;
+  border-color: rgba($tealdeer, var(--bs-border-opacity)) !important;
 }

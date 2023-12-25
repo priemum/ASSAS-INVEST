@@ -1,55 +1,28 @@
 <% layout('layouts/boilerplate')%>
-
 <div class="container-fluid mt-4">
-  <div class="col m-auto bg-light rounded-5 p-2">
-    <h3 class="text-center text-success">سجل الإعلانات</h3>
+  <div class="mb-3">
+    <h3 class="display-6 text-center text-success">سجل الإعلانات</h3>
     <div class="d-flex mb-2"><%- include("./new")%></div>
   </div>
-  <form class="d-flex mt-2">
-    <input
-      id="search"
-      class="form-control mb-2"
-      type="search"
-      placeholder="خانة البحث"
-      aria-label="Search"
-    />
-  </form>
-  <div class="table-responsive shadow-sm">
-    <table
-      class="table table-striped table-hover table-borderless text-center sortable"
-      width="100"
-      id="patientTable"
-    >
-      <thead class="table-success">
-        <tr>
-          <th scope="col">الرقم</th>
-          <th scope="col">العنوان</th>
-          <th scope="col">العمليات</th>
-        </tr>
-      </thead>
-      <tbody id="tablebody">
-        <% var i=1 %>
-        <% for (announcement of announcements){%>
-        <tr>
-          <th
-            scope="row"
-            class="clickable"
-            onclick="window.location='/announcement/<%=announcement.id%>'"
-          >
-            <%= i%> <% i=i+1; %>
-          </th>
-          <td
-            class="clickable"
-            onclick="window.location='/announcement/<%=announcement.id%>'"
-          >
-            <%= announcement.title %>
-          </td>
+<div class="row row-cols-1 row-cols-md-3 mb-3">
+    <% for (announcement of announcements){%>
 
-          <td><%- include("./delete")%></td>
-        </tr>
-        <% }%>
-      </tbody>
-    </table>
+    <div class="col-12 mb-3">
+      <div class="card h-100">
+        <img src="/assets/<%= announcement.announcementPicture %>" class="card-img-top"
+          alt="<%= announcement.announcementPicture %>" width="200" height="300"/>
+        <div class="card-body">
+          <h5 class="card-title text-center text-tealdeer fs-4"> <%= announcement.title %> </h5>
+          <p class="card-text">
+            <%= announcement.resume %>
+          </p>
+          <a href="/announcement/<%= announcement.id %>" class="p-0 m-0 stretched-link"></a>
+        </div>
+        <div class="card-footer">
+          <small class="text-muted"> تم إنشاءه يوم: <%=moment(announcement.creationDate).format("YYYY-MM-DD")%> </small>
+        </div>
+      </div>
   </div>
+  <% }%>
 </div>
-<style></style>
+</div>

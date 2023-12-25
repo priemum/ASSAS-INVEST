@@ -1,16 +1,25 @@
 const moment = require("moment");
+const crypto = require("crypto");
 const Case = require("../models/case");
 const Pack = require("../models/pack");
 const User = require("../models/user");
 
 module.exports.caseList = async (req, res) => {
-   const cases = await Case.find({}).populate(
-    ["user", "pack"]
-  );
+  const cases = await Case.find({}).populate(["user", "pack"]);
   res.render("case/index", { cases, moment });
 };
 module.exports.createCase = async (req, res) => {
   let { casee } = req.body;
+  const packchosen = await Pack.findById(casee.pack);
+
+  if (packchosen.unite === "شهر") {
+    endDate = moment(casee.startDate).add(packchosen.period, "months").format("YYYY-MM-DD");
+  } else if (packchosen.unite === "أسبوع") {
+    endDate = moment(casee.startDate).add(packchosen.period, "weeks").format("YYYY-MM-DD");
+  } else {
+    endDate = moment(casee.startDate).add(packchosen.period, "days").format("YYYY-MM-DD");
+  }
+
   const newCase = new Case({
     reference: casee.reference,
     user: casee.user,
@@ -18,6 +27,7 @@ module.exports.createCase = async (req, res) => {
     initAmount: casee.initAmount,
     description: casee.description,
     startDate: casee.startDate,
+    endDate: endDate,
   });
 
   await newCase.save();
@@ -26,7 +36,11 @@ module.exports.createCase = async (req, res) => {
 module.exports.showCreationForm = async (req, res) => {
   const packs = await Pack.find({});
   const users = await User.find({});
-  res.render("case/new", { packs, users, moment });
+  var ref_id = crypto.randomBytes(4).toString("hex").toUpperCase();
+  const year = moment().format('YY');
+  ref_id = ref_id + year;
+  
+  res.render("case/new", { packs, users, moment, ref_id });
 };
 module.exports.showUpdateForm = async (req, res) => {
   const { id } = req.params;
@@ -57,6 +71,6 @@ module.exports.updateCase = async (req, res) => {
 module.exports.deleteCase = async (req, res) => {
   const { id } = req.params;
   await Case.findByIdAndDelete(id);
-  req.flash("success", "Successfully deleted investment!");
-  res.redirect("/case/users");
+  req.flash("success", "تم الحذف بنجاح");
+  res.redirect("/case");
 };
