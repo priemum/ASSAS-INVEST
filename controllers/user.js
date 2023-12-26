@@ -9,9 +9,7 @@ module.exports.showUserForm = async (req, res) => {
 };
 // ================== showLoginForm =============================
 module.exports.showLoginForm = async (req, res) => {
-  const algeria = await Country.find({});
-  const states = algeria[0].states;
-  res.render("user/login", { states });
+  res.render("user/login");
 };
 // ================== showUsers =============================
 module.exports.showUsers = async (req, res) => {
@@ -24,11 +22,21 @@ module.exports.showRegisterForm = async (req, res) => {
   const states = algeria[0].states;
   res.render("user/register", { states, moment });
 };
-// 
+//
 // ==================== Register ==============================
 module.exports.register = async (req, res) => {
   try {
-    const { email, password, firstname, lastname, birthdate, phone, gender, adress, role } = req.body.user;
+    const {
+      email,
+      password,
+      firstname,
+      lastname,
+      birthdate,
+      phone,
+      gender,
+      adress,
+      role,
+    } = req.body.user;
 
     const user = new User({
       email: email.toLowerCase(),
@@ -50,7 +58,8 @@ module.exports.register = async (req, res) => {
         res.redirect("/user");
       }
     });
-  []} catch (e) {
+    [];
+  } catch (e) {
     req.flash("error", e.message);
     res.redirect("register");
   }
@@ -58,7 +67,8 @@ module.exports.register = async (req, res) => {
 
 // ================s==== Login ==============================
 module.exports.login = async (req, res) => {
-  req.flash("success", `Welcome Back ${req.user.firstname}`);
+
+  req.flash("success", `مرحبا بك ${req.user.firstname}`);
   // update the recently logged in user
   await User.findByIdAndUpdate({ _id: req.user.id }, { loggedIn: moment() });
   const redirectUrl = req.session.returnTo || "/user";
@@ -69,7 +79,7 @@ module.exports.login = async (req, res) => {
 module.exports.logout = (req, res) => {
   // logout requere a callback function and a get request to work
   req.logout(() => {
-    req.flash("success", `Goodbye`);
+    req.flash("success", `نراك قريبا`);
     res.redirect("login");
   });
 };
@@ -89,7 +99,7 @@ module.exports.updateUser = async (req, res) => {
     { new: true }
   );
   res.redirect(`/user/${updatedUser._id}/profile`);
-  // 
+  //
 };
 // =============== deleteUser ==============================
 module.exports.deleteUser = async (req, res) => {

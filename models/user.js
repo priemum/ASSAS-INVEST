@@ -31,6 +31,10 @@ const User = new Schema(
         ref: "Case",
       },
     ],
+    loggedIn: {
+      type: Date,
+      default: Date.now,
+    },
   },
   opts
 );

@@ -12,11 +12,18 @@ module.exports.errorPage = (err, req, res, next) => {
     statusCode,
   });
 };
+module.exports.isAdmin = async (req, res, next) => {
+  if (!req.user.role.includes("أدمين")) {
+    req.flash("error", "Vous n'êtes pas autorisé!");
+    return res.redirect(`/`);
+  }
+  next();
+};
 module.exports.isLoggedIn = (req, res, next) => {
   if (!req.isAuthenticated()) {
     req.session.returnTo = req.originalUrl;
     req.flash("error", "You must be signed in first!");
-    return res.redirect("/users/login");
+    return res.redirect("/user/login");
   }
   next();
 };

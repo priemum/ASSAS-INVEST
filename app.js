@@ -67,27 +67,37 @@ app.use(session(sessionConfig));
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use("local-user", new LocalStrategy(User.authenticate()));
+
+passport.use(
+  "local",
+  new LocalStrategy((email,password, done) => {
+    console.log("Welcome")
+    User.findOne({ email: email.toLowerCase() }).then((user, err) => {
+      if (err) {
+        return done(err);
+      }
+      if (!user) {
+        console.log("if")
+        return done(null, false);
+      } else {
+        console.log("else")
+        return done(null, user);
+      }
+    });
+  })
+);
 // serialization refers to how to store user's
 // authentication user data will be stored in the session
 passport.serializeUser((user, done) => {
-  // console.log("userType = ", user.userType)
-  if (user.userType === "user") {
-    // console.log("Serialize User");
-    passport.serializeUser(User.serializeUser());
-    // console.log("User");
-  }
+  passport.serializeUser(User.serializeUser());
   done(null, user);
 });
 
 // deserialization refers to how remove user's authentication data
 passport.deserializeUser((user, done) => {
-  if (user.userType === "user") {
-    passport.deserializeUser(User.deserializeUser());
-  }
+  passport.deserializeUser(User.deserializeUser());
   done(null, user);
 });
-
 app.use(locals);
 app.use(cors());
 app.use("/case", caseRoutes);

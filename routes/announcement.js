@@ -9,19 +9,18 @@ const {
   showAnnouncements,
   addAnnouncement,
   showAnnouncement,
-
   removeAnnouncement,
 } = require("../controllers/announcement");
 const { isLoggedIn, isAdmin } = require("../middleware/middleware");
 router;
 router
   .route("/")
-  .get(catchAsync(showAnnouncements))
-  .post( catchAsync(addAnnouncement));
+  .get(isLoggedIn, isAdmin, catchAsync(showAnnouncements))
+  .post(isLoggedIn, isAdmin, catchAsync(addAnnouncement));
 
 router
   .route("/:idannouncement")
-  .delete( catchAsync(removeAnnouncement))
-  .get(catchAsync(showAnnouncement));
+  .delete(isLoggedIn, isAdmin, catchAsync(removeAnnouncement))
+  .get(isLoggedIn, isAdmin, catchAsync(showAnnouncement));
 
 module.exports = router;
