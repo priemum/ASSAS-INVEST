@@ -15,12 +15,12 @@ const { isLoggedIn, isAdmin } = require("../middleware/middleware");
 router;
 router
   .route("/")
-  .get(isLoggedIn, isAdmin, catchAsync(showAnnouncements))
+  .get(isLoggedIn,catchAsync(showAnnouncements))
   .post(isLoggedIn, isAdmin, catchAsync(addAnnouncement));
 
 router
   .route("/:idannouncement")
   .delete(isLoggedIn, isAdmin, catchAsync(removeAnnouncement))
-  .get(isLoggedIn, isAdmin, catchAsync(showAnnouncement));
+  .get(isLoggedIn, catchAsync(showAnnouncement));
 
 module.exports = router;
