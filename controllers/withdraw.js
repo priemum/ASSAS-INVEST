@@ -34,13 +34,8 @@ module.exports.createCase = async (req, res) => {
   res.redirect("/case");
 };
 module.exports.showCreationForm = async (req, res) => {
-  const packs = await Pack.find({});
-  const users = await User.find({});
-  var ref_id = crypto.randomBytes(4).toString("hex").toUpperCase();
-  const year = moment().format('YY');
-  ref_id = ref_id + year;
-  
-  res.render("case/new", { packs, users, moment, ref_id });
+const casees = await Case.find({}).populate(["user", "pack"]);
+  res.render("withdraw/new", { casees ,moment });
 };
 module.exports.showUpdateForm = async (req, res) => {
   const { id } = req.params;

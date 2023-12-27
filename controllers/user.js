@@ -71,7 +71,7 @@ module.exports.login = async (req, res) => {
   req.flash("success", `مرحبا بك ${req.user.firstname}`);
   // update the recently logged in user
   await User.findByIdAndUpdate({ _id: req.user.id }, { loggedIn: moment() });
-  const redirectUrl = req.session.returnTo || "/user";
+  const redirectUrl = req.session.returnTo || "/";
   delete req.session.returnTo;
   res.redirect(redirectUrl);
 };

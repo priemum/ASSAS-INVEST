@@ -1,0 +1,66 @@
+<% layout('layouts/boilerplate')%>
+<div
+  class="d-flex justify-content-center align-items-center mx-3"
+  id="register-box"
+>
+  <div class="p-2 shadow-sm border rounded-3 bg-light">
+    <h1 class="display-6 text-success text-center mb-3">سحب لمستثمر</h1>
+
+    <form class="row g-3 m-2 needs-validation" action="/withdraw" method="POST">
+      <div class="form-floating col-12 mb-2">
+        <select
+          id="user"
+          name="withdraw[user]"
+          class="form-select border border-success"
+        >
+          <option selected disabled value="">المستثمر</option>
+          <% for (casee of casees){%>
+          <option class="option" value="<%= casee.id%>">
+            <%= casee.reference%> <%= casee.user.fullname%> <%=
+            casee.initAmount%>
+          </option>
+          <%}%>
+        </select>
+        <label for="user" class="form-label">المستثمر</label>
+        <div class="valid-feedback">صحيح</div>
+      </div>
+      <div class="form-floating mb-2 col-6">
+        <input class="form-control border border-success" type="date"
+        id="startDate" name="withdraw[withdrawDate]" placeholder=""
+        value="<%=moment().format("YYYY-MM-DD")%>" required />
+        <label for="startDate" class="form-labelfs-6">تاريخ السحب:</label>
+        <div class="valid-feedback">صحيح</div>
+      </div>
+      <div class="form-floating mb-2 col-6">
+        <input
+          class="form-control border border-success"
+          type="number"
+          id="Amount"
+          min="1"
+           max="<%=casee.initAmount%>"
+          name="withdraw[amount]"
+          placeholder=""
+          required
+        />
+        <label for="initAmount" class="form-labelfs-6">المبلغ:</label>
+        <div class="valid-feedback">صحيح</div>
+      </div>
+
+      <div class="mb-2">
+        <textarea
+          class="form-control border border-success"
+          type="text"
+          id="description"
+          name="withdraw[description]"
+          placeholder="تفاصيل السحب"
+          rows="4"
+          required
+        ></textarea>
+        <div class="valid-feedback">صحيح</div>
+      </div>
+      <div class="mb-2">
+        <button class="w-100 btn btn-lg btn-success">سحب</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -29,20 +29,21 @@ const mongoSanitize = require("express-mongo-sanitize");
 // Connect/Express middleware that can be used to enable CORS
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-const i18nextMiddleware = require("i18next-http-middleware");
+const schedule = require("node-schedule");
 const Packs = require("./models/pack");
 const userRoutes = require("./routes/user");
 const announcementRoutes = require("./routes/announcement");
 const packRoutes = require("./routes/pack");
 const caseRoutes = require("./routes/case");
+const withdrawRoutes = require("./routes/withdraw");
 const User = require("./models/user");
 const Announcement = require("./models/announcement");
+const Case = require("./models/case");
 const ExpressError = require("./utils/ExpressError");
 const DBConnection = require("./database/connection");
 const { errorPage } = require("./middleware/middleware");
 const { sessionConfig } = require("./config/sessionConfig");
-// i18next contains the language configuration
-const i18next = require("./config/i18next");
+
 const { locals } = require("./config/local");
 const app = express();
 //const helmet = require("helmet");
@@ -50,7 +51,7 @@ const app = express();
 // =========================== App Configuration =========================
 app.set("trust proxy", true);
 app.disable("x-powered-by");
-app.use(i18nextMiddleware.handle(i18next));
+
 //app.use(helmet());
 app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
@@ -70,17 +71,17 @@ app.use(passport.session());
 
 passport.use(
   "local",
-  new LocalStrategy((email,password, done) => {
-    console.log("Welcome")
+  new LocalStrategy((email, password, done) => {
+    console.log("Welcome");
     User.findOne({ email: email.toLowerCase() }).then((user, err) => {
       if (err) {
         return done(err);
       }
       if (!user) {
-        console.log("if")
+        console.log("if");
         return done(null, false);
       } else {
-        console.log("else")
+        console.log("else");
         return done(null, user);
       }
     });
@@ -103,6 +104,7 @@ app.use(cors());
 app.use("/case", caseRoutes);
 app.use("/announcement", announcementRoutes);
 app.use("/pack", packRoutes);
+app.use("/withdraw", withdrawRoutes);
 app.use("/user", userRoutes);
 // app.use("/user/:id/transaction", userRoutes);
 // === Home Page ===
@@ -121,4 +123,8 @@ app.listen(port, () => {
   console.log("===================================================");
   console.log(`   ----- SERVER IS RUNNING ON PORT ${port} ----`);
   console.log("===================================================");
+  const job = schedule.scheduleJob("0 0 0 * * *", function () {
+    console.log("Check user cases state !!!");
+    Case.updateMany({ state: { $ne: "End" } }, {state:"End"});
+  });
 });

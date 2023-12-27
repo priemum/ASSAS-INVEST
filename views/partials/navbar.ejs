@@ -85,6 +85,7 @@
               </div>
             </ul>
           </li>
+          <% if (currentUser.role.includes('أدمين')){ %>
           <li class="nav-item dropdown px-2">
             <a
               class="nav-link dropdown-toggle text-secondary fs-5"
@@ -118,42 +119,38 @@
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-             باقات المستثمرين 
+             إعدادات المستثمرين 
             </a>
             <ul class="dropdown-menu">
               <div class="d-flex flex-column">
+                
                 <li>
                   <a class="dropdown-item text-dark fs-5" href="/case/new"
                     >إضافة باقة لمستثمر</a
                   >
                 </li>
                 <li>
-                  <a class="dropdown-item text-dark fs-5" href="/case"
-                    >سجل باقات المستثمرين</a
+                  <a class="dropdown-item text-dark fs-5" href="/withdraw/new"
+                    >سحب لمستثمر</a
                   >
                 </li>
-                
-              </div>
-            </ul>
-          </li>
-          <li class="nav-item dropdown px-2">
-            <a
-              class="nav-link dropdown-toggle text-secondary fs-5"
-              href="#"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              المستثمرين
-            </a>
-            <ul class="dropdown-menu">
-              <div class="d-flex flex-column">
                 <li>
                   <a class="dropdown-item text-dark fs-5" href="/user/register"
                     >إضافة مستثمر</a
                   >
                 </li>
+              
+                <li>
+                  <a class="dropdown-item text-dark fs-5" href="/case"
+                    >سجل باقات المستثمرين</a
+                  >
+                </li>
                
+                <li>
+                  <a class="dropdown-item text-dark fs-5" href="/withdraw"
+                    >سجل سحوبات المستثمرين</a
+                  >
+                </li>
                 <li>
                   <a class="dropdown-item text-dark fs-5" href="/user/"
                     >سجل المستثمرين</a
@@ -162,6 +159,8 @@
               </div>
             </ul>
           </li>
+          
+          <% } %>
           <li class="nav-item px-2">
             <a class="nav-link text-secondary fs-5" href="/announcement">الإعلانات</a>
           </li>
