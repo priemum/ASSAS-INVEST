@@ -1,5 +1,6 @@
 // ================ this is a Base Schema for all other users Type =================
 const mongoose = require("mongoose");
+const moment = require("moment");
 const opts = {
   toJSON: {
     virtuals: true,
@@ -42,6 +43,11 @@ const User = new Schema(
 // this virtual property is not stored in the mongo DB
 User.virtual("fullname").get(function () {
   return this.lastname + " " + this.firstname;
+});
+User.virtual("age").get(function () {
+  var now = moment();
+  var bday = moment(this.birthdate);
+  return Math.round(now.diff(bday, "years", true));
 });
 
 User.index({

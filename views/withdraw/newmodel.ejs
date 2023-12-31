@@ -1,0 +1,93 @@
+<!-- Button trigger modal -->
+<button
+  type="button"
+  class="btn btn-outline-greenSea bg-gradient px-2 py-1"
+  data-bs-toggle="modal"
+  data-bs-target="#staticBackdropWithdraw"
+>
+سحب جديد <i class="bi bi-coin"></i></i>
+</button>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="staticBackdropWithdraw"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">سحب لمستثمر <%= caisse.user.fullname%>: <%= caisse.reference%>  </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form class="row p-2 needs-validation" action="/withdraw" method="POST">
+          <div class="form-floating col-12 mb-2">
+            <select
+              id="caseId"
+              name="withdraw[caseId]"
+              class="form-select border border-success"
+            > 
+              <option selected class="option" value="<%= caisse.id%>">
+                <%= caisse.reference%> <%= caisse.user.fullname%> <%=
+                caisse.initAmount%>
+              </option>
+            
+            </select>
+            <label for="caseId" class="form-label">رقم المرجع</label>
+            <div class="valid-feedback">صحيح</div>
+          </div>
+            <div class="form-floating mb-2 col-6">
+              <input class="form-control border border-success" type="date"
+              id="startDate" name="withdraw[date]" placeholder="date"
+              value="<%=moment().format("YYYY-MM-DD")%>" required />
+              <label for="startDate" class="form-labelfs-6">تاريخ السحب:</label>
+              <div class="valid-feedback">صحيح</div>
+            </div>
+            <div class="form-floating mb-2 col-6">
+              <input
+                class="form-control border border-success"
+                type="number"
+                id="Amount"
+                min="1"
+                 max="<%=caisse.restCase%>"
+                name="withdraw[amount]"
+                placeholder="المبلغ"
+                required
+              />
+              <label for="initAmount" class="form-labelfs-6">المبلغ:</label>
+              <div class="valid-feedback">صحيح</div>
+            </div>
+      
+            <div class="mb-2">
+              <textarea
+                class="form-control border border-success"
+                type="text"
+                id="description"
+                name="withdraw[description]"
+                placeholder="تفاصيل السحب"
+                rows="4"
+                required
+              ></textarea>
+              <div class="valid-feedback">صحيح</div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
+            إلغاء
+          </button>
+          <button  class="btn btn-outline-success">سحب</button>
+        </div>
+          </form>
+          </div>
+    </div>
+  </div>
+</div>

@@ -18,75 +18,41 @@
       <tr>
         <th scope="col">الرقم</th>
         <th scope="col">رقم المرجع</th>
+        <th scope="col">معلومات الباقة</th>
         <th scope="col">الاسم الكامل</th>
-        <th scope="col">الباقة / المدة</th>
+        <th scope="col">المبلغ الابتدائي</th>
+        <th scope="col">تاريخ السحب</th>
         <th scope="col">المبلغ</th>
-        <th scope="col">تاريخ البداية</th>
-        <th scope="col">تاريخ النهاية</th>
-        <th scope="col">المدة المتبقية</th>
-        <th scope="col">حالة الباقة</th>
+        <th scope="col">حالة السحب</th>
+        <th scope="col">الوصف</th>
         <th scope="col">العمليات</th>
       </tr>
     </thead>
     <tbody id="tablebody">
-      <% var i=1 %> <% for (casee of casees){%>
+      <% var i=1 %> 
+      <% for (caisse of caisses){%>
+        <% for (withdraw of caisse.withdraws){%>
       <tr>
-        <th scope="row" scope="row"><%= i%> <% i=i+1; %></th>
-
-        <td scope="row"><%= casee.reference%></td>
-        <td scope="row"><%= casee.user.fullname%></td>
-        <td scope="row">
-          <%= casee.pack.title%> / <%= casee.pack.period%> <%=
-          casee.pack.unite%>
+        <th scope="row" class="data"><%= i%> <% i=i+1; %></th>
+        <td scope="row" class="data"><%= caisse.reference%></td>
+        <td scope="row" class="data"><%= caisse.pack.title%> / <%= caisse.pack.period%> <%=caisse.pack.unite%></td>
+        <td scope="row" class="data"><%= caisse.user.fullname%></td>
+        <td scope="row" class="data"><%= caisse.initAmount.toLocaleString('de-DE', { minimumFractionDigits: 2 })%> دج</td>
+        <td scope="row" class="data">
+          <%= moment(withdraw.date).format("YYYY-MM-DD")%>
         </td>
-        <td scope="row"><%= casee.initAmount.toLocaleString('de-DE', { minimumFractionDigits: 2 })%> دج</td>
-        <td scope="row"><%= moment(casee.startDate).format("YYYY-MM-DD")%></td>
-        <td scope="row"><%= moment(casee.endDate).format("YYYY-MM-DD")%></td>
-        <td scope="row">
-          <div
-            class="progress border border-tealdeer text-white bg-poseidon"
-            style="
-              font-size: 18px;
-              font-weight: bold;
-              height: 31px;
-              max-width: auto;
-              margin: auto;
-            "
-          >
-            <div
-              class="progress-bar bg-desertSand"
-              role="progressbar"
-              style="width: '<%= casee.daysPersent %>'"
-              aria-valuenow="25"
-              aria-valuemin="0"
-              aria-valuemax="<%= casee.nbrDays%>"
-            >
-              <%= casee.pastDays%>
-            </div>
-            <div class="align-self-center justify-content-center flex-fill">
-             
-              <%= casee.restDays%>
-            </div>
-          </div>
+        <td scope="row" class="data">
+          <%=withdraw.amount %>
         </td>
-        <% if (casee.state==="Active" ){%>
-        <td scope="row">
-          <div class="rounded-3 bg-success progress-bar-striped text-white">
-            نشطة
-          </div>
+        <td scope="row" class="data">
+          <%= withdraw.state %>
         </td>
-
-        <%}else{%>
-        <td scope="row">
-          <div class="rounded-3 bg-danger progress-bar-striped text-white">
-            منتهية
-          </div>
+        <td scope="row" class="data">
+          <%= withdraw.description %>
         </td>
-        <%}%>
-
-        <td><%- include("./delete") %></td>
+        <td>delete</td>
       </tr>
-      <%}%>
+      <%}}%>
     </tbody>
   </table>
 </div>

@@ -31,18 +31,26 @@
     <tbody id="tablebody">
       <% var i=1 %> <% for (casee of casees){%>
       <tr>
-        <th scope="row" scope="row"><%= i%> <% i=i+1; %></th>
+        <th scope="row" scope="row"  class="clickable"
+        onclick="window.location='/withdraw/<%=casee.id%>'"><%= i%> <% i=i+1; %></th>
 
-        <td scope="row"><%= casee.reference%></td>
-        <td scope="row"><%= casee.user.fullname%></td>
-        <td scope="row">
+        <td scope="row"  class="clickable"
+        onclick="window.location='/withdraw/<%=casee.id%>'"><%= casee.reference%></td>
+        <td scope="row"  class="clickable"
+        onclick="window.location='/withdraw/<%=casee.id%>'"><%= casee.user.fullname%></td>
+        <td scope="row"  class="clickable"
+        onclick="window.location='/withdraw/<%=casee.id%>'">
           <%= casee.pack.title%> / <%= casee.pack.period%> <%=
           casee.pack.unite%>
         </td>
-        <td scope="row"><%= casee.initAmount.toLocaleString('de-DE', { minimumFractionDigits: 2 })%> دج</td>
-        <td scope="row"><%= moment(casee.startDate).format("YYYY-MM-DD")%></td>
-        <td scope="row"><%= moment(casee.endDate).format("YYYY-MM-DD")%></td>
-        <td scope="row">
+        <td scope="row"  class="clickable"
+        onclick="window.location='/withdraw/<%=casee.id%>'"><%= casee.initAmount.toLocaleString('de-DE', { minimumFractionDigits: 2 })%> دج</td>
+        <td scope="row"  class="clickable"
+        onclick="window.location='/withdraw/<%=casee.id%>'"><%= moment(casee.startDate).format("YYYY-MM-DD")%></td>
+        <td scope="row"  class="clickable"
+        onclick="window.location='/withdraw/<%=casee.id%>'"><%= moment(casee.endDate).format("YYYY-MM-DD")%></td>
+        <td scope="row"  class="clickable"
+        onclick="window.location='/withdraw/<%=casee.id%>'">
           <div
             class="progress border border-tealdeer text-white bg-poseidon"
             style="
@@ -68,16 +76,18 @@
               <%= casee.restDays%>
             </div>
           </div>
-        </td>
+        </td >
         <% if (casee.state==="Active" ){%>
-        <td scope="row">
+        <td scope="row"  class="clickable"
+        onclick="window.location='/withdraw/<%=casee.id%>'">
           <div class="rounded-3 bg-success progress-bar-striped text-white">
             نشطة
           </div>
         </td>
 
         <%}else{%>
-        <td scope="row">
+        <td scope="row"  class="clickable"
+        onclick="window.location='/withdraw/<%=casee.id%>'">
           <div class="rounded-3 bg-danger progress-bar-striped text-white">
             منتهية
           </div>

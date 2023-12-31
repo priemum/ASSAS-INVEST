@@ -4,38 +4,34 @@ const Case = require("../models/case");
 const Pack = require("../models/pack");
 const User = require("../models/user");
 
-module.exports.caseList = async (req, res) => {
-  const casees = await Case.find({}).populate(["user", "pack"]);
-  res.render("case/index", { casees, moment });
+module.exports.withdrawList = async (req, res) => {
+  const caisses = await Case.find({}).populate(["user", "pack"]);
+  res.render("withdraw/index", { caisses, moment });
 };
-module.exports.createCase = async (req, res) => {
-  let { casee } = req.body;
-  const packchosen = await Pack.findById(casee.pack);
+module.exports.createWithdraw = async (req, res) => {
+  let { withdraw } = req.body;
 
-  if (packchosen.unite === "شهر") {
-    endDate = moment(casee.startDate).add(packchosen.period, "months").format("YYYY-MM-DD");
-  } else if (packchosen.unite === "أسبوع") {
-    endDate = moment(casee.startDate).add(packchosen.period, "weeks").format("YYYY-MM-DD");
-  } else {
-    endDate = moment(casee.startDate).add(packchosen.period, "days").format("YYYY-MM-DD");
-  }
+  const newWithdraw = await Case.findByIdAndUpdate(
+    withdraw.caseId,
+    {
+      $push: {
+        withdraws: {
+          date: withdraw.date,
+          amount: withdraw.amount,
+          description: withdraw.description,
+        },
+      },
+    },
+    { new: true }
+  );
 
-  const newCase = new Case({
-    reference: casee.reference,
-    user: casee.user,
-    pack: casee.pack,
-    initAmount: casee.initAmount,
-    description: casee.description,
-    startDate: casee.startDate,
-    endDate: endDate,
-  });
-
-  await newCase.save();
-  res.redirect("/case");
+  const redirectUrl = `back`;
+  req.flash("success", "تم السحب بنجاح");
+  res.redirect("/withdraw/" + withdraw.caseId);
 };
 module.exports.showCreationForm = async (req, res) => {
-const casees = await Case.find({}).populate(["user", "pack"]);
-  res.render("withdraw/new", { casees ,moment });
+  const caisse = await Case.find({}).populate(["user", "pack"]);
+  res.render("withdraw/new", { caisse, moment });
 };
 module.exports.showUpdateForm = async (req, res) => {
   const { id } = req.params;
@@ -53,19 +49,28 @@ module.exports.showUpdateForm = async (req, res) => {
 module.exports.showCase = async (req, res) => {
   res.send("Show Case");
 };
-module.exports.showUsersCase = async (req, res) => {
-  // const users = await Case.find({}).populate({ path: "user" });
-  const invests = await Case.find({}).populate(["user", "packname"]);
-  // res.send(invests);
+module.exports.showCaseWithdraws = async (req, res) => {
+  // get the Case id from the Cases table
+  const { id } = req.params;
+  // find the Case in the database
 
-  res.render("case/usersInvest", { invests, moment });
+  const caisse = await Case.findById(id).populate(["user", "pack"]);
+  // send it to the client
+
+  res.render("withdraw/show", { caisse, moment });
 };
 module.exports.updateCase = async (req, res) => {
   res.send("Update Case");
 };
-module.exports.deleteCase = async (req, res) => {
-  const { id } = req.params;
-  await Case.findByIdAndDelete(id);
-  req.flash("success", "تم الحذف بنجاح");
-  res.redirect("/case");
+module.exports.deleteWithdraw = async (req, res) => {
+  const { idCase, idWithdraw } = req.params;
+
+  const casee = await Case.findByIdAndUpdate(
+    idCase,
+    { $pull: { withdraws: { _id: idWithdraw } } },
+    { new: true }
+  );
+
+  req.flash("success", "تم المسح بنجاح");
+  res.redirect(`/withdraw/${idCase}`);
 };

@@ -2,7 +2,7 @@
   type="button"
   class="btn btn-outline-lightCoral bg-gradient px-2 py-1"
   data-bs-toggle="modal"
-  data-bs-target="#dcasee-<%= casee.id %>"
+  data-bs-target="#dcasee-<%= caisse.id %>"
 >
   <i class="bi bi-trash-fill"></i>
 </button>
@@ -10,7 +10,7 @@
 <!-- Modal -->
 <div
   class="modal fade"
-  id="dcasee-<%= casee.id %>"
+  id="dcasee-<%= caisse.id %>"
   data-bs-keyboard="true"
   tabindex="-1"
   aria-labelledby="staticBackdropLabel"
@@ -20,7 +20,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="staticBackdropLabel">
-        حذف <%=casee.user.fullname %>
+        حذف <%=caisse.user.fullname %>
         </h5>
 
         <button
@@ -45,7 +45,7 @@
         <form
           class=""
           id="delete-form"
-          action="/case/<%=casee.id%>/?_method=DELETE"
+          action="/case/<%=caisse.id%>/?_method=DELETE"
           method="POST"
         >
           <div class="modal-footer mt-4">

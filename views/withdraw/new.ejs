@@ -9,24 +9,24 @@
     <form class="row g-3 m-2 needs-validation" action="/withdraw" method="POST">
       <div class="form-floating col-12 mb-2">
         <select
-          id="user"
-          name="withdraw[user]"
+          id="caseId"
+          name="withdraw[caseId]"
           class="form-select border border-success"
         >
-          <option selected disabled value="">المستثمر</option>
-          <% for (casee of casees){%>
+          <option selected disabled value="">رقم المرجع</option>
+          <% for (casee of caisse){%>
           <option class="option" value="<%= casee.id%>">
             <%= casee.reference%> <%= casee.user.fullname%> <%=
             casee.initAmount%>
           </option>
           <%}%>
         </select>
-        <label for="user" class="form-label">المستثمر</label>
+        <label for="caseId" class="form-label">رقم المرجع</label>
         <div class="valid-feedback">صحيح</div>
       </div>
       <div class="form-floating mb-2 col-6">
         <input class="form-control border border-success" type="date"
-        id="startDate" name="withdraw[withdrawDate]" placeholder=""
+        id="startDate" name="withdraw[date]" placeholder=""
         value="<%=moment().format("YYYY-MM-DD")%>" required />
         <label for="startDate" class="form-labelfs-6">تاريخ السحب:</label>
         <div class="valid-feedback">صحيح</div>

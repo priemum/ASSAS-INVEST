@@ -7,6 +7,12 @@ const Schema = mongoose.Schema;
     thier state(active, inactive...) and their time left
   
 */
+const opts = {
+  toJSON: {
+    virtuals: true,
+  },
+};
+
 const Case = new Schema({
   reference: {
     // an id used to uniquely identify the investment used in the contract
@@ -32,7 +38,7 @@ const Case = new Schema({
   state: {
     //value = active, end
     type: String,
-    default: "Active",
+    default: "نشطة",
   },
   startDate: {
     //we get the timeleft
@@ -52,14 +58,20 @@ const Case = new Schema({
         type: Number,
         default: 0,
       },
+      description: {
+       
+        type: String,
+        default: "لاشيء",
+      },
       state: {
         // state of the withdraw accepted, pending, or rejected
         type: String,
-        default: "Pending",
+        default: "قيد الإنتظار",
       },
     },
   ],
-});
+  
+},opts);
 Case.virtual("nbrDays").get(function () {
   return moment(this.endDate).diff(this.startDate, "days");
 });
@@ -71,5 +83,14 @@ Case.virtual("restDays").get(function () {
 });
 Case.virtual("daysPersent").get(function () {
   return (this.pastDays * 100) / this.nbrDays;
+});
+
+Case.virtual("restCase").get(function () {
+ const restCase = this.initAmount - this.withdraws.reduce((acc, currentvalue)=>acc + currentvalue.amount,0);
+  return restCase;
+});
+Case.virtual("totalWithdraw").get(function () {
+ const totalWithdraw = this.withdraws.reduce((acc, currentvalue)=>acc + currentvalue.amount,0);
+  return totalWithdraw;
 });
 module.exports = mongoose.model("Case", Case);

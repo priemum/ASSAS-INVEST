@@ -1,0 +1,106 @@
+<% layout('layouts/boilerplate')%>
+
+<div class="col m-auto">
+    <div class="container-fluid">
+
+        <div class="  bg-light rounded-5 px-2 mx-5 my-2">
+
+            <div class="d-flex">
+                <div class="col d-flex m-auto">
+                    <h2>
+                        <%=caisse.user.fullname.toUpperCase() %>
+
+                    </h2>
+                    <div class="ms-2">
+                      
+                      <%- include("./newmodel",{caisse}) %>
+                      <%- include("../case/delete") %>
+                       <!-- edit
+                        delete -->
+                    </div>
+                    </div>
+                
+                <div class="col-2 mt-2">
+                    
+                    <p>رقم المرجع:</p>
+                    <p>اسم الباقة:</p>
+                    <p>المبلغ</p>
+                    <p>تاريخ بداية الاستثمار:</p>
+                    <p>المدة:</p>
+                    <p>عدد الأيام المتبقية:</p>
+                    <p> مجموع السحوبات:</p>
+                    <p>الحالة:</p>
+                    
+                </div>
+                <div class="col-2 mt-2">
+                    <p><%=caisse.reference%></p>
+                    <p><%=caisse.pack.title%></p>
+                    <p><%=caisse.initAmount.toLocaleString('de-DE', { minimumFractionDigits: 2 })%> دج</p>
+                    <p><%= moment(caisse.startDate).format("YYYY-MM-DD")%></p>
+                    <p><%=caisse.pack.period%> <%=caisse.pack.unite%></p>
+                    <p><%=caisse.restDays%> يوم</p>
+                    <p><%=caisse.totalWithdraw.toLocaleString('de-DE', { minimumFractionDigits: 2 })%> دج</p>
+                    <p><%=caisse.state%></p>
+                    
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- --------------------------------------------------------------- -->
+
+
+<form class="d-flex shadow-sm mx-5" >
+  <input
+    id="search"
+    class="form-control mb-2"
+    type="search"
+    placeholder="خانة البحث"
+    aria-label="Search"
+  />
+</form>
+<div class="table-responsive shadow-sm mx-5">
+  <table
+    class="table table-striped table-hover table-borderless text-center sortable"
+  >
+    <thead class="table-greenSea">
+      <tr>
+        <th scope="col">الرقم</th>
+        <th scope="col">تاريخ السحب</th>
+        <th scope="col">المبلغ</th>
+        <th scope="col">الحالة</th>
+        <th scope="col"> الوصف</th>
+        <th scope="col"> العمليات</th>
+
+      </tr>
+    </thead>
+    <tbody id="tablebody">
+      <% var i=1 %> 
+      <% for (withdraw of caisse.withdraws){%>
+      <tr>
+        <th 
+          
+          scope="row" scope="row"><%= i%> <% i=i+1; %></th>
+        <td
+          
+          scope="row" class="data"><%= moment(withdraw.date).format("YYYY-MM-DD")%></td>
+        <td
+          
+          scope="row"class="data"><%=withdraw.amount %></td>
+          <td
+          
+          scope="row" class="data"><%= withdraw.state %></td>
+          <td
+          
+          scope="row" class="data"><%= withdraw.description %></td>
+       
+       
+        <td>
+          <%- include("./delete") %>
+        </td>
+      </tr>
+      <%}%>
+    </tbody>
+  </table>
+</div>
