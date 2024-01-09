@@ -34,6 +34,11 @@ const Case = new Schema({
     type: Number,
     required: true,
   },
+  profit: {
+    //profits at the end of the case
+    type: Number,
+    
+  },
   description: String,
   state: {
     //value = active, end
@@ -49,6 +54,11 @@ const Case = new Schema({
 
   withdraws: [
     {
+      reference: {
+        // an id used to uniquely identify the withdraw
+        type: String,
+        required: true,
+      },
       // withdraw happends in the investment
       date: {
         type: Date,
@@ -86,7 +96,7 @@ Case.virtual("daysPersent").get(function () {
 });
 
 Case.virtual("restCase").get(function () {
- const restCase = this.initAmount - this.withdraws.reduce((acc, currentvalue)=>acc + currentvalue.amount,0);
+ const restCase = (this.initAmount+ this.profit)- this.withdraws.reduce((acc, currentvalue)=>acc + currentvalue.amount,0);
   return restCase;
 });
 Case.virtual("totalWithdraw").get(function () {

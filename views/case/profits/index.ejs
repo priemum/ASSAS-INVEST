@@ -1,5 +1,5 @@
 <% layout('layouts/boilerplate')%>
-<h1 class="display-6 text-success text-center mb-3">سجل باقات المستثمرين</h1>
+<h1 class="display-6 text-success text-center mb-3">إعلان الأرباح</h1>
 <form class="d-flex shadow-sm mx-5">
   <input
     id="search"
@@ -31,6 +31,7 @@
     </thead>
     <tbody id="tablebody">
       <% var i=1 %> <% for (caisse of caisses){%>
+        <% if (caisse.state === "قيد الإنتظار"){ %>
       <tr>
         <th scope="row" scope="row"  class="clickable"
         onclick="window.location='/withdraw/<%=caisse.id%>'"><%= i%> <% i=i+1; %></th>
@@ -80,33 +81,21 @@
             </div>
           </div>
         </td >
-        <% if (caisse.state==="نشطة" ){%>
-          <td scope="row"  class="clickable"
-          onclick="window.location='/withdraw/<%=caisse.id%>'">
-            <div class="rounded-3 bg-success progress-bar-striped text-white">
-              نشطة
-            </div>
-          </td>
-  
-          <%}else if (caisse.state==="قيد الإنتظار" ){%>
-          <td scope="row"  class="clickable"
-          onclick="window.location='/withdraw/<%=caisse.id%>'">
-            <div class="rounded-3 bg-warning progress-bar-striped text-white">
-              قيد الإنتظار
-            </div>
-          </td>
-          <%}else{%>
-            <td scope="row"  class="clickable"
-          onclick="window.location='/withdraw/<%=caisse.id%>'">
-            <div class="rounded-3 bg-danger progress-bar-striped text-white">
-              منتهية
-            </div>
-          </td>
-          <% } %>
-
-        <td><%- include("./delete") %></td>
+       
+        <td scope="row"  class="clickable"
+        onclick="window.location='/withdraw/<%=caisse.id%>'">
+          <div class="rounded-3 bg-warning progress-bar-striped text-white">
+            قيد الإنتظار
+          </div>
+        </td>
+        
+    
+        <td>
+          <%- include("./newmodel") %>
+          <%- include("../delete") %>
+        </td>
       </tr>
-      <%}%>
+      <%}}%>
     </tbody>
   </table>
 </div>

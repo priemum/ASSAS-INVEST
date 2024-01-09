@@ -22,12 +22,13 @@
                 
                 <div class="col-2 mt-2">
                     
-                    <p>رقم المرجع:</p>
+                    <p>رقم مرجع الباقة:</p>
                     <p>اسم الباقة:</p>
-                    <p>المبلغ</p>
+                    <p>مبلغ الاستثمار</p>
                     <p>تاريخ بداية الاستثمار:</p>
                     <p>المدة:</p>
                     <p>عدد الأيام المتبقية:</p>
+                    <p>العائدات:</p>
                     <p> مجموع السحوبات:</p>
                     <p>الحالة:</p>
                     
@@ -40,6 +41,7 @@
                     <p><%=caisse.pack.period%> <%=caisse.pack.unite%></p>
                     <p><%=caisse.restDays%> يوم</p>
                     <p><%=caisse.totalWithdraw.toLocaleString('de-DE', { minimumFractionDigits: 2 })%> دج</p>
+                    <p><%= caisse.profit.toLocaleString('de-DE', { minimumFractionDigits: 2 }) %> دج</p>
                     <p><%=caisse.state%></p>
                     
                     
@@ -67,6 +69,7 @@
     <thead class="table-greenSea">
       <tr>
         <th scope="col">الرقم</th>
+        <th scope="col">رقم مرجع السحب</th>
         <th scope="col">تاريخ السحب</th>
         <th scope="col">المبلغ</th>
         <th scope="col">الحالة</th>
@@ -82,15 +85,38 @@
         <th 
           
           scope="row" scope="row"><%= i%> <% i=i+1; %></th>
+          <td
+          
+          scope="row"class="data"><%=withdraw.reference %></td>
         <td
           
           scope="row" class="data"><%= moment(withdraw.date).format("YYYY-MM-DD")%></td>
         <td
           
           scope="row"class="data"><%=withdraw.amount %></td>
-          <td
-          
-          scope="row" class="data"><%= withdraw.state %></td>
+          <% if (withdraw.state==="تم الدفع" ){%>
+            <td scope="row"  class="clickable"
+            onclick="window.location='/withdraw/<%=caisse.id%>'">
+              <div class="rounded-3 bg-success progress-bar-striped text-white">
+                تم الدفع
+              </div>
+            </td>
+    
+            <%}else if (withdraw.state==="قيد الإنتظار" ){%>
+            <td scope="row"  class="clickable"
+            onclick="window.location='/withdraw/<%=caisse.id%>'">
+              <div class="rounded-3 bg-warning progress-bar-striped text-white">
+                قيد الإنتظار
+              </div>
+            </td>
+            <%}else{%>
+              <td scope="row"  class="clickable"
+            onclick="window.location='/withdraw/<%=caisse.id%>'">
+              <div class="rounded-3 bg-danger progress-bar-striped text-white">
+                مرفوض
+              </div>
+            </td>
+            <% } %>
           <td
           
           scope="row" class="data"><%= withdraw.description %></td>

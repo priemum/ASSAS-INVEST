@@ -10,12 +10,16 @@ module.exports.withdrawList = async (req, res) => {
 };
 module.exports.createWithdraw = async (req, res) => {
   let { withdraw } = req.body;
+  var ref_id = crypto.randomBytes(4).toString("hex").toUpperCase();
+  const year = moment().format('YY');
+  ref_id = ref_id + year;
 
   const newWithdraw = await Case.findByIdAndUpdate(
     withdraw.caseId,
     {
       $push: {
         withdraws: {
+          reference: ref_id,
           date: withdraw.date,
           amount: withdraw.amount,
           description: withdraw.description,

@@ -1,28 +1,31 @@
 <% layout('layouts/boilerplate')%>
-<div class="container-fluid mt-4">
-  <div class="mb-3">
-    <h3 class="display-6 text-center text-success">سجل الإعلانات</h3>
-    <div class="d-flex mb-2"><%- include("./new")%></div>
-  </div>
-<div class="row row-cols-1 row-cols-md-3 mb-3">
-    <% for (announcement of announcements){%>
+  <div class="container-fluid mt-4">
+    <div class="mb-3">
+      <h3 class="display-6 text-center text-success">سجل الإعلانات</h3>
+      <div class="d-flex mb-2"><%- include("./new")%></div>
+    </div>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 mb-3">
+      <% for (announcement of announcements){%>
 
-    <div class="col-12 mb-3">
-      <div class="card h-100">
-        <img src="/assets/<%= announcement.announcementPicture %>" class="card-img-top"
-          alt="<%= announcement.announcementPicture %>" width="200" height="300"/>
-        <div class="card-body">
-          <h5 class="card-title text-center text-tealdeer fs-4"> <%= announcement.title %> </h5>
-          <p class="card-text">
-            <%= announcement.resume %>
-          </p>
-          <a href="/announcement/<%= announcement.id %>" class="p-0 m-0 stretched-link"></a>
+        <div class="col-12 mb-3">
+          <div class="card h-100">
+            <img src="/assets/<%= announcement.announcementPicture %>" class="card-img-top"
+              alt="<%= announcement.announcementPicture %>" width="200" height="300" />
+            <div class="card-body">
+              <h5 class="card-title text-center text-tealdeer fs-4">
+                <%= announcement.title %>
+              </h5>
+              <p class="card-text">
+                <%= announcement.resume %>
+              </p>
+              <a href="/announcement/<%= announcement.id %>" class="p-0 m-0 stretched-link"></a>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted"> تم إنشاءه يوم: <%=moment(announcement.creationDate).format("YYYY-MM-DD")%>
+              </small>
+            </div>
+          </div>
         </div>
-        <div class="card-footer">
-          <small class="text-muted"> تم إنشاءه يوم: <%=moment(announcement.creationDate).format("YYYY-MM-DD")%> </small>
-        </div>
-      </div>
+        <% }%>
+    </div>
   </div>
-  <% }%>
-</div>
-</div>

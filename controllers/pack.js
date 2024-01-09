@@ -5,7 +5,9 @@ module.exports.showCreationForm = (req, res) => {
 module.exports.createPack = async (req, res) => {
   const { pack } = req.body;
   if (pack.state === "on"){
-    pack.state = true;
+    pack.state = "مفعلة";
+  }else{
+    pack.state = "غير مفعلة";
   }
 
   const newPacks = new Pack({ ...pack });

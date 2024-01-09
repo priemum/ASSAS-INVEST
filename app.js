@@ -35,6 +35,7 @@ const userRoutes = require("./routes/user");
 const announcementRoutes = require("./routes/announcement");
 const packRoutes = require("./routes/pack");
 const caseRoutes = require("./routes/case");
+const profitsRoutes = require("./routes/profits");
 const withdrawRoutes = require("./routes/withdraw");
 const User = require("./models/user");
 const Announcement = require("./models/announcement");
@@ -105,6 +106,7 @@ app.use("/case", caseRoutes);
 app.use("/announcement", announcementRoutes);
 app.use("/pack", packRoutes);
 app.use("/withdraw", withdrawRoutes);
+app.use("/profits", profitsRoutes);
 app.use("/user", userRoutes);
 // app.use("/user/:id/transaction", userRoutes);
 // === Home Page ===
@@ -125,6 +127,6 @@ app.listen(port, () => {
   console.log("===================================================");
   const job = schedule.scheduleJob("0 0 0 * * *", function () {
     console.log("Check user cases state !!!");
-    Case.updateMany({ state: { $ne: "End" } }, {state:"End"});
+    Case.updateMany({ restDays: 0 }, {state:"قيد الإنتظار"});
   });
 });

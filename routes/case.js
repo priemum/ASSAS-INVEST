@@ -4,7 +4,7 @@ const catchAsync = require("../utils/catchAsync");
 const { isLoggedIn, isAdmin } = require("../middleware/middleware");
 const {
   caseList,
-  showUsersCase,
+  showUserCases,
   createCase,
   showCreationForm,
   showUpdateForm,
@@ -19,8 +19,9 @@ router
 router.route("/new").get(isLoggedIn, isAdmin, catchAsync(showCreationForm));
 router
   .route("/:id")
-  .get(isLoggedIn, isAdmin, catchAsync(showCase))
+  .get(isLoggedIn, catchAsync(showCase))
   .put(isLoggedIn, isAdmin, catchAsync(updateCase))
   .delete(isLoggedIn, isAdmin, catchAsync(deleteCase));
+  router.route("/:id/cases").get(isLoggedIn, catchAsync(showUserCases));
 router.route("/:id/edit").get(isLoggedIn, isAdmin, catchAsync(showUpdateForm));
 module.exports = router;

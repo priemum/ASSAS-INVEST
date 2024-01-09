@@ -13,8 +13,8 @@ const Pack = new Schema({
   unite: String,
   state: {
     //show or hide the pack to the users
-    type: Boolean, //
-    default: false,
+    type: String, //
+    default: "غير مفعلة",
   },
   creationDate: {
     type: Date,

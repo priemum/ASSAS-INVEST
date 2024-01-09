@@ -66,7 +66,7 @@
           class="form-select border border-success"
         >
           <option selected disabled value="">الباقة</option>
-          <% for (pack of packs){%> <% if (pack.state===true){%>
+          <% for (pack of packs){%> <% if (pack.state==="مفعلة"){%>
           <option class="option" value="<%= pack.id%>">
             <%= pack.title%> <%= pack.period%> <%= pack.unite%>
           </option>

@@ -17,12 +17,14 @@
     <thead class="table-greenSea">
       <tr>
         <th scope="col">الرقم</th>
-        <th scope="col">رقم المرجع</th>
+        <th scope="col">رقم مرجع الباقة</th>
+        <th scope="col">رقم مرجع السحب</th>
         <th scope="col">معلومات الباقة</th>
         <th scope="col">الاسم الكامل</th>
         <th scope="col">المبلغ الابتدائي</th>
         <th scope="col">تاريخ السحب</th>
         <th scope="col">المبلغ</th>
+        <th scope="col">العائدات</th>
         <th scope="col">حالة السحب</th>
         <th scope="col">الوصف</th>
         <th scope="col">العمليات</th>
@@ -35,9 +37,11 @@
       <tr>
         <th scope="row" class="data"><%= i%> <% i=i+1; %></th>
         <td scope="row" class="data"><%= caisse.reference%></td>
+        <td scope="row" class="data"><%= withdraw.reference%></td>
         <td scope="row" class="data"><%= caisse.pack.title%> / <%= caisse.pack.period%> <%=caisse.pack.unite%></td>
         <td scope="row" class="data"><%= caisse.user.fullname%></td>
         <td scope="row" class="data"><%= caisse.initAmount.toLocaleString('de-DE', { minimumFractionDigits: 2 })%> دج</td>
+        <td scope="row" class="data"><%= caisse.profit.toLocaleString('de-DE', { minimumFractionDigits: 2 }) %> دج</td>
         <td scope="row" class="data">
           <%= moment(withdraw.date).format("YYYY-MM-DD")%>
         </td>

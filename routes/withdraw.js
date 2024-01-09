@@ -20,7 +20,7 @@ router
 router.route("/new").get(isLoggedIn, isAdmin, catchAsync(showCreationForm));
 router
   .route("/:id")
-  .get(isLoggedIn, isAdmin, catchAsync(showCaseWithdraws));
+  .get(isLoggedIn, catchAsync(showCaseWithdraws));
   router.route("/:idCase/:idWithdraw")
   .put(isLoggedIn, isAdmin, catchAsync(updateWithdraw))
   .delete(isLoggedIn, isAdmin, catchAsync(deleteWithdraw));

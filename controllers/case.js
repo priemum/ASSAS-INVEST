@@ -5,8 +5,12 @@ const Pack = require("../models/pack");
 const User = require("../models/user");
 
 module.exports.caseList = async (req, res) => {
-  const casees = await Case.find({}).populate(["user", "pack"]);
-  res.render("case/index", { casees, moment });
+  const caisses = await Case.find({}).populate(["user", "pack"]);
+  res.render("case/index", { caisses, moment });
+};
+module.exports.profitsList = async (req, res) => {
+  const caisses = await Case.find({}).populate(["user", "pack"]);
+  res.render("case/profits/index", { caisses, moment });
 };
 module.exports.createCase = async (req, res) => {
   let { casee } = req.body;
@@ -28,10 +32,40 @@ module.exports.createCase = async (req, res) => {
     description: casee.description,
     startDate: casee.startDate,
     endDate: endDate,
+    profit:0,
   });
 
   await newCase.save();
   res.redirect("/case");
+};
+module.exports.createProfits = async (req, res) => {
+  let { caisse } = req.body;
+  const chosenCaisse = await Case.findById(caisse.profitsId);
+if (chosenCaisse.restCase === 0){
+  const newProfits = await Case.findByIdAndUpdate(
+    caisse.profitsId,
+    {
+  
+        profit:caisse.amount,
+        state:"منتهية"
+    
+    },
+    { new: true }
+  );
+}else{
+  const newProfits = await Case.findByIdAndUpdate(
+    caisse.profitsId,
+    {
+  
+        profit:caisse.amount
+    
+    },
+    { new: true }
+  );
+}
+  
+
+  res.redirect("/profits");
 };
 module.exports.showCreationForm = async (req, res) => {
   const packs = await Pack.find({});
@@ -56,7 +90,14 @@ module.exports.showUpdateForm = async (req, res) => {
   });
 };
 module.exports.showCase = async (req, res) => {
-  res.send("Show Case");
+  const { id } = req.params;
+  const caisses = await Case.find({user: id}).populate(["pack"]);
+  res.render("case/show", { caisses, moment });
+};
+module.exports.showUserCases = async (req, res) => {
+  const { id } = req.params;
+  const caisses = await Case.find({user: id}).populate(["pack"]);
+  res.render("case/indexuser", { caisses, moment });
 };
 module.exports.showUsersCase = async (req, res) => {
   // const users = await Case.find({}).populate({ path: "user" });
