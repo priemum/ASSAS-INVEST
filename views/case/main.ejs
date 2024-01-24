@@ -1,0 +1,44 @@
+<% layout('layouts/boilerplate')%>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-xl-3">
+
+            <div class="card main-card bg-c-blue order-card">
+                <div class="card-block">
+                    <h4 class="mb-4">الرصيد المستثمر الحالي</h4>
+                    <h2 class=""><span class="me-2"><%= caisse.initAmount.toLocaleString('de-DE', { minimumFractionDigits: 2 })%> دج</span><i class="bi bi-cash-coin fs-2"></i></h2>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 col-xl-3">
+
+            <div class="card main-card bg-c-green order-card">
+                <div class="card-block">
+                    <h4 class="mb-4">الرصيد المستثمر الحالي</h4>
+                    <h2 class=""><span class="me-2"><%= caisse.initAmount.toLocaleString('de-DE', { minimumFractionDigits: 2 })%> دج</span><i class="bi bi-cash-coin fs-2"></i></h2>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 col-xl-3">
+
+            <div class="card main-card bg-c-yellow order-card">
+                <div class="card-block">
+                    <h4 class="mb-4">اجمالي الرصيدالمستثمر</h4>
+                    <h2 class=""><span class="me-2"><%= caisse.initAmount.toLocaleString('de-DE', { minimumFractionDigits: 2 })%> دج</span><i class="bi bi-cash-coin fs-2"></i></h2>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 col-xl-3">
+
+            <div class="card main-card bg-c-pink order-card">
+                <div class="card-block">
+                    <h4 class="mb-4">مجموع السحوبات</h4>
+                    <h2 class=""><span class="me-2"><%= caisse.initAmount.toLocaleString('de-DE', { minimumFractionDigits: 2 })%> دج</span><i class="bi bi-cash-coin fs-2"></i></h2>
+                </div>
+            </div>
+        </div>
+	</div>
+</div>

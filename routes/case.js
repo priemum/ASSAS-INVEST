@@ -8,6 +8,7 @@ const {
   createCase,
   showCreationForm,
   showUpdateForm,
+  showUserMain,
   showCase,
   updateCase,
   deleteCase,
@@ -24,4 +25,5 @@ router
   .delete(isLoggedIn, isAdmin, catchAsync(deleteCase));
   router.route("/:id/cases").get(isLoggedIn, catchAsync(showUserCases));
 router.route("/:id/edit").get(isLoggedIn, isAdmin, catchAsync(showUpdateForm));
+router.route("/:id/main").get(isLoggedIn, catchAsync(showUserMain));
 module.exports = router;

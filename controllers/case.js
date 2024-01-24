@@ -8,6 +8,11 @@ module.exports.caseList = async (req, res) => {
   const caisses = await Case.find({}).populate(["user", "pack"]);
   res.render("case/index", { caisses, moment });
 };
+module.exports.showUserMain = async (req, res) => {
+  const { id } = req.params;
+  const caisses = await Case.find({user: id}).populate(["pack"]);
+  res.render("case/main", { caisses, moment });
+};
 module.exports.profitsList = async (req, res) => {
   const caisses = await Case.find({}).populate(["user", "pack"]);
   res.render("case/profits/index", { caisses, moment });

@@ -86,21 +86,33 @@ Case.virtual("nbrDays").get(function () {
   return moment(this.endDate).diff(this.startDate, "days");
 });
 Case.virtual("pastDays").get(function () {
-  return moment().diff(this.startDate, "days");
+  const pastdays= moment().diff(this.startDate, "days");
+ 
+  if (pastdays <=this.nbrDays){
+    return pastdays;
+  }else{
+  return this.nbrDays;
+  }
 });
 Case.virtual("restDays").get(function () {
-  return moment(this.endDate).diff(moment(), "days");
+  const restdays = moment(this.endDate).diff(moment(), "days");
+
+  if (restdays >=0){
+    return restdays;
+  }else{
+    return 0;
+  }
 });
 Case.virtual("daysPersent").get(function () {
   return (this.pastDays * 100) / this.nbrDays;
 });
 
 Case.virtual("restCase").get(function () {
- const restCase = (this.initAmount+ this.profit)- this.withdraws.reduce((acc, currentvalue)=>acc + currentvalue.amount,0);
+  const restCase = (this.initAmount+ this.profit)- this.withdraws.reduce((acc, currentvalue)=>acc + currentvalue.amount,0);
   return restCase;
 });
 Case.virtual("totalWithdraw").get(function () {
- const totalWithdraw = this.withdraws.reduce((acc, currentvalue)=>acc + currentvalue.amount,0);
+  const totalWithdraw = this.withdraws.reduce((acc, currentvalue)=>acc + currentvalue.amount,0);
   return totalWithdraw;
 });
 module.exports = mongoose.model("Case", Case);
