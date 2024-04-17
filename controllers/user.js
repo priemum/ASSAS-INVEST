@@ -14,7 +14,7 @@ module.exports.showLoginForm = async (req, res) => {
 // ================== showUsers =============================
 module.exports.showUsers = async (req, res) => {
   const users = await User.find({});
-  res.render("user/index", { users });
+  res.render("user/index", { users,moment });
 };
 // ================== showRegisterForm ============================
 module.exports.showRegisterForm = async (req, res) => {
@@ -54,7 +54,7 @@ module.exports.register = async (req, res) => {
         console.error(err);
         res.redirect("register");
       } else {
-        req.flash("success", "مرحبا بك في منصة أساس");
+        req.flash("success", "تم الإضافة بنجاح");
         res.redirect("/user");
       }
     });
@@ -85,21 +85,13 @@ module.exports.logout = (req, res) => {
 };
 // =============== updateUser ==============================
 module.exports.updateUser = async (req, res) => {
-  const { user, socialMedia } = req.body;
-  //  const currentUser = req.user._id;
-  const newUser = new User({ ...user });
-  newUser.socialMedia = { ...socialMedia };
+  const { user } = req.body;
+  const id = req.query.id;
 
-  const updatedUser = await User.findByIdAndUpdate(
-    { _id: req.user._id },
-    {
-      socialMedia: socialMedia,
-      ...user,
-    },
-    { new: true }
-  );
-  res.redirect(`/user/${updatedUser._id}/profile`);
-  //
+  // res.send(id)
+  const updatedUser =  await User.findByIdAndUpdate(id, { ...user }, { new: true });
+  req.flash("success", "تم التعديل بنجاح");
+  res.redirect("back");
 };
 // =============== deleteUser ==============================
 module.exports.deleteUser = async (req, res) => {

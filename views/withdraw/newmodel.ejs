@@ -38,8 +38,8 @@
               class="form-select border border-success"
             > 
               <option selected class="option" value="<%= caisse.id%>">
-                <%= caisse.reference%> <%= caisse.user.fullname%> <%=
-                caisse.initAmount%>
+                <%= caisse.reference%> / <%= caisse.user.fullname%> / العوائد :<%=
+            caisse.restCase%> دج
               </option>
             
             </select>
@@ -62,6 +62,7 @@
                  max="<%=caisse.restCase%>"
                 name="withdraw[amount]"
                 placeholder="المبلغ"
+                value="<%= caisse.restCase%>"
                 required
               />
               <label for="initAmount" class="form-labelfs-6">المبلغ:</label>

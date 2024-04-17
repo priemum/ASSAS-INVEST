@@ -10,8 +10,9 @@ module.exports.caseList = async (req, res) => {
 };
 module.exports.showUserMain = async (req, res) => {
   const { id } = req.params;
-  const caisses = await Case.find({user: id}).populate(["pack"]);
-  res.render("case/main", { caisses, moment });
+  const caisse = await Case.find({user: id}).populate(["pack"]);
+  
+  res.render("case/main", { caisse, moment });//fix global initamount
 };
 module.exports.profitsList = async (req, res) => {
   const caisses = await Case.find({}).populate(["user", "pack"]);
@@ -112,8 +113,14 @@ module.exports.showUsersCase = async (req, res) => {
   res.render("case/usersInvest", { invests, moment });
 };
 module.exports.updateCase = async (req, res) => {
-  res.send("Update Case");
+  const { id } = req.params;
+  const { caisse } = req.body;
+
+  await Case.findByIdAndUpdate(id, { ...caisse }, { new: true });
+  req.flash("success", "تم التعديل بنجاح");
+  res.redirect("back");
 };
+
 module.exports.deleteCase = async (req, res) => {
   const { id } = req.params;
   await Case.findByIdAndDelete(id);

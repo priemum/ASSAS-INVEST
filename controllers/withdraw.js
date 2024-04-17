@@ -31,11 +31,11 @@ module.exports.createWithdraw = async (req, res) => {
 
   const redirectUrl = `back`;
   req.flash("success", "تم السحب بنجاح");
-  res.redirect("/withdraw/" + withdraw.caseId);
+  res.redirect(redirectUrl);
 };
 module.exports.showCreationForm = async (req, res) => {
-  const caisse = await Case.find({}).populate(["user", "pack"]);
-  res.render("withdraw/new", { caisse, moment });
+  const caisses = await Case.find({}).populate(["user", "pack"]);
+  res.render("withdraw/new", { caisses, moment });
 };
 module.exports.showUpdateForm = async (req, res) => {
   const { id } = req.params;
@@ -63,9 +63,51 @@ module.exports.showCaseWithdraws = async (req, res) => {
 
   res.render("withdraw/show", { caisse, moment });
 };
-module.exports.updateCase = async (req, res) => {
-  res.send("Update Case");
+module.exports.updateWithdraw = async (req, res) => {
+  const { idCase, idWithdraw } = req.params;
+  const { withdraw } = req.body;
+  const {confirmed } = req.query;
+  if (confirmed == 1) {
+    const updatedWithdraw = await Case.findOneAndUpdate(
+      { _id: idCase, "withdraws._id": idWithdraw },
+      {
+        $set: {
+          "withdraws.$.state": "تم الدفع",
+          
+        },
+      },
+      { new: true }
+    );
+  }else if (confirmed == 0) {
+    const updatedWithdraw = await Case.findOneAndUpdate(
+      { _id: idCase, "withdraws._id": idWithdraw },
+      {
+        $set: {
+          "withdraws.$.state": "قيد الإنتظار",
+        },
+      },
+      { new: true }
+    );
+  }else{
+    const updatedWithdraw = await Case.findOneAndUpdate(
+      { _id: idCase, "withdraws._id": idWithdraw },
+      {
+        $set: {
+          "withdraws.$.date": withdraw.date,
+          "withdraws.$.amount": withdraw.amount,
+          "withdraws.$.description": withdraw.description,
+        },
+      },
+      { new: true }
+    );
+  }
+  
+  const redirectUrl = `back`;
+  req.flash("success", "تم تحديث السحب بنجاح");
+  res.redirect(redirectUrl);
+  
 };
+
 module.exports.deleteWithdraw = async (req, res) => {
   const { idCase, idWithdraw } = req.params;
 
@@ -74,7 +116,8 @@ module.exports.deleteWithdraw = async (req, res) => {
     { $pull: { withdraws: { _id: idWithdraw } } },
     { new: true }
   );
-
+const redirectUrl = `back`;
   req.flash("success", "تم المسح بنجاح");
-  res.redirect(`/withdraw/${idCase}`);
+  res.redirect(redirectUrl);
 };
+

@@ -25,6 +25,7 @@ router
   .route("/register")
   .get(isLoggedIn, isAdmin, catchAsync(showRegisterForm))
   .post(isLoggedIn, isAdmin, catchAsync(register));
+  router.route("/:id").put(isLoggedIn, isAdmin, catchAsync(updateUser));
 router
   .route("/login")
   .get(catchAsync(showLoginForm))

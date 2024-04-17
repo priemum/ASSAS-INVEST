@@ -1,5 +1,5 @@
 <% layout('layouts/boilerplate')%>
-<h1 class="display-6 text-success text-center mb-3">سجل باقات المستثمرين</h1>
+<h1 class="display-6 text-success text-center mb-3">سجل سحوبات المستثمرين</h1>
 <form class="d-flex shadow-sm mx-5">
   <input
     id="search"
@@ -21,10 +21,11 @@
         <th scope="col">رقم مرجع السحب</th>
         <th scope="col">معلومات الباقة</th>
         <th scope="col">الاسم الكامل</th>
-        <th scope="col">المبلغ الابتدائي</th>
         <th scope="col">تاريخ السحب</th>
-        <th scope="col">المبلغ</th>
+        <th scope="col">المبلغ الابتدائي</th>
         <th scope="col">العائدات</th>
+        <th scope="col">مبلغ السحب</th>
+        <th scope="col">باقي الحساب</th>
         <th scope="col">حالة السحب</th>
         <th scope="col">الوصف</th>
         <th scope="col">العمليات</th>
@@ -40,21 +41,52 @@
         <td scope="row" class="data"><%= withdraw.reference%></td>
         <td scope="row" class="data"><%= caisse.pack.title%> / <%= caisse.pack.period%> <%=caisse.pack.unite%></td>
         <td scope="row" class="data"><%= caisse.user.fullname%></td>
+        <td scope="row" class="data"><%= moment(withdraw.date).format("YYYY-MM-DD")%></td>
         <td scope="row" class="data"><%= caisse.initAmount.toLocaleString('de-DE', { minimumFractionDigits: 2 })%> دج</td>
         <td scope="row" class="data"><%= caisse.profit.toLocaleString('de-DE', { minimumFractionDigits: 2 }) %> دج</td>
+        
+        
         <td scope="row" class="data">
-          <%= moment(withdraw.date).format("YYYY-MM-DD")%>
+          <%=withdraw.amount.toLocaleString('de-DE', { minimumFractionDigits: 2 }) %> دج %>
         </td>
         <td scope="row" class="data">
-          <%=withdraw.amount %>
-        </td>
-        <td scope="row" class="data">
-          <%= withdraw.state %>
-        </td>
+          <%= caisse.restCase.toLocaleString('de-DE', { minimumFractionDigits: 2 })%> دج
+
+          <% if (withdraw.state==="تم الدفع" ){%>
+            <td scope="row"  class="clickable"
+            onclick="window.location='/withdraw/<%=caisse.id%>'">
+              <div class="rounded-3 bg-success progress-bar-striped text-white">
+                تم الدفع
+              </div>
+            </td>
+    
+            <%}else if (withdraw.state==="قيد الإنتظار" ){%>
+            <td scope="row"  class="clickable"
+            onclick="window.location='/withdraw/<%=caisse.id%>'">
+              <div class="rounded-3 bg-warning progress-bar-striped text-white">
+                قيد الإنتظار
+              </div>
+            </td>
+            <%}else{%>
+              <td scope="row"  class="clickable"
+            onclick="window.location='/withdraw/<%=caisse.id%>'">
+              <div class="rounded-3 bg-danger progress-bar-striped text-white">
+                مرفوض
+              </div>
+            </td>
+            <% } %>
         <td scope="row" class="data">
           <%= withdraw.description %>
         </td>
-        <td>delete</td>
+        <td>
+          <% if (withdraw.state==="تم الدفع") {%>
+            <%- include("./edit") %>
+          <%}else{%>
+          <%- include("./completedwithdraw") %>
+          <%- include("./edit") %>
+          <%- include("./delete") %>
+          <%}%>
+        </td>
       </tr>
       <%}}%>
     </tbody>

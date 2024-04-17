@@ -21,7 +21,8 @@
         <th scope="col">الاسم الكامل</th>
         <th scope="col">الباقة / المدة</th>
         <th scope="col">المبلغ</th>
-        <th scope="col">العائدات</th>
+        <th scope="col"> العائدات الحالية</th>
+        <th scope="col"> العائدات النهائية</th>
         <th scope="col">تاريخ البداية</th>
         <th scope="col">تاريخ النهاية</th>
         <th scope="col">المدة المتبقية</th>
@@ -46,6 +47,8 @@
         </td>
         <td scope="row"  class="clickable"
         onclick="window.location='/withdraw/<%=caisse.id%>'"><%= caisse.initAmount.toLocaleString('de-DE', { minimumFractionDigits: 2 })%> دج</td>
+        <td scope="row"  class="clickable"
+        onclick="window.location='/withdraw/<%=caisse.id%>'"> <%= caisse.actualprofitls.toLocaleString('de-DE', { minimumFractionDigits: 2 }) %> دج</td>
         <td scope="row"  class="clickable"
         onclick="window.location='/withdraw/<%=caisse.id%>'"> <%= caisse.profit.toLocaleString('de-DE', { minimumFractionDigits: 2 }) %> دج</td>
         <td scope="row"  class="clickable"
@@ -103,8 +106,11 @@
             </div>
           </td>
           <% } %>
-
-        <td><%- include("./delete") %></td>
+          
+        <td>
+          <%- include("./edit") %>
+          <%- include("./delete") %>
+        </td>
       </tr>
       <%}%>
     </tbody>

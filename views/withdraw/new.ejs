@@ -14,12 +14,13 @@
           class="form-select border border-success"
         >
           <option selected disabled value="">رقم المرجع</option>
-          <% for (casee of caisse){%>
-          <option class="option" value="<%= casee.id%>">
-            <%= casee.reference%> <%= casee.user.fullname%> <%=
-            casee.initAmount%>
+          <% for (caisse of caisses){%>
+          <% if (caisse.restDays == 0 ){ %>
+          <option class="option" value="<%= caisse.id%>">
+            <%= caisse.reference%> / <%= caisse.user.fullname%> / العوائد :<%=
+            caisse.restCase%> دج
           </option>
-          <%}%>
+          <%}}%>
         </select>
         <label for="caseId" class="form-label">رقم المرجع</label>
         <div class="valid-feedback">صحيح</div>
@@ -37,7 +38,7 @@
           type="number"
           id="Amount"
           min="1"
-           max="<%=casee.initAmount%>"
+           max="<%=caisse.initAmount%>"
           name="withdraw[amount]"
           placeholder=""
           required

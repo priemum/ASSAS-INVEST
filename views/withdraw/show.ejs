@@ -3,7 +3,7 @@
 <div class="col m-auto">
     <div class="container-fluid">
 
-        <div class="  bg-light rounded-5 px-2 mx-5 my-2">
+        <div class="bg-withdraw rounded-5 px-2 mx-5 my-2">
 
             <div class="d-flex">
                 <div class="col d-flex m-auto">
@@ -12,11 +12,9 @@
 
                     </h2>
                     <div class="ms-2">
-                      
-                      <%- include("./newmodel",{caisse}) %>
-                      <%- include("../case/delete") %>
-                       <!-- edit
-                        delete -->
+                      <% if(!caisse.profit==0 && !caisse.restCase==0){ %>
+                      <%- include("./newmodel",{caisse}) %> 
+                      <%}%>
                     </div>
                     </div>
                 
@@ -30,6 +28,7 @@
                     <p>عدد الأيام المتبقية:</p>
                     <p>العائدات:</p>
                     <p> مجموع السحوبات:</p>
+                    <p> باقي الحساب:</p>
                     <p>الحالة:</p>
                     
                 </div>
@@ -40,8 +39,13 @@
                     <p><%= moment(caisse.startDate).format("YYYY-MM-DD")%></p>
                     <p><%=caisse.pack.period%> <%=caisse.pack.unite%></p>
                     <p><%=caisse.restDays%> يوم</p>
-                    <p><%=caisse.totalWithdraw.toLocaleString('de-DE', { minimumFractionDigits: 2 })%> دج</p>
                     <p><%= caisse.profit.toLocaleString('de-DE', { minimumFractionDigits: 2 }) %> دج</p>
+                    <p><%=caisse.totalWithdraw.toLocaleString('de-DE', { minimumFractionDigits: 2 })%> دج</p>
+                    <% if(caisse.profit==0){ %>
+                    <p><%=(0).toLocaleString('de-DE', { minimumFractionDigits: 2 })%> دج</p>
+                    <%}else{%>
+                      <p><%=caisse.restCase.toLocaleString('de-DE', { minimumFractionDigits: 2 })%> دج</p>
+                    <%}%>
                     <p><%=caisse.state%></p>
                     
                     
@@ -93,7 +97,7 @@
           scope="row" class="data"><%= moment(withdraw.date).format("YYYY-MM-DD")%></td>
         <td
           
-          scope="row"class="data"><%=withdraw.amount %></td>
+          scope="row"class="data"><%=withdraw.amount.toLocaleString('de-DE', { minimumFractionDigits: 2 })%> دج %></td>
           <% if (withdraw.state==="تم الدفع" ){%>
             <td scope="row"  class="clickable"
             onclick="window.location='/withdraw/<%=caisse.id%>'">
@@ -123,7 +127,13 @@
        
        
         <td>
+          <% if (withdraw.state==="تم الدفع") {%>
+            <%- include("./edit") %>
+          <%}else{%>
+          <%- include("./completedwithdraw") %>
+          <%- include("./edit") %>
           <%- include("./delete") %>
+          <%}%>
         </td>
       </tr>
       <%}%>

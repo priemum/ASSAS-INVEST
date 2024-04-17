@@ -34,6 +34,11 @@ const Case = new Schema({
     type: Number,
     required: true,
   },
+  actualprofitls:{
+    //profits at actual time of the case
+    type: Number,
+    default: 0,
+  },
   profit: {
     //profits at the end of the case
     type: Number,

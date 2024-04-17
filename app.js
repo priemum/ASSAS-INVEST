@@ -108,11 +108,16 @@ app.use("/pack", packRoutes);
 app.use("/withdraw", withdrawRoutes);
 app.use("/profits", profitsRoutes);
 app.use("/user", userRoutes);
+
 // app.use("/user/:id/transaction", userRoutes);
 // === Home Page ===
 app.get("/", async (req, res) => {
   const packs = await Packs.find({});
   res.render("home/home", { packs });
+});
+app.get("/about", async (req, res) => {
+  
+  res.render("about/about");
 });
 // app.all("*", (req, res, next) => {
 //   next(new ExpressError("page not found", 404));
