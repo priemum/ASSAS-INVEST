@@ -124,7 +124,7 @@ app.get("/about", async (req, res) => {
 // });
 // app.use(errorPage);
 // the PORT variable is in .env file but it won't be added to the deployed site
-const port = process.env.PORT;
+const port = process.env.PORT || 8888;
 
 app.listen(port, () => {
   console.log("===================================================");
