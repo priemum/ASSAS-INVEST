@@ -1,5 +1,13 @@
+.bg-highsilver {
+  background-color: #838383;
+}
+
 .bg-lotion {
   background-color: rgba(230, 235, 229, 0.3058823529);
+}
+
+.bg-Chinesesilver {
+  background-color: rgba(255, 255, 255, 0.7529411765);
 }
 
 .bg-desertSand {
@@ -56,6 +64,14 @@
 
 .text-lotion {
   color: rgba(230, 235, 229, 0.3058823529);
+}
+
+.text-highsilver {
+  color: #838383;
+}
+
+.text-Chinesesilver {
+  color: rgba(255, 255, 255, 0.7529411765);
 }
 
 .text-poseidon {

@@ -11,9 +11,17 @@ $citrine: #7f7836;
 $lotion: #e6ebe54e;
 $poseidon: #133955;
 $desertSand: #11794c;
+$Chinesesilver: #ffffffc0;
+$highsilver: #838383;
 
+.bg-highsilver {
+  background-color: $highsilver;
+}
 .bg-lotion {
   background-color: $lotion;
+}
+.bg-Chinesesilver {
+  background-color: $Chinesesilver;
 }
 .bg-desertSand {
   background-color: $desertSand;
@@ -57,6 +65,12 @@ $desertSand: #11794c;
 }
 .text-lotion {
   color: $lotion;
+}
+.text-highsilver {
+  color: $highsilver;
+}
+.text-Chinesesilver {
+  color: $Chinesesilver;
 }
 .text-poseidon {
   color: $poseidon;

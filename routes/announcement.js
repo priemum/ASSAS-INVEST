@@ -16,7 +16,7 @@ router;
 router
   .route("/")
   .get(isLoggedIn,catchAsync(showAnnouncements))
-  .post(isLoggedIn, isAdmin, catchAsync(addAnnouncement));
+  .post(isLoggedIn, isAdmin, upload.single("picture"), catchAsync(addAnnouncement));
 
 router
   .route("/:idannouncement")

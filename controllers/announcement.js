@@ -9,16 +9,24 @@ module.exports.showAnnouncements = async (req, res) => {
 };
 module.exports.addAnnouncement = async (req, res) => {
   // get the Announcement id from the materiels table
-  const { creationDate, title, resume, description, announcementPicture } = req.body.announcement;
-
-  const announcement = new Announcement({
+  console.log("before announcement: ")
+  const { creationDate, title, resume, description } = req.body.announcement;
+  
+  const newAnnouncement = new Announcement({
     creationDate,
     title,
     resume,
-    description,
-    announcementPicture
+    description
   });
-  await announcement.save();
+  console.log("before announcement: ")
+  // res.send(req.file.path);
+
+  newAnnouncement.picture = {
+    url: req.file.path,
+    filename: req.file.filename,
+  };
+
+  await newAnnouncement.save();
   req.flash("success", "تم الإضافة بنجاح");
   res.redirect("/announcement");
 };
