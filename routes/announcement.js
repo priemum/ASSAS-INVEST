@@ -16,6 +16,7 @@ router;
 router
   .route("/")
   .get(isLoggedIn,catchAsync(showAnnouncements))
+  // the single(name) name should be the same as the name of the input file 
   .post(isLoggedIn, isAdmin, upload.single("picture"), catchAsync(addAnnouncement));
 
 router
