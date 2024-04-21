@@ -2,6 +2,7 @@ if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
 const express = require("express");
+const moment = require("moment");
 const path = require("path");
 // <<ejs-mate>> is layout, partial and block template functions for the EJS template engine.
 const ejsMate = require("ejs-mate");
@@ -116,8 +117,20 @@ app.get("/", async (req, res) => {
   res.render("home/home", { packs });
 });
 app.get("/about", async (req, res) => {
-  
   res.render("about/about");
+});
+app.get("/test", async (req, res) => {
+  
+   const cases =  await Case.find({}).then(function(documents){
+      for(document of documents) {
+        if(document.restDays == 0){
+          document.state = "قيد الإنتظار";
+          document.save();
+        }
+      }
+   });
+  const result =  await Case.find({})
+  res.send(result);
 });
 // app.all("*", (req, res, next) => {
 //   next(new ExpressError("page not found", 404));
@@ -130,8 +143,15 @@ app.listen(port, () => {
   console.log("===================================================");
   console.log(`   ----- SERVER IS RUNNING ON PORT ${port} ----`);
   console.log("===================================================");
-  const job = schedule.scheduleJob("0 0 0 * * *", function () {
+  const job = schedule.scheduleJob("0 0 0 * * *", async function () {
     console.log("Check user cases state !!!");
-    Case.updateMany({ restDays: 0 }, {state:"قيد الإنتظار"});
+    const cases =  await Case.find({}).then(function(documents){
+      for(document of documents) {
+        if(document.restDays == 0 && document.state=="نشطة"){
+          document.state = "قيد الإنتظار";
+          document.save();
+        }
+      }
+   });
   });
 });

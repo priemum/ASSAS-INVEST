@@ -101,7 +101,7 @@ Case.virtual("pastDays").get(function () {
 });
 Case.virtual("restDays").get(function () {
   const restdays = moment(this.endDate).diff(moment(), "days");
-
+  
   if (restdays >=0){
     return restdays;
   }else{

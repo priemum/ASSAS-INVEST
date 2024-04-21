@@ -46,9 +46,7 @@ module.exports.createCase = async (req, res) => {
 };
 module.exports.createProfits = async (req, res) => {
   let { caisse } = req.body;
-  const chosenCaisse = await Case.findById(caisse.profitsId);
-if (chosenCaisse.restCase === 0){
-  const newProfits = await Case.findByIdAndUpdate(
+    const newProfits = await Case.findByIdAndUpdate(
     caisse.profitsId,
     {
   
@@ -58,19 +56,6 @@ if (chosenCaisse.restCase === 0){
     },
     { new: true }
   );
-}else{
-  const newProfits = await Case.findByIdAndUpdate(
-    caisse.profitsId,
-    {
-  
-        profit:caisse.amount
-    
-    },
-    { new: true }
-  );
-}
-  
-
   res.redirect("/profits");
 };
 module.exports.showCreationForm = async (req, res) => {
