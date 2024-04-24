@@ -14,7 +14,7 @@ module.exports.showLoginForm = async (req, res) => {
 // ================== showUsers =============================
 module.exports.showUsers = async (req, res) => {
   const users = await User.find({});
-  res.render("user/index", { users,moment });
+  res.render("user/index", { users, moment });
 };
 // ================== showRegisterForm ============================
 module.exports.showRegisterForm = async (req, res) => {
@@ -67,10 +67,12 @@ module.exports.register = async (req, res) => {
 
 // ================s==== Login ==============================
 module.exports.login = async (req, res) => {
-
   req.flash("success", `مرحبا بك ${req.user.firstname}`);
   // update the recently logged in user
-  await User.findByIdAndUpdate({ _id: req.user.id }, { loggedIn: moment() });
+  await User.findByIdAndUpdate(
+    { _id: req.user.id },
+    { $push: { loggedIn: moment() } }
+  );
   const redirectUrl = req.session.returnTo || "/";
   delete req.session.returnTo;
   res.redirect(redirectUrl);
@@ -85,20 +87,30 @@ module.exports.logout = (req, res) => {
 };
 // =============== updateUser ==============================
 module.exports.updateUser = async (req, res) => {
-  const { user } = req.body;
+  const { user, approved } = req.body;
   const id = req.query.id;
-
+  console.log(user.approved);
   // res.send(id)
-  const updatedUser =  await User.findByIdAndUpdate(id, { ...user }, { new: true });
+  const updatedUser = await User.findByIdAndUpdate(
+    id,
+    { ...user, approved: approved == "on" ? true : false },
+    { new: true }
+  );
   req.flash("success", "تم التعديل بنجاح");
   res.redirect("back");
 };
 // =============== deleteUser ==============================
 module.exports.deleteUser = async (req, res) => {
   const { id } = req.params;
-  await User.findByIdAndDelete(id);
-  req.flash("success", "تم الحذف بنجاح");
-  res.redirect("/user");
+  await User.findById(id).then((document) => {
+    if ((document.cases.length = 0)) {
+      document.deleteOne();
+      req.flash("success", "تم الحذف بنجاح");
+    } else {
+      req.flash("error", "المستثمر لديه سجل باقات");
+    }
+    res.redirect("/user");
+  });
 };
 // =============== showProfile ==============================
 module.exports.showProfile = async (req, res) => {

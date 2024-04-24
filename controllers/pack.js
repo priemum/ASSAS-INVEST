@@ -1,12 +1,13 @@
 const Pack = require("../models/pack");
-module.exports.showCreationForm = (req, res) => {
-  res.render("pack/new");
+const units = require("../seeds/units");
+module.exports.showCreationForm = async (req, res) => {
+  res.render("pack/new", { units });
 };
 module.exports.createPack = async (req, res) => {
   const { pack } = req.body;
-  if (pack.state === "on"){
+  if (pack.state === "on") {
     pack.state = "مفعلة";
-  }else{
+  } else {
     pack.state = "غير مفعلة";
   }
 
@@ -16,7 +17,7 @@ module.exports.createPack = async (req, res) => {
 };
 module.exports.packList = async (req, res) => {
   const packs = await Pack.find({});
-  res.render("pack/index", { packs });
+  res.render("pack/index", { packs, units });
 };
 module.exports.showPack = async (req, res) => {
   const { id } = req.params;

@@ -1,17 +1,10 @@
 <% layout('layouts/boilerplate')%>
-<form class="d-flex shadow-sm mx-5 mt-5" >
-  <input
-    id="search"
-    class="form-control mb-2"
-    type="search"
-    placeholder="خانة البحث"
-    aria-label="Search"
-  />
+<form class="d-flex shadow-sm mx-5 mt-5">
+  <input id="search" class="form-control mb-2" type="search" placeholder="خانة البحث" aria-label="Search" />
 </form>
+<% if(packs.length>0){ %>
 <div class="table-responsive shadow-sm mx-5">
-  <table
-    class="table table-striped table-hover table-borderless text-center sortable"
-  >
+  <table class="table table-striped table-hover table-borderless text-center sortable">
     <thead class="table-greenSea">
       <tr>
         <th scope="col">الرقم</th>
@@ -19,41 +12,41 @@
         <th scope="col">المدة</th>
         <th scope="col">التفاصيل</th>
         <th scope="col"> الحالة الباقة</th>
-       <th scope="col"> العمليات</th>
+        <th scope="col"> العمليات</th>
 
       </tr>
     </thead>
     <tbody id="tablebody">
-      <% var i=1 %> 
+      <% var i=1 %>
       <% for (pack of packs){%>
       <tr>
-        <th 
-          
-          scope="row" scope="row"><%= i%> <% i=i+1; %></th>
-          
-        <td
-          
-          scope="row" ><%= pack.title%></td>
-          <td
-          
-          scope="row" ><%= pack.period%> <%= pack.unite%></td>
-          <td
-          scope="row" ><%= pack.description %></td>
-          <% if (pack.state === "مفعلة"){%>
-            <td
-            scope="row"><div class="rounded-3 bg-success progress-bar-striped text-white">مفعلة</div></td>
-            
-            <%}else{%>
-              <td
-            scope="row"> <div class="rounded-3 bg-danger progress-bar-striped text-white">غير مفعلة</div></td>
-            <%}%>
+        <th scope="row" scope="row"><%= i%> <% i=i+1; %></th>
+
+        <td scope="row"><%= pack.title%></td>
+        <td scope="row"><%= pack.period%> <%= pack.unite%></td>
+        <td scope="row"><%= pack.description %></td>
+        <% if (pack.state === "مفعلة"){%>
+        <td scope="row">
+          <div class="rounded-3 bg-success progress-bar-striped text-white">مفعلة</div>
+        </td>
+
+        <%}else{%>
+        <td scope="row">
+          <div class="rounded-3 bg-danger progress-bar-striped text-white">غير مفعلة</div>
+        </td>
+        <%}%>
           
        
         <td>
-          <%- include("./delete") %>
+          <%- include("./edit") %>
+        <%- include("./delete") %>
         </td>
+
       </tr>
       <%}%>
     </tbody>
   </table>
 </div>
+<% }else{ %>
+      <%-include('../partials/nothingDipslay')%>
+      <% } %>

@@ -80,11 +80,13 @@ passport.use(
         return done(err);
       }
       if (!user) {
-        console.log("if");
         return done(null, false);
       } else {
-        console.log("else");
-        return done(null, user);
+        if (user.approved) {
+          return done(null, user);
+        } else {
+          return done(null, false, "تم تعطيل حسابك يرجى الاتصال بالادمين");
+        }
       }
     });
   })
@@ -120,16 +122,15 @@ app.get("/about", async (req, res) => {
   res.render("about/about");
 });
 app.get("/test", async (req, res) => {
-  
-   const cases =  await Case.find({}).then(function(documents){
-      for(document of documents) {
-        if(document.restDays == 0){
-          document.state = "قيد الإنتظار";
-          document.save();
-        }
+  const cases = await Case.find({}).then(function (documents) {
+    for (document of documents) {
+      if (document.restDays == 0) {
+        document.state = "قيد الإنتظار";
+        document.save();
       }
-   });
-  const result =  await Case.find({})
+    }
+  });
+  const result = await Case.find({});
   res.send(result);
 });
 // app.all("*", (req, res, next) => {
@@ -145,13 +146,13 @@ app.listen(port, () => {
   console.log("===================================================");
   const job = schedule.scheduleJob("0 0 0 * * *", async function () {
     console.log("Check user cases state !!!");
-    const cases =  await Case.find({}).then(function(documents){
-      for(document of documents) {
-        if(document.restDays == 0 && document.state=="نشطة"){
+    const cases = await Case.find({}).then(function (documents) {
+      for (document of documents) {
+        if (document.restDays == 0 && document.state == "نشطة") {
           document.state = "قيد الإنتظار";
           document.save();
         }
       }
-   });
+    });
   });
 });

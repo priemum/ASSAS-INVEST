@@ -1,20 +1,20 @@
 <% layout('layouts/boilerplate')%>
 
 <div class="col m-auto">
-    <div class="container-fluid">
+  <div class="container-fluid">
 
-        <div class="bg-withdraw rounded-5 px-2 mx-5 my-2">
+    <div class="bg-withdraw rounded-5 px-2 mx-5 my-2">
 
-            <div class="d-flex">
-                <div class="col d-flex m-auto">
-                    <h2>
-                        <%=caisse.user.fullname.toUpperCase() %>
+      <div class="d-flex">
+        <div class="col d-flex m-auto">
+          <h2>
+            <%=caisse.user.fullname.toUpperCase() %>
 
-                    </h2>
-                    <div class="ms-2">
-                      <% if(!caisse.profit==0 && !caisse.restCase==0){ %>
-                      <%- include("./newmodel",{caisse}) %> 
-                      <%}%>
+          </h2>
+          <div class="ms-2">
+            <% if(!caisse.profit==0 && !caisse.restCase==0){ %>
+            <%- include("./newmodel",{caisse}) %>
+            <%}%>
                     </div>
                     </div>
                 
@@ -34,109 +34,91 @@
                 </div>
                 <div class="col-2 mt-2">
                     <p><%=caisse.reference%></p>
-                    <p><%=caisse.pack.title%></p>
-                    <p><%=caisse.initAmount.toLocaleString('de-DE', { minimumFractionDigits: 2 })%> دج</p>
-                    <p><%= moment(caisse.startDate).format("YYYY-MM-DD")%></p>
-                    <p><%=caisse.pack.period%> <%=caisse.pack.unite%></p>
-                    <p><%=caisse.restDays%> يوم</p>
-                    <p><%= caisse.profit.toLocaleString('de-DE', { minimumFractionDigits: 2 }) %> دج</p>
-                    <p><%=caisse.totalWithdraw.toLocaleString('de-DE', { minimumFractionDigits: 2 })%> دج</p>
-                    <% if(caisse.profit==0){ %>
-                    <p><%=(0).toLocaleString('de-DE', { minimumFractionDigits: 2 })%> دج</p>
-                    <%}else{%>
-                      <p><%=caisse.restCase.toLocaleString('de-DE', { minimumFractionDigits: 2 })%> دج</p>
-                    <%}%>
-                    <p><%=caisse.state%></p>
-                    
-                    
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- --------------------------------------------------------------- -->
-
-
-<form class="d-flex shadow-sm mx-5" >
-  <input
-    id="search"
-    class="form-control mb-2"
-    type="search"
-    placeholder="خانة البحث"
-    aria-label="Search"
-  />
-</form>
-<div class="table-responsive shadow-sm mx-5">
-  <table
-    class="table table-striped table-hover table-borderless text-center sortable"
-  >
-    <thead class="table-greenSea">
-      <tr>
-        <th scope="col">الرقم</th>
-        <th scope="col">رقم مرجع السحب</th>
-        <th scope="col">تاريخ السحب</th>
-        <th scope="col">المبلغ</th>
-        <th scope="col">الحالة</th>
-        <th scope="col"> الوصف</th>
-        <th scope="col"> العمليات</th>
-
-      </tr>
-    </thead>
-    <tbody id="tablebody">
-      <% var i=1 %> 
-      <% for (withdraw of caisse.withdraws){%>
-      <tr>
-        <th 
-          
-          scope="row" scope="row"><%= i%> <% i=i+1; %></th>
-          <td
-          
-          scope="row"class="data"><%=withdraw.reference %></td>
-        <td
-          
-          scope="row" class="data"><%= moment(withdraw.date).format("YYYY-MM-DD")%></td>
-        <td
-          
-          scope="row"class="data"><%=withdraw.amount.toLocaleString('de-DE', { minimumFractionDigits: 2 })%> دج %></td>
-          <% if (withdraw.state==="تم الدفع" ){%>
-            <td scope="row"  class="clickable"
-            onclick="window.location='/withdraw/<%=caisse.id%>'">
-              <div class="rounded-3 bg-success progress-bar-striped text-white">
-                تم الدفع
-              </div>
-            </td>
-    
-            <%}else if (withdraw.state==="قيد الإنتظار" ){%>
-            <td scope="row"  class="clickable"
-            onclick="window.location='/withdraw/<%=caisse.id%>'">
-              <div class="rounded-3 bg-warning progress-bar-striped text-white">
-                قيد الإنتظار
-              </div>
-            </td>
+            <p><%=caisse.pack.title%></p>
+            <p><%=caisse.initAmount.toLocaleString('de-DE', { minimumFractionDigits: 2 })%> دج</p>
+            <p><%= moment(caisse.startDate).format("YYYY-MM-DD")%></p>
+            <p><%=caisse.pack.period%> <%=caisse.pack.unite%></p>
+            <p><%=caisse.restDays%> يوم</p>
+            <p><%= caisse.profit.toLocaleString('de-DE', { minimumFractionDigits: 2 }) %> دج</p>
+            <p><%=caisse.totalWithdraw.toLocaleString('de-DE', { minimumFractionDigits: 2 })%> دج</p>
+            <% if(caisse.profit==0){ %>
+            <p><%=(0).toLocaleString('de-DE', { minimumFractionDigits: 2 })%> دج</p>
             <%}else{%>
-              <td scope="row"  class="clickable"
-            onclick="window.location='/withdraw/<%=caisse.id%>'">
-              <div class="rounded-3 bg-danger progress-bar-striped text-white">
-                مرفوض
-              </div>
-            </td>
-            <% } %>
-          <td
-          
-          scope="row" class="data"><%= withdraw.description %></td>
-       
-       
-        <td>
-          <% if (withdraw.state==="تم الدفع") {%>
-            <%- include("./edit") %>
+            <p><%=caisse.restCase.toLocaleString('de-DE', { minimumFractionDigits: 2 })%> دج</p>
+            <%}%>
+                    <p><%=caisse.state%></p>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- --------------------------------------------------------------- -->
+
+  <% if(caisse.withdraws.length>0){ %>
+  <form class="d-flex shadow-sm mx-5">
+    <input id="search" class="form-control mb-2" type="search" placeholder="خانة البحث" aria-label="Search" />
+  </form>
+  <div class="table-responsive shadow-sm mx-5">
+    <table class="table table-striped table-hover table-borderless text-center sortable">
+      <thead class="table-greenSea">
+        <tr>
+          <th scope="col">الرقم</th>
+          <th scope="col">رقم مرجع السحب</th>
+          <th scope="col">تاريخ السحب</th>
+          <th scope="col">المبلغ</th>
+          <th scope="col">الحالة</th>
+          <th scope="col"> الوصف</th>
+          <th scope="col"> العمليات</th>
+
+        </tr>
+      </thead>
+      <tbody id="tablebody">
+        <% var i=1 %>
+        <% for (withdraw of caisse.withdraws){%>
+        <tr>
+          <th scope="row" scope="row"><%= i%> <% i=i+1; %></th>
+          <td scope="row" class="data"><%=withdraw.reference %></td>
+          <td scope="row" class="data"><%= moment(withdraw.date).format("YYYY-MM-DD")%></td>
+          <td scope="row" class="data"><%=withdraw.amount.toLocaleString('de-DE', { minimumFractionDigits: 2 })%> دج %></td>
+          <% if (withdraw.state==="تم الدفع" ){%>
+          <td scope="row" class="clickable" onclick="window.location='/withdraw/<%=caisse.id%>'">
+            <div class="rounded-3 bg-success progress-bar-striped text-white">
+              تم الدفع
+            </div>
+          </td>
+
+          <%}else if (withdraw.state==="قيد الإنتظار" ){%>
+          <td scope="row" class="clickable" onclick="window.location='/withdraw/<%=caisse.id%>'">
+            <div class="rounded-3 bg-warning progress-bar-striped text-white">
+              قيد الإنتظار
+            </div>
+          </td>
           <%}else{%>
-          <%- include("./completedwithdraw") %>
-          <%- include("./edit") %>
-          <%- include("./delete") %>
-          <%}%>
+          <td scope="row" class="clickable" onclick="window.location='/withdraw/<%=caisse.id%>'">
+            <div class="rounded-3 bg-danger progress-bar-striped text-white">
+              مرفوض
+            </div>
+          </td>
+          <% } %>
+          <td scope="row" class="data"><%= withdraw.description %></td>
+
+
+          <td>
+            <% if (withdraw.state==="تم الدفع") {%>
+            <%- include("./edit") %>
+            <%}else{%>
+            <%- include("./completedwithdraw") %>
+            <%- include("./edit") %>
+            <%- include("./delete") %>
+            <%}%>
         </td>
       </tr>
       <%}%>
-    </tbody>
-  </table>
-</div>
+      </tbody>
+    </table>
+  </div>
+  <% }else{ %>
+  <%-include('../partials/nothingDipslay')%>
+  <% } %>

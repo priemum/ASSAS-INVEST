@@ -6,7 +6,7 @@ const catchAsync = require("../utils/catchAsync");
 // const { profilePictures } = require("../cloudinary");
 
 // const upload = multer({ storage: profilePictures });
-const { isLoggedIn,isAdmin } = require("../middleware/middleware");
+const { isLoggedIn, isAdmin } = require("../middleware/middleware");
 const {
   login,
   register,
@@ -25,7 +25,10 @@ router
   .route("/register")
   .get(isLoggedIn, isAdmin, catchAsync(showRegisterForm))
   .post(isLoggedIn, isAdmin, catchAsync(register));
-  router.route("/:id").put(isLoggedIn, isAdmin, catchAsync(updateUser));
+router
+  .route("/:id")
+  .put(isLoggedIn, isAdmin, catchAsync(updateUser))
+  .delete(catchAsync(deleteUser));
 router
   .route("/login")
   .get(catchAsync(showLoginForm))
