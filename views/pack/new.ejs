@@ -1,14 +1,12 @@
 <% layout('layouts/boilerplate')%>
 <div
-  class=" d-flex justify-content-center align-items-center mx-3"
+  class="d-flex justify-content-center align-items-center mx-3"
   id="register-box"
 >
-  <div class=" p-2 shadow-sm border rounded-3 bg-light">
+  <div class="p-2 shadow-sm border rounded-3 bg-light">
+    <h1 class="display-6 text-success text-center mb-3">إضافة باقة جديدة</h1>
 
-  <h1 class="display-6 text-success text-center mb-3">إضافة باقة جديدة</h1>
-  
     <form class="row g-3 m-2 needs-validation" action="/pack" method="POST">
-      
       <div class="form-floating col-md-6 mb-2">
         <input
           dir="rtl"
@@ -37,11 +35,15 @@
       </div>
 
       <div class="form-floating col-3 mb-2">
-        <select id="unite" name="pack[unite]" class="form-select border border-success">
+        <select
+          id="unite"
+          name="pack[unite]"
+          class="form-select border border-success"
+        >
           <option selected disabled value="">الوحدة</option>
-          <option class="option" value="يوم">يوم</option>
-          <option class="option" value="أسبوع">أسبوع</option>
-          <option class="option" value="شهر">شهر</option>
+          <% for(unit of units) {%>
+          <option class="option" value="<%= unit %>"><%= unit %></option>
+          <% } %>
         </select>
         <label for="unite" class="form-label">الوحدة</label>
         <div class="valid-feedback">صحيح</div>
@@ -71,11 +73,8 @@
         <label class="form-check-label" for="state"> تفعيل الباقة؟</label>
       </div>
       <div class="mb-2">
-        <button class="w-100 btn btn-lg btn-success">
-          إضافة الباقة
-        </button>
+        <button class="w-100 btn btn-lg btn-success">إضافة الباقة</button>
       </div>
     </form>
-  
-</div>
+  </div>
 </div>

@@ -32,10 +32,16 @@ const User = new Schema(
         ref: "Case",
       },
     ],
-    loggedIn: {
-      type: Date,
-      default: Date.now,
+    approved: {
+      type: Boolean,
+      default: true,
     },
+    loggedIn: [
+      {
+        type: Date,
+        default: Date.now,
+      },
+    ],
   },
   opts
 );

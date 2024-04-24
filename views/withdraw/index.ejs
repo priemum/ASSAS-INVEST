@@ -1,19 +1,11 @@
 <% layout('layouts/boilerplate')%>
 <h1 class="display-6 text-success text-center mb-3">سجل سحوبات المستثمرين</h1>
 <form class="d-flex shadow-sm mx-5">
-  <input
-    id="search"
-    class="form-control mb-2"
-    type="search"
-    placeholder="خانة البحث"
-    aria-label="Search"
-    autocomplete="off"
-  />
+  <input id="search" class="form-control mb-2" type="search" placeholder="خانة البحث" aria-label="Search" autocomplete="off" />
 </form>
-<div class="table-responsive shadow-sm mx-5">
-  <table
-    class="table table-striped table-hover table-borderless text-center sortable"
-  >
+<% if(caisses.length>0){ %>
+<div class="table-responsive shadow-sm mx-5 mb-5">
+  <table class="table table-striped table-hover table-borderless text-center sortable">
     <thead class="table-greenSea">
       <tr>
         <th scope="col">الرقم</th>
@@ -32,9 +24,9 @@
       </tr>
     </thead>
     <tbody id="tablebody">
-      <% var i=1 %> 
+      <% var i=1 %>
       <% for (caisse of caisses){%>
-        <% for (withdraw of caisse.withdraws){%>
+      <% for (withdraw of caisse.withdraws){%>
       <tr>
         <th scope="row" class="data"><%= i%> <% i=i+1; %></th>
         <td scope="row" class="data"><%= caisse.reference%></td>
@@ -44,8 +36,8 @@
         <td scope="row" class="data"><%= moment(withdraw.date).format("YYYY-MM-DD")%></td>
         <td scope="row" class="data"><%= caisse.initAmount.toLocaleString('de-DE', { minimumFractionDigits: 2 })%> دج</td>
         <td scope="row" class="data"><%= caisse.profit.toLocaleString('de-DE', { minimumFractionDigits: 2 }) %> دج</td>
-        
-        
+
+
         <td scope="row" class="data">
           <%=withdraw.amount.toLocaleString('de-DE', { minimumFractionDigits: 2 }) %> دج %>
         </td>
@@ -53,34 +45,31 @@
           <%= caisse.restCase.toLocaleString('de-DE', { minimumFractionDigits: 2 })%> دج
 
           <% if (withdraw.state==="تم الدفع" ){%>
-            <td scope="row"  class="clickable"
-            onclick="window.location='/withdraw/<%=caisse.id%>'">
-              <div class="rounded-3 bg-success progress-bar-striped text-white">
-                تم الدفع
-              </div>
-            </td>
-    
-            <%}else if (withdraw.state==="قيد الإنتظار" ){%>
-            <td scope="row"  class="clickable"
-            onclick="window.location='/withdraw/<%=caisse.id%>'">
-              <div class="rounded-3 bg-warning progress-bar-striped text-white">
-                قيد الإنتظار
-              </div>
-            </td>
-            <%}else{%>
-              <td scope="row"  class="clickable"
-            onclick="window.location='/withdraw/<%=caisse.id%>'">
-              <div class="rounded-3 bg-danger progress-bar-striped text-white">
-                مرفوض
-              </div>
-            </td>
-            <% } %>
+        <td scope="row" class="clickable" onclick="window.location='/withdraw/<%=caisse.id%>'">
+          <div class="rounded-3 bg-success progress-bar-striped text-white">
+            تم الدفع
+          </div>
+        </td>
+
+        <%}else if (withdraw.state==="قيد الإنتظار" ){%>
+        <td scope="row" class="clickable" onclick="window.location='/withdraw/<%=caisse.id%>'">
+          <div class="rounded-3 bg-warning progress-bar-striped text-white">
+            قيد الإنتظار
+          </div>
+        </td>
+        <%}else{%>
+        <td scope="row" class="clickable" onclick="window.location='/withdraw/<%=caisse.id%>'">
+          <div class="rounded-3 bg-danger progress-bar-striped text-white">
+            مرفوض
+          </div>
+        </td>
+        <% } %>
         <td scope="row" class="data">
           <%= withdraw.description %>
         </td>
         <td>
           <% if (withdraw.state==="تم الدفع") {%>
-            <%- include("./edit") %>
+          <%- include("./edit") %>
           <%}else{%>
           <%- include("./completedwithdraw") %>
           <%- include("./edit") %>
@@ -92,3 +81,7 @@
     </tbody>
   </table>
 </div>
+
+<% }else{ %>
+<%-include('../partials/nothingDipslay')%>
+<% } %>

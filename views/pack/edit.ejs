@@ -1,54 +1,144 @@
-<% layout('layouts/boilerplate')%>
-<form class="d-flex shadow-sm mx-5 mt-5" >
-  <input
-    id="search"
-    class="form-control mb-2"
-    type="search"
-    placeholder="خانة البحث"
-    aria-label="Search"
-  />
-</form>
-<div class="table-responsive shadow-sm mx-5">
-  <table
-    class="table table-striped table-hover table-borderless text-center sortable"
+<!-- Button trigger modal -->
+<button
+  type="button"
+  class="me-3 btn btn-outline-warning bg-gradient px-2 py-1"
+  data-bs-toggle="modal"
+  data-bs-target="#pack-<%= pack.id %>"
+>
+  <i class="bi bi-pencil-fill"></i>
+</button>
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="pack-<%= pack.id %>"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div
+    class="modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable"
   >
-    <thead class="table-greenSea">
-      <tr>
-        <th scope="col">الرقم</th>
-        <th scope="col">اسم الباقة</th>
-        <th scope="col">المدة</th>
-        <th scope="col">التفاصيل</th>
-        <th scope="col"> الحالة</th>
-       <th scope="col"> العمليات</th>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="display-6 text-success text-center mb-3">تعديل الباقة</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form
+          class="row g-3 m-2 needs-validation"
+          action="/pack/<%= pack.id %>/?_method=PUT"
+          method="POST"
+        >
+          <div class="form-floating col-md-6 mb-2">
+            <input
+              dir="rtl"
+              class="form-control border border-success"
+              type="text"
+              id="title"
+              name="pack[title]"
+              value="<%= pack.title %>"
+              placeholder="اسم الباقة"
+              required
+            />
+            <label for="title" class="form-labelfs-6">إسم الباقة:</label>
+            <div class="valid-feedback">صحيح</div>
+          </div>
 
-      </tr>
-    </thead>
-    <tbody id="tablebody">
-      <% var i=1 %> 
-      <% for (pack of packs){%>
-      <tr>
-        <th 
-          
-          scope="row" scope="row"><%= i%> <% i=i+1; %></th>
-        <td
-          
-          scope="row" ><%= pack.title%></td>
-        <td
-          
-          scope="row"><%=pack.period %></td>
-          <td
-          
-          scope="row" ><%= pack.description %></td>
-          <td
-          
-          scope="row" ><%= pack.state %></td>
-          
-       
-        <td>
-          <%- include("./delete") %>
-        </td>
-      </tr>
-      <%}%>
-    </tbody>
-  </table>
+          <div class="form-floating mb-2 col-3">
+            <input
+              class="form-control border border-success"
+              type="number"
+              id="period"
+              name="pack[period]"
+              value="<%= pack.period %>"
+              placeholder="مدة الباقة"
+              required
+            />
+            <label for="period" class="form-labelfs-6">المدة:</label>
+            <div class="valid-feedback">صحيح</div>
+          </div>
+          <div class="form-floating col-3 mb-2">
+            <select
+              id="unite"
+              name="pack[unite]"
+              class="form-select border border-success"
+            >
+              <option selected disabled value="">الوحدة</option>
+              <% for(unit of units) {%> <% if(pack.unite==unit) {%>
+              <option class="option" value="<%= unit %>" selected>
+                <%= unit %>
+              </option>
+              <% }else{ %>
+              <option class="option" value="<%= unit %>"><%= unit %></option>
+              <% }} %>
+            </select>
+            <label for=" unite" class="form-label">الوحدة</label>
+            <div class="valid-feedback">صحيح</div>
+          </div>
+
+          <div class="mb-2">
+            <textarea
+              class="form-control border border-success"
+              type="text"
+              id="description"
+              name="pack[description]"
+              placeholder="تفاصيل الباقة"
+              rows="4"
+              required
+            >
+<%= pack.description %></textarea
+            >
+            <div class="valid-feedback">صحيح</div>
+          </div>
+          <div class="form-floating">
+            <div class="d-flex align-item-start form-check form-switch ms-2">
+              <% if(pack.state=="مفعلة" ){ %>
+              <input
+                class="form-check-input me-2"
+                type="checkbox"
+                name="pack[state]"
+                role="switch"
+                id="state"
+                checked
+              />
+              <% }else{ %>
+              <input
+                class="form-check-input me-2"
+                type="checkbox"
+                name="pack[state]"
+                role="switch"
+                id="state"
+              />
+              <% } %>
+              <label class="form-check-label" for="state"> تفعيل الباقة؟</label>
+              <div class="valid-feedback">BIEN</div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              إغلاق
+            </button>
+            <button
+              type="submit"
+              id="user-edit"
+              class="btn btn-outline-warning bg-gradient"
+            >
+              إضافة الباقة
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>

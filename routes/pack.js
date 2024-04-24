@@ -12,13 +12,15 @@ const {
   deletePack,
   showActivePacks,
 } = require("../controllers/pack");
-router.route("/").get(isLoggedIn, isAdmin,catchAsync(packList)).post(isLoggedIn, isAdmin,catchAsync(createPack));
-router.route("/new").get(isLoggedIn, isAdmin,catchAsync(showCreationForm));
+router
+  .route("/")
+  .get(isLoggedIn, isAdmin, catchAsync(packList))
+  .post(isLoggedIn, isAdmin, catchAsync(createPack));
+router.route("/new").get(isLoggedIn, isAdmin, catchAsync(showCreationForm));
 router
   .route("/:id")
-  .get(isLoggedIn,catchAsync(showPack))
-  .put(isLoggedIn, isAdmin,catchAsync(updatePack))
-  .delete(isLoggedIn, isAdmin,catchAsync(deletePack));
-router.route("/:id/edit").get(isLoggedIn, isAdmin,catchAsync(showUpdateForm));
-
+  .get(isLoggedIn, catchAsync(showPack))
+  .put(isLoggedIn, isAdmin, catchAsync(updatePack))
+  .delete(isLoggedIn, isAdmin, catchAsync(deletePack));
+router.route("/:id/edit").get(isLoggedIn, isAdmin, catchAsync(showUpdateForm));
 module.exports = router;

@@ -10,9 +10,9 @@ module.exports.caseList = async (req, res) => {
 };
 module.exports.showUserMain = async (req, res) => {
   const { id } = req.params;
-  const caisse = await Case.find({user: id}).populate(["pack"]);
-  
-  res.render("case/main", { caisse, moment });//fix global initamount
+  const caisse = await Case.find({ user: id }).populate(["pack"]);
+
+  res.render("case/main", { caisse, moment }); //fix global initamount
 };
 module.exports.profitsList = async (req, res) => {
   const caisses = await Case.find({}).populate(["user", "pack"]);
@@ -23,11 +23,17 @@ module.exports.createCase = async (req, res) => {
   const packchosen = await Pack.findById(casee.pack);
 
   if (packchosen.unite === "شهر") {
-    endDate = moment(casee.startDate).add(packchosen.period, "months").format("YYYY-MM-DD");
+    endDate = moment(casee.startDate)
+      .add(packchosen.period, "months")
+      .format("YYYY-MM-DD");
   } else if (packchosen.unite === "أسبوع") {
-    endDate = moment(casee.startDate).add(packchosen.period, "weeks").format("YYYY-MM-DD");
+    endDate = moment(casee.startDate)
+      .add(packchosen.period, "weeks")
+      .format("YYYY-MM-DD");
   } else {
-    endDate = moment(casee.startDate).add(packchosen.period, "days").format("YYYY-MM-DD");
+    endDate = moment(casee.startDate)
+      .add(packchosen.period, "days")
+      .format("YYYY-MM-DD");
   }
 
   const newCase = new Case({
@@ -38,7 +44,7 @@ module.exports.createCase = async (req, res) => {
     description: casee.description,
     startDate: casee.startDate,
     endDate: endDate,
-    profit:0,
+    profit: 0,
   });
 
   await newCase.save();
@@ -46,13 +52,11 @@ module.exports.createCase = async (req, res) => {
 };
 module.exports.createProfits = async (req, res) => {
   let { caisse } = req.body;
-    const newProfits = await Case.findByIdAndUpdate(
+  const newProfits = await Case.findByIdAndUpdate(
     caisse.profitsId,
     {
-  
-        profit:caisse.amount,
-        state:"منتهية"
-    
+      profit: caisse.amount,
+      state: "منتهية",
     },
     { new: true }
   );
@@ -62,9 +66,9 @@ module.exports.showCreationForm = async (req, res) => {
   const packs = await Pack.find({});
   const users = await User.find({});
   var ref_id = crypto.randomBytes(4).toString("hex").toUpperCase();
-  const year = moment().format('YY');
+  const year = moment().format("YY");
   ref_id = ref_id + year;
-  
+
   res.render("case/new", { packs, users, moment, ref_id });
 };
 module.exports.showUpdateForm = async (req, res) => {
@@ -82,12 +86,12 @@ module.exports.showUpdateForm = async (req, res) => {
 };
 module.exports.showCase = async (req, res) => {
   const { id } = req.params;
-  const caisses = await Case.find({user: id}).populate(["pack"]);
+  const caisses = await Case.find({ user: id }).populate(["pack"]);
   res.render("case/show", { caisses, moment });
 };
 module.exports.showUserCases = async (req, res) => {
   const { id } = req.params;
-  const caisses = await Case.find({user: id}).populate(["pack"]);
+  const caisses = await Case.find({ user: id }).populate(["pack"]);
   res.render("case/indexuser", { caisses, moment });
 };
 module.exports.showUsersCase = async (req, res) => {
