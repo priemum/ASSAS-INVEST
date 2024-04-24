@@ -13,9 +13,18 @@ $poseidon: #133955;
 $desertSand: #11794c;
 $Chinesesilver: #ffffffc0;
 $highsilver: #838383;
+$messenger: #0078ff;
+$Dzsilver: #e6e6e6;
+
 
 .bg-highsilver {
   background-color: $highsilver;
+}
+.bg-Dzsilver {
+  background-color: $Dzsilver;
+}
+.bg-messenger {
+  background-color: $messenger;
 }
 .bg-lotion {
   background-color: $lotion;
@@ -63,6 +72,9 @@ $highsilver: #838383;
 .bg-tealdeer {
   background-color: $tealdeer;
 }
+.text-messenger {
+  color: $messenger;
+}
 .text-lotion {
   color: $lotion;
 }
@@ -71,6 +83,9 @@ $highsilver: #838383;
 }
 .text-Chinesesilver {
   color: $Chinesesilver;
+}
+.text-Dzsilver {
+  color: $Dzsilver;
 }
 .text-poseidon {
   color: $poseidon;

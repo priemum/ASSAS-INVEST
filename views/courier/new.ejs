@@ -1,0 +1,47 @@
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-outline-greenSea bg-gradient px-2 py-1" data-bs-toggle="modal"
+    data-bs-target="#staticBackdropCourier">
+    محادثة جديدة <i class="bi bi-coin"></i></i>
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdropCourier" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">سجل المحادثة</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+
+            <div class="modal-body">
+
+                <div id="chatbox" class="d-flex flex-column justify-content-start mb-2 border p-2 border-secondary rounded-3 "
+                    style="overflow-y:scroll;overflow-x: hidden; max-height:300px; height:200px;">
+                  
+                </div>
+
+                <form class="row p-2 needs-validation" id="formcourier">
+               
+
+                <div class="mb-2">
+                    <textarea class="form-floating col-12 rounded-3 border border-success" type="text" id="usercourier"
+                        name="usercourier" placeholder="نص الرسالة" rows="4" required></textarea>
+                    <div for="usercourier" class="valid-feedback">صحيح</div>
+                </div>
+
+                <div class="mb-2">
+
+                    <button name="submitcourier" type="submit" id="submitcourier"
+                        class="btn btn-outline-success">ارسال</button>
+
+                    <button type="button" class="btn btn-outline-secondary" id="removemsgs">
+                        حذف
+                    </button>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+</div>

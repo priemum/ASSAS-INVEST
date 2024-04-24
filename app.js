@@ -4,6 +4,7 @@ if (process.env.NODE_ENV !== "production") {
 const express = require("express");
 const moment = require("moment");
 const path = require("path");
+
 // <<ejs-mate>> is layout, partial and block template functions for the EJS template engine.
 const ejsMate = require("ejs-mate");
 // <<method-override>> Lets you use HTTP verbs such as PUT or DELETE in places
@@ -37,8 +38,10 @@ const announcementRoutes = require("./routes/announcement");
 const packRoutes = require("./routes/pack");
 const caseRoutes = require("./routes/case");
 const profitsRoutes = require("./routes/profits");
+const courierRoutes = require("./routes/courier");
 const withdrawRoutes = require("./routes/withdraw");
 const User = require("./models/user");
+
 const Announcement = require("./models/announcement");
 const Case = require("./models/case");
 const ExpressError = require("./utils/ExpressError");
@@ -48,6 +51,8 @@ const { sessionConfig } = require("./config/sessionConfig");
 
 const { locals } = require("./config/local");
 const app = express();
+const http = require('http').createServer(app);
+const io = require('socket.io')(http);
 //const helmet = require("helmet");
 
 // =========================== App Configuration =========================
@@ -109,6 +114,7 @@ app.use("/pack", packRoutes);
 app.use("/withdraw", withdrawRoutes);
 app.use("/profits", profitsRoutes);
 app.use("/user", userRoutes);
+app.use("/courier", courierRoutes);
 
 // app.use("/user/:id/transaction", userRoutes);
 // === Home Page ===

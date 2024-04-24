@@ -1,0 +1,100 @@
+<% layout('layouts/boilerplate')%>
+
+  <!-- ---------------------------------------------- -->
+  <div class="container bg-Chinesesilver p-3 rounded-3 mb-5">
+    <div class="mb-5">
+      <h3 class="display-6 text-center text-success">سجل المحادثات</h3>
+      
+
+    </div>
+    <% if (currentUser.role.includes('أدمين')){ %>
+    <div class="row ">
+      <div class="users-list col-12 col-md-4 mb-md-0 mb-2">
+        <div class="form-floating col-12 mb-2">
+          <select id="selectedUser" name="selectedUser" class="form-select border border-success">
+              <option selected disabled value="">اسم المستثمر</option>
+              <% for (user of users){%>
+
+                  <option class="option" value="<%= user.id%>">
+                      <%= user.fullname%> / <%= user.email%>
+                  </option>
+                  <%}%>
+          </select>
+          <label for="userId" class="form-label">رسالة جديدة</label>
+          <div class="valid-feedback">صحيح</div>
+      </div>
+        <div class=" d-md-none">
+          <button class="btn btn-outline-white w-100 " id="user-list-collapser" type="button" data-bs-toggle="collapse"
+            data-bs-target="#user-list-collapsed" aria-expanded="false" aria-controls="user-list-collapsed">
+            قائمة المستخدمين
+          </button>
+
+        </div>
+        <form class="d-flex shadow-sm">
+          <input id="searchmsg" class="form-control mb-2" type="search" placeholder="خانة البحث" aria-label="Search"
+            autocomplete="off" />
+        </form>
+         
+
+        <div class=" border border-secondary bg-Chinesesilver" id="user-list-collapsed"
+          style="overflow-y:scroll;overflow-x: hidden;height:56vh;">
+          <!-- Each user should be a link that can be clicked to select the chat -->
+          <% for (user of couriers){ %>
+            <div class="collapse show text-center">
+              <div class="listed-user m-2 p-3 fs-5 fw-bold border border-secondary rounded-3 "
+                id="<%=user.user.id%>">
+                <%= user.user.fullname %>
+              </div>
+
+            </div>
+            <% } %>
+        </div>
+      </div>
+      <div class="col-12 col-md-8">
+        <div class="card">
+          <div class="card-body " >
+           <div class="d-flex flex-column"id="adminchatbox" style="overflow-y:scroll;overflow-x: hidden; height:50vh;">
+<!-- This is where the chat messages will go -->
+           </div> 
+           
+            <div class="card-footer">
+              <form class=" needs-validation" id="formcourier02">
+                <div class="input-group">
+              <input type="text" class="form-control" id="usercourier02" placeholder="نص الرسالة" autocomplete="off" required>
+              <div class="input-group-append">
+              <button type="submit" class="btn btn-outline-secondary"><i class="fa-regular fa-circle-left"></i></button>
+            </div>
+            </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% }else{ %>
+
+      <div class="card">
+        <div class="card-body " >
+         <div class="d-flex flex-column"id="userchatbox"  style="overflow-y:scroll;overflow-x: hidden; height:50vh;">
+<!-- This is where the chat messages will go -->
+         </div> 
+         
+          <div class="card-footer">
+            <form class=" needs-validation" id="formcourier03">
+              <div class="input-group">
+            <input type="text" class="form-control" id="usercourier03" placeholder="نص الرسالة" autocomplete="off" required>
+            <div class="input-group-append">
+            <button type="submit" class="btn btn-outline-secondary"><i class="fa-regular fa-circle-left"></i></button>
+          </div>
+          </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+
+
+      <% } %>
+    <script>
+        let currentUser = <%- JSON.stringify(currentUser) %>;
+    </script>

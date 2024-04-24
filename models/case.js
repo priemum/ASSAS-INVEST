@@ -111,6 +111,9 @@ Case.virtual("restDays").get(function () {
 Case.virtual("daysPersent").get(function () {
   return (this.pastDays * 100) / this.nbrDays;
 });
+Case.virtual("daysPastPersent").get(function () {
+  return 100-(this.pastDays * 100) / this.nbrDays;
+});
 
 Case.virtual("restCase").get(function () {
   const restCase = (this.initAmount+ this.profit)- this.withdraws.reduce((acc, currentvalue)=>acc + currentvalue.amount,0);

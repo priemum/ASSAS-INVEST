@@ -1,0 +1,43 @@
+<!-- Button trigger modal -->
+<a
+  href="#staticBackdropcourier"
+  class="stretched-link"
+  data-bs-toggle="modal"
+  data-bs-target="#staticBackdropcourier-<%= user.id %>"
+>
+</a>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="staticBackdropcourier-<%= user.id %>"
+  data-bs-backdrop="static"
+  data-bs-keyboard="true"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">سجل محادثات</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        
+        <div id="chatbox">
+          <% for (courier of couriers){%>
+            <p><b><%=user.fullname %>:</b></p>
+            <p><%= courier.message %></p>
+            <% } %>
+        </div>
+       
+          </div>
+    </div>
+  </div>
+</div>
