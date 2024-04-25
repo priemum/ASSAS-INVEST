@@ -29,7 +29,6 @@
 <body class="d-flex flex-column">
   <%- include("../partials/navbar")%>
     <main class="container-fluid"><%- include("../partials/flash")%> <%- body %></main>
-    <%-include('../partials/footer')%>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
@@ -178,9 +177,9 @@
             });
 
             function sendMessage02() {
-              console.log("i am in sendmessage 02");
+              
               var clientmsg02 = $("#usercourier03").val().trim();
-              console.log("message from input:"+clientmsg02);
+             
               var chatboxContent02 = `<div class="px-3 py-2 mb-2 bg-messenger rounded-3 text-white" style="width: fit-content;">
                           `+ clientmsg02 + `hhhh
                           </div>`;
@@ -225,7 +224,7 @@
               data: JSON.stringify({ userId: userId }),
               contentType: 'application/json',
               success: function (data) {
-                console.log("data: " + data);
+                
                 // Clear the div
                 $("#adminchatbox").empty();
                 var chatboxContent = '';
@@ -265,19 +264,10 @@
               }
             });
  /////////////////////////////////////////////////admin send interface///////////////////////////////////////////////////////////////////
-            $("#selectedUser").change(function () {
-           var time = moment().format('YYYY-MM-DD hh:mm');
-            var userId = $("#selectedUser").val();
-            $.ajax({
-            url: '/courier/show',
-            type: 'POST',
-            data: JSON.stringify({ userId: userId }),
-            contentType: 'application/json',
-
-           });
-           });
+                   
+ 
             $("#formcourier02").on('submit', function (e) {
-              console.log("i am in form submit 01");
+             
               e.preventDefault();
               sendMessage01();
               
@@ -295,9 +285,9 @@
             });
 
             function sendMessage01() {
-              console.log("i am in sendmessage 01");
+              
               var clientmsg = $("#usercourier02").val().trim();
-              console.log("message from input:"+clientmsg);
+              
               var chatboxContent = `<div class="px-3 py-2 mb-2 bg-messenger rounded-3 text-white" style="width: fit-content;">
                           `+ clientmsg + `
                           </div>`;
@@ -315,6 +305,41 @@
           });
         };
     
+    </script>
+    <script>
+       $("#selectedUser").change(function () {
+           var selectedUser = $("#selectedUser").val();
+           var clientmsg = "بدأ محادثة جديدة";
+          console.log("selected user: "+selectedUser);
+            $.ajax({
+            url: '/courier',
+            type: 'POST',
+            data: JSON.stringify({ message: clientmsg, userId: selectedUser}),
+            contentType: 'application/json',
+            success: function () {
+            localStorage.setItem('State', 'part2');
+            localStorage.setItem('selectedUser', selectedUser);
+             // After page refresh, you can get the ID back
+             location.reload();
+             
+            },
+            
+              });
+             $(document).ready(function() {
+              var state = localStorage.getItem('State');
+              if (state === 'part2') { 
+             var id_selectedUser = localStorage.getItem('selectedUser');
+             id_selectedUser = '#' + id_selectedUser;
+             console.log("selected user after R: "+id_selectedUser);
+             $(id_selectedUser).trigger('click');
+             localStorage.removeItem('State');
+              };
+              });
+            });
+            
+
+            
+          
     </script>
 </body>
 
