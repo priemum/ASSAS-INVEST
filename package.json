@@ -13,7 +13,7 @@
   "author": "Hocine harrouzi",
   "license": "ISC",
   "dependencies": {
-    "cloudinary": "^1.40.0",
+    "cloudinary": "^2.2.0",
     "connect-flash": "^0.1.1",
     "connect-mongo": "^5.1.0",
     "cookie-parser": "^1.4.6",

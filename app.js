@@ -83,9 +83,16 @@ passport.use(
         return done(err);
       }
       if (!user) {
-        return done(null, false);
+        return done(
+          null,
+          false,
+          "يرجي التأكد من البريد الالكتروني او كلمة السر"
+        );
       } else {
         if (user.approved) {
+          console.log("id:", user.id);
+          console.log("firstname:", user.firstname);
+          console.log("email:", user.email);
           return done(null, user);
         } else {
           return done(null, false, "تم تعطيل حسابك يرجى الاتصال بالادمين");
