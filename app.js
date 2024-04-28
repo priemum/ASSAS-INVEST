@@ -51,8 +51,6 @@ const { sessionConfig } = require("./config/sessionConfig");
 
 const { locals } = require("./config/local");
 const app = express();
-const http = require('http').createServer(app);
-const io = require('socket.io')(http);
 //const helmet = require("helmet");
 
 // =========================== App Configuration =========================
