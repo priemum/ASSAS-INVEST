@@ -37,6 +37,7 @@ const userRoutes = require("./routes/user");
 const announcementRoutes = require("./routes/announcement");
 const packRoutes = require("./routes/pack");
 const caseRoutes = require("./routes/case");
+const caseOperRoutes = require("./routes/caseOperation");
 const profitsRoutes = require("./routes/profits");
 const courierRoutes = require("./routes/courier");
 const withdrawRoutes = require("./routes/withdraw");
@@ -116,6 +117,7 @@ passport.deserializeUser((user, done) => {
 app.use(locals);
 app.use(cors());
 app.use("/case", caseRoutes);
+app.use("/case/:id/operation/", caseOperRoutes);
 app.use("/announcement", announcementRoutes);
 app.use("/pack", packRoutes);
 app.use("/withdraw", withdrawRoutes);
@@ -135,7 +137,11 @@ app.get("/about", async (req, res) => {
 app.get("/test", async (req, res) => {
   const cases = await Case.find({}).then(function (documents) {
     for (document of documents) {
-      if (document.restDays == 0) {
+      if (
+        document.restDays == 0 &&
+        document.state == "نشطة" &&
+        document.pastDays > 0
+      ) {
         document.state = "قيد الإنتظار";
         document.save();
       }
@@ -159,7 +165,11 @@ app.listen(port, () => {
     console.log("Check user cases state !!!");
     const cases = await Case.find({}).then(function (documents) {
       for (document of documents) {
-        if (document.restDays == 0 && document.state == "نشطة") {
+        if (
+          document.restDays == 0 &&
+          document.state == "نشطة" &&
+          document.pastDays > 0
+        ) {
           document.state = "قيد الإنتظار";
           document.save();
         }

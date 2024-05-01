@@ -13,98 +13,116 @@ const opts = {
   },
 };
 
-const Case = new Schema({
-  reference: {
-    // an id used to uniquely identify the investment used in the contract
-    type: String,
-    required: true,
-  },
-  user: {
-    //the investor
-    type: Schema.Types.ObjectId,
-    ref: "User",
-  },
-  pack: {
-    //the pack selected by the admin
-    type: Schema.Types.ObjectId,
-    ref: "Pack",
-  },
-  initAmount: {
-    //initial invested amount
-    type: Number,
-    required: true,
-  },
-  actualprofitls:{
-    //profits at actual time of the case
-    type: Number,
-    default: 0,
-  },
-  profit: {
-    //profits at the end of the case
-    type: Number,
-    
-  },
-  description: String,
-  state: {
-    //value = active, end
-    type: String,
-    default: "نشطة",
-  },
-  startDate: {
-    //we get the timeleft
-    type: Date,
-    default: Date.now,
-  },
-  endDate: Date,
-
-  withdraws: [
-    {
-      reference: {
-        // an id used to uniquely identify the withdraw
-        type: String,
-        required: true,
-      },
-      // withdraw happends in the investment
-      date: {
-        type: Date,
-        default: Date.now,
-      },
-      amount: {
-        type: Number,
-        default: 0,
-      },
-      description: {
-       
-        type: String,
-        default: "لاشيء",
-      },
-      state: {
-        // state of the withdraw accepted, pending, or rejected
-        type: String,
-        default: "قيد الإنتظار",
-      },
+const Case = new Schema(
+  {
+    reference: {
+      // an id used to uniquely identify the investment used in the contract
+      type: String,
+      required: true,
     },
-  ],
-  
-},opts);
+    user: {
+      //the investor
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+    pack: {
+      //the pack selected by the admin
+      type: Schema.Types.ObjectId,
+      ref: "Pack",
+    },
+    initAmount: {
+      //initial invested amount
+      type: Number,
+      required: true,
+    },
+    actualprofitls: {
+      //profits at actual time of the case
+      type: Number,
+      default: 0,
+    },
+    profit: {
+      //profits at the end of the case
+      type: Number,
+    },
+    description: String,
+    state: {
+      //value = active, end
+      type: String,
+      default: "نشطة",
+    },
+    startDate: {
+      //we get the timeleft
+      type: Date,
+      default: Date.now,
+    },
+    endDate: Date,
+    reinvest: [
+      {
+        reference: { type: Schema.Types.ObjectId, default: null },
+        initAmount: Number,
+        pack: { type: Schema.Types.ObjectId, ref: "Pack", default: null },
+        state: {
+          type: String,
+          default: "قيد الإنتظار",
+        },
+        date: {
+          type: Date,
+          default: Date.now,
+        },
+      },
+    ],
+    withdraws: [
+      {
+        reference: {
+          // an id used to uniquely identify the withdraw
+          type: String,
+          required: true,
+        },
+        // withdraw happends in the investment
+        date: {
+          type: Date,
+          default: Date.now,
+        },
+        amount: {
+          type: Number,
+          default: 0,
+        },
+        description: {
+          type: String,
+          default: "لاشيء",
+        },
+        state: {
+          // state of the withdraw accepted, pending, or rejected
+          type: String,
+          default: "قيد الإنتظار",
+        },
+        motif: {
+          // state of the withdraw accepted, pending, or rejected
+          type: String,
+        },
+      },
+    ],
+  },
+  opts
+);
 Case.virtual("nbrDays").get(function () {
   return moment(this.endDate).diff(this.startDate, "days");
 });
 Case.virtual("pastDays").get(function () {
-  const pastdays= moment().diff(this.startDate, "days");
- 
-  if (pastdays <=this.nbrDays){
+  const pastdays = moment().diff(this.startDate, "days");
+
+  if (pastdays <= this.nbrDays) {
     return pastdays;
-  }else{
-  return this.nbrDays;
+  } else {
+    return this.nbrDays;
   }
 });
 Case.virtual("restDays").get(function () {
   const restdays = moment(this.endDate).diff(moment(), "days");
-  
-  if (restdays >=0){
+
+  if (restdays >= 0) {
     return restdays;
-  }else{
+  } else {
     return 0;
   }
 });
@@ -112,15 +130,27 @@ Case.virtual("daysPersent").get(function () {
   return (this.pastDays * 100) / this.nbrDays;
 });
 Case.virtual("daysPastPersent").get(function () {
-  return 100-(this.pastDays * 100) / this.nbrDays;
+  return 100 - (this.pastDays * 100) / this.nbrDays;
 });
 
 Case.virtual("restCase").get(function () {
-  const restCase = (this.initAmount+ this.profit)- this.withdraws.reduce((acc, currentvalue)=>acc + currentvalue.amount,0);
+  const restCase =
+    this.initAmount +
+    this.profit -
+    this.withdraws.reduce((acc, currentvalue) => {
+      if (currentvalue.state != "مرفوض") return acc + currentvalue.amount;
+    }, 0) -
+    this.reinvest.reduce(
+      (acc, currentvalue) => acc + currentvalue.initAmount,
+      0
+    );
   return restCase;
 });
 Case.virtual("totalWithdraw").get(function () {
-  const totalWithdraw = this.withdraws.reduce((acc, currentvalue)=>acc + currentvalue.amount,0);
+  const totalWithdraw = this.withdraws.reduce(
+    (acc, currentvalue) => acc + currentvalue.amount,
+    0
+  );
   return totalWithdraw;
 });
 module.exports = mongoose.model("Case", Case);

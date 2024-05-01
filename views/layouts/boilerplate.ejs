@@ -1,34 +1,44 @@
 <!DOCTYPE html>
 
 <html dir="rtl" lang="ar">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>أساس للإستثمار</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css"
+    />
+    <!--<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">-->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/bootstrap.rtl.min.css" />
+    <!-- <link rel="stylesheet" href="/css/bootstrap.rtl.min.css" /> -->
+    <link rel="stylesheet" href="/css/package.css" />
+    <link rel="stylesheet" href="/css/about.css" />
+    <link rel="stylesheet" href="/css/courier.css" />
+    <link rel="stylesheet" href="/css/login.css" />
+    <link rel="stylesheet" href="/css/mainpage.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <link rel="stylesheet" href="/css/scss/colors.css" />
+    <link rel="stylesheet" href="/css/announcement.css" />
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>أساس للإستثمار</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css" />
-  <!--<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">-->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-  <link rel="stylesheet" href="/css/bootstrap.rtl.min.css" />
-  <!-- <link rel="stylesheet" href="/css/bootstrap.rtl.min.css" /> -->
-  <link rel="stylesheet" href="/css/package.css" />
-  <link rel="stylesheet" href="/css/about.css" />
-  <link rel="stylesheet" href="/css/courier.css" />
-  <link rel="stylesheet" href="/css/login.css" />
-  <link rel="stylesheet" href="/css/mainpage.css" />
-  <link rel="stylesheet" href="/css/fonts.css" />
-  <link rel="stylesheet" href="/css/scss/colors.css" />
-  <link rel="stylesheet" href="/css/announcement.css" />
+    <link rel="icon" href="/assets/media/logo.png" />
+  </head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-  <link rel="icon" href="/assets/media/logo.png" />
-</head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
-<body class="d-flex flex-column">
-  <%- include("../partials/navbar")%>
-    <main class="container-fluid"><%- include("../partials/flash")%> <%- body %></main>
+  <body class="d-flex flex-column">
+    <%- include("../partials/navbar")%>
+    <main class="container-fluid">
+      <%- include("../partials/flash")%> <%- body %>
+    </main>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
@@ -58,29 +68,30 @@
       $(document).ready(function () {
         // Existing code...
 
-        $("#formcourier").on('submit', function (e) {
+        $("#formcourier").on("submit", function (e) {
           e.preventDefault();
           sendMessage();
         });
         $("#usercourier").keypress(function (e) {
-
-          if (e.which == 13 && ($("#usercourier").val().trim() !== '')) {
+          if (e.which == 13 && $("#usercourier").val().trim() !== "") {
             e.preventDefault();
             sendMessage();
-            return false;  // prevent the default behavior of the enter key
-          } else if (e.which == 13 && $("#usercourier").val().trim() == '') {
+            return false; // prevent the default behavior of the enter key
+          } else if (e.which == 13 && $("#usercourier").val().trim() == "") {
             alert("خانة الرسالة فارغة");
             $("#usercourier").val("");
           }
         });
 
         function sendMessage() {
-
           var clientmsg = $("#usercourier").val().trim();
           var userId = $("#userId option:selected").val();
-          var chatboxContent = `<div class=" mb-2 p-2 bg-messenger rounded-3 text-white text-start" style="width: fit-content; ">
+          var chatboxContent =
+            `<div class=" mb-2 p-2 bg-messenger rounded-3 text-white text-start" style="width: fit-content; ">
                           <p><b>أنا :</b></p>
-                          <p>`+ clientmsg + `</p>
+                          <p>` +
+            clientmsg +
+            `</p>
                           </div>`;
           $("#chatbox").append(chatboxContent);
 
@@ -89,11 +100,10 @@
           $.post("/courier", { message: clientmsg, userId: userId });
         }
       });
-
     </script>
 
-
     <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/toggleInput.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
       AOS.init();
@@ -110,30 +120,24 @@
           $("#chatbox").empty();
         });
       });
-
     </script>
-  <script>
+    <script>
       //////////////////////////////////////////////user interface///////////////////////////////////////////////
-      if (!currentUser.role.includes('أدمين')) {
+      if (!currentUser.role.includes("أدمين")) {
         var userId = currentUser.id;
         $(document).ready(function () {
-
-          var time = moment().format('YYYY-MM-DD hh:mm');
-          
+          var time = moment().format("YYYY-MM-DD hh:mm");
 
           $.ajax({
-            url: '/courier/show',
-            type: 'POST',
+            url: "/courier/show",
+            type: "POST",
             data: JSON.stringify({ userId: userId }),
-            contentType: 'application/json',
+            contentType: "application/json",
             success: function (data) {
-
-
               $("#userchatbox").empty();
-              var chatboxContent = '';
+              var chatboxContent = "";
               for (courier of data.message) {
-                if (courier.createdby !== 'المستثمر') {
-
+                if (courier.createdby !== "المستثمر") {
                   chatboxContent = `<div class="align-self-end mb-2 px-3 py-2 bg-Dzsilver rounded-3 text-black text-start" style="width: fit-content; ">
                       
                       ${courier.content}
@@ -145,202 +149,191 @@
                   ${courier.content}
                 </div>`;
                   $("#userchatbox").append(chatboxContent);
-                };
-
+                }
               }
-              $("#userchatbox").animate({
-                    scrollTop: $("#userchatbox").prop('scrollHeight')
-                  }, 800);
+              $("#userchatbox").animate(
+                {
+                  scrollTop: $("#userchatbox").prop("scrollHeight"),
+                },
+                800
+              );
             },
             error: function (error) {
               console.log(error);
-            }
+            },
           });
         });
-         ///////////////////////user send interface/////////////////////////////
-         $("#formcourier03").on('submit', function (e) {
-              
-              e.preventDefault();
-              sendMessage02();
-              
-            });
-            $("#usercourier03").keypress(function (e) {
+        ///////////////////////user send interface/////////////////////////////
+        $("#formcourier03").on("submit", function (e) {
+          e.preventDefault();
+          sendMessage02();
+        });
+        $("#usercourier03").keypress(function (e) {
+          if (e.which == 13 && $("#usercourier03").val().trim() !== "") {
+            e.preventDefault();
+            sendMessage02();
+            return false; // prevent the default behavior of the enter key
+          } else if (e.which == 13 && $("#usercourier03").val().trim() == "") {
+            alert("خانة الرسالة فارغة");
+            $("#usercourier03").val("");
+          }
+        });
 
-              if (e.which == 13 && ($("#usercourier03").val().trim() !== '')) {
-                e.preventDefault();
-                sendMessage02();
-                return false;  // prevent the default behavior of the enter key
-              } else if (e.which == 13 && $("#usercourier03").val().trim() == '') {
-                alert("خانة الرسالة فارغة");
-                $("#usercourier03").val("");
-              }
-            });
+        function sendMessage02() {
+          var clientmsg02 = $("#usercourier03").val().trim();
 
-            function sendMessage02() {
-              
-              var clientmsg02 = $("#usercourier03").val().trim();
-             
-              var chatboxContent02 = `<div class="px-3 py-2 mb-2 bg-messenger rounded-3 text-white" style="width: fit-content;">
-                          `+ clientmsg02 + `hhhh
+          var chatboxContent02 =
+            `<div class="px-3 py-2 mb-2 bg-messenger rounded-3 text-white" style="width: fit-content;">
+                          ` +
+            clientmsg02 +
+            `hhhh
                           </div>`;
-              $("#userchatbox").append(chatboxContent02);
-              $("#userchatbox").animate({
-                    scrollTop: $("#userchatbox").prop('scrollHeight')
-                  }, 800);
-              $("#usercourier03").attr("value", "");
-              $("#usercourier03").val("");
-              $.post("/courier", { message: clientmsg02, userId: userId });
-            };
-            ///////////////////////
-
-
-
-
-
+          $("#userchatbox").append(chatboxContent02);
+          $("#userchatbox").animate(
+            {
+              scrollTop: $("#userchatbox").prop("scrollHeight"),
+            },
+            800
+          );
+          $("#usercourier03").attr("value", "");
+          $("#usercourier03").val("");
+          $.post("/courier", { message: clientmsg02, userId: userId });
+        }
+        ///////////////////////
       } else {
         //////////////////////////////////////////////admin interface///////////////////////////////////////////////
-       
-          $(".listed-user").click(function () {
-            $(".listed-user").css({
 
-              "background-color": "#f0f0f0",
-              "color": "black",
+        $(".listed-user").click(function () {
+          $(".listed-user").css({
+            "background-color": "#f0f0f0",
+            color: "black",
+          });
+          $(this).css({
+            "background-color": "#133955",
+            color: "white",
+          });
 
-            });
-            $(this).css({
+          var time = moment().format("YYYY-MM-DD hh:mm");
+          var userId = $(this).attr("id");
 
-              "background-color": "#133955",
-              "color": "white",
-
-            });
-
-
-            var time = moment().format('YYYY-MM-DD hh:mm');
-            var userId = $(this).attr('id');
-
-            $.ajax({
-              url: '/courier/show',
-              type: 'POST',
-              data: JSON.stringify({ userId: userId }),
-              contentType: 'application/json',
-              success: function (data) {
-                
-                // Clear the div
-                $("#adminchatbox").empty();
-                var chatboxContent = '';
-                for (courier of data.message) {
-                  if (courier.createdby == 'المستثمر') {
-
-                    chatboxContent = `<div class="align-self-end mb-2 px-3 py-2 bg-Dzsilver rounded-3 text-black text-start" style="width: fit-content; ">
+          $.ajax({
+            url: "/courier/show",
+            type: "POST",
+            data: JSON.stringify({ userId: userId }),
+            contentType: "application/json",
+            success: function (data) {
+              // Clear the div
+              $("#adminchatbox").empty();
+              var chatboxContent = "";
+              for (courier of data.message) {
+                if (courier.createdby == "المستثمر") {
+                  chatboxContent = `<div class="align-self-end mb-2 px-3 py-2 bg-Dzsilver rounded-3 text-black text-start" style="width: fit-content; ">
                           
                           ${courier.content}
                           
                           </div>`;
-                    $("#adminchatbox").append(chatboxContent);
-                  } else if (courier.createdby == currentUser.fullname) {
-                    var chatboxContent = `<div class="px-3 py-2 mb-2 bg-messenger rounded-3 text-white" style="width: fit-content;">
+                  $("#adminchatbox").append(chatboxContent);
+                } else if (courier.createdby == currentUser.fullname) {
+                  var chatboxContent = `<div class="px-3 py-2 mb-2 bg-messenger rounded-3 text-white" style="width: fit-content;">
                      
                       ${courier.content}
                       
                     </div>`;
-                    $("#adminchatbox").append(chatboxContent);
-                  } else {
-                    var chatboxContent = `<div class="align-self-end mb-2 px-3 py-2 bg-crystalBlue rounded-3 text-black text-start" style="width: fit-content; ">
-                      <p><b>`+ courier.createdby + ` (أدمين): </b></p>${courier.content}
+                  $("#adminchatbox").append(chatboxContent);
+                } else {
+                  var chatboxContent =
+                    `<div class="align-self-end mb-2 px-3 py-2 bg-crystalBlue rounded-3 text-black text-start" style="width: fit-content; ">
+                      <p><b>` +
+                    courier.createdby +
+                    ` (أدمين): </b></p>${courier.content}
                     
                     </div>`;
-                    $("#adminchatbox").append(chatboxContent);
-
-
-                  };
-
-                  $("#adminchatbox").animate({
-                    scrollTop: $("#adminchatbox").prop('scrollHeight')
-                  }, 800);
+                  $("#adminchatbox").append(chatboxContent);
                 }
-              },
-              error: function (error) {
-                console.log(error);
+
+                $("#adminchatbox").animate(
+                  {
+                    scrollTop: $("#adminchatbox").prop("scrollHeight"),
+                  },
+                  800
+                );
               }
-            });
- /////////////////////////////////////////////////admin send interface///////////////////////////////////////////////////////////////////
-                   
- 
-            $("#formcourier02").on('submit', function (e) {
-             
+            },
+            error: function (error) {
+              console.log(error);
+            },
+          });
+          /////////////////////////////////////////////////admin send interface///////////////////////////////////////////////////////////////////
+
+          $("#formcourier02").on("submit", function (e) {
+            e.preventDefault();
+            sendMessage01();
+          });
+          $("#usercourier02").keypress(function (e) {
+            if (e.which == 13 && $("#usercourier02").val().trim() !== "") {
               e.preventDefault();
               sendMessage01();
-              
-            });
-            $("#usercourier02").keypress(function (e) {
-
-              if (e.which == 13 && ($("#usercourier02").val().trim() !== '')) {
-                e.preventDefault();
-                sendMessage01();
-                return false;  // prevent the default behavior of the enter key
-              } else if (e.which == 13 && $("#usercourier02").val().trim() == '') {
-                alert("خانة الرسالة فارغة");
-                $("#usercourier02").val("");
-              }
-            });
-
-            function sendMessage01() {
-              
-              var clientmsg = $("#usercourier02").val().trim();
-              
-              var chatboxContent = `<div class="px-3 py-2 mb-2 bg-messenger rounded-3 text-white" style="width: fit-content;">
-                          `+ clientmsg + `
-                          </div>`;
-              $("#adminchatbox").append(chatboxContent);
-              $("#adminchatbox").animate({
-                    scrollTop: $("#adminchatbox").prop('scrollHeight')
-                  }, 800);
-              $("#usercourier02").attr("value", "");
+              return false; // prevent the default behavior of the enter key
+            } else if (
+              e.which == 13 &&
+              $("#usercourier02").val().trim() == ""
+            ) {
+              alert("خانة الرسالة فارغة");
               $("#usercourier02").val("");
-              $.post("/courier", { message: clientmsg, userId: userId });
-            };
-
-           
-
+            }
           });
-        };
-    
+
+          function sendMessage01() {
+            var clientmsg = $("#usercourier02").val().trim();
+
+            var chatboxContent =
+              `<div class="px-3 py-2 mb-2 bg-messenger rounded-3 text-white" style="width: fit-content;">
+                          ` +
+              clientmsg +
+              `
+                          </div>`;
+            $("#adminchatbox").append(chatboxContent);
+            $("#adminchatbox").animate(
+              {
+                scrollTop: $("#adminchatbox").prop("scrollHeight"),
+              },
+              800
+            );
+            $("#usercourier02").attr("value", "");
+            $("#usercourier02").val("");
+            $.post("/courier", { message: clientmsg, userId: userId });
+          }
+        });
+      }
     </script>
     <script>
-       $("#selectedUser").change(function () {
-           var selectedUser = $("#selectedUser").val();
-           var clientmsg = "بدأ محادثة جديدة";
-          console.log("selected user: "+selectedUser);
-            $.ajax({
-            url: '/courier',
-            type: 'POST',
-            data: JSON.stringify({ message: clientmsg, userId: selectedUser}),
-            contentType: 'application/json',
-            success: function () {
-            localStorage.setItem('State', 'part2');
-            localStorage.setItem('selectedUser', selectedUser);
-             // After page refresh, you can get the ID back
-             location.reload();
-             
-            },
-            
-              });
-             $(document).ready(function() {
-              var state = localStorage.getItem('State');
-              if (state === 'part2') { 
-             var id_selectedUser = localStorage.getItem('selectedUser');
-             id_selectedUser = '#' + id_selectedUser;
-             console.log("selected user after R: "+id_selectedUser);
-             $(id_selectedUser).trigger('click');
-             localStorage.removeItem('State');
-              };
-              });
-            });
-            
-
-            
-          
+      $("#selectedUser").change(function () {
+        var selectedUser = $("#selectedUser").val();
+        var clientmsg = "بدأ محادثة جديدة";
+        console.log("selected user: " + selectedUser);
+        $.ajax({
+          url: "/courier",
+          type: "POST",
+          data: JSON.stringify({ message: clientmsg, userId: selectedUser }),
+          contentType: "application/json",
+          success: function () {
+            localStorage.setItem("State", "part2");
+            localStorage.setItem("selectedUser", selectedUser);
+            // After page refresh, you can get the ID back
+            location.reload();
+          },
+        });
+        $(document).ready(function () {
+          var state = localStorage.getItem("State");
+          if (state === "part2") {
+            var id_selectedUser = localStorage.getItem("selectedUser");
+            id_selectedUser = "#" + id_selectedUser;
+            console.log("selected user after R: " + id_selectedUser);
+            $(id_selectedUser).trigger("click");
+            localStorage.removeItem("State");
+          }
+        });
+      });
     </script>
-</body>
-
+  </body>
 </html>
