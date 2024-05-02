@@ -13,9 +13,17 @@ module.exports.updateUserDemande = async (req, res) => {
   const year = moment().format("YY");
   ref_id = ref_id + year;
   // state:مقبول /مرفوض
-  if (state) {
     if (state == "مقبول") {
+      console.log("مقبول")
       const casee = await Case.findById(id);
+      let amount;
+      for(c of casee.reinvests){
+        if(c.id===idct){
+          amount = c.amount
+        }
+        console.log("amount:",amount)
+        console.log(typeof amount)
+      }
       const packchosen = await Pack.findById(pack);
       let endDate;
       if (packchosen.unite === "شهر") {
@@ -33,6 +41,7 @@ module.exports.updateUserDemande = async (req, res) => {
       }
       const newCase = new Case({
         reference: ref_id,
+        initAmount:amount,
         user: casee.user,
         pack: pack,
         startDate: date,
@@ -41,29 +50,31 @@ module.exports.updateUserDemande = async (req, res) => {
       });
       await newCase.save();
       await Case.findOneAndUpdate(
-        { _id: id, "reinvest._id": idct },
+        { _id: id, "reinvests._id": idct },
         {
           $set: {
-            "reinvest.$.reference": newCase.id,
-            "reinvest.$.state": state,
-            "reinvest.$.motif": motif,
+            "reinvests.$.reference": ref_id,
+            "reinvests.$.state": state,
+            "reinvests.$.motif": motif,
           },
         },
         { new: true }
       );
-    } else {
+    } else {// مرفوض
+      console.log("مرفوض")
+      console.log("idct:",idct)
       await Case.findOneAndUpdate(
-        { _id: id, "reinvest._id": idct },
+        { _id: id, "reinvests._id": idct },
         {
           $set: {
-            "reinvest.$.state": state,
-            "reinvest.$.motif": motif,
+            "reinvests.$.state": state,
+            "reinvests.$.motif": motif,
           },
         },
         { new: true }
       );
     }
-  }
+  
 
   const redirectUrl = `back`;
   req.flash("success", "تم تحديث بنجاح");

@@ -13,12 +13,14 @@ module.exports.createWithdraw = async (req, res) => {
   var ref_id = crypto.randomBytes(4).toString("hex").toUpperCase();
   const year = moment().format("YY");
   ref_id = ref_id + year;
+  // Find the case
   const caisse = await Case.findById(withdraw.caseId);
   console.log("test caisse:", caisse.restCase);
+  // في حالة السحب
   if (choice == "سحب") {
-    // Find the case
     // Check the amount by comparing it to the restCase property
     if (withdraw.amount <= caisse.restCase) {
+      // update the case by pushing a new withdraw object to the withdraws table
       await Case.findByIdAndUpdate(
         withdraw.caseId,
         {
@@ -37,43 +39,19 @@ module.exports.createWithdraw = async (req, res) => {
     } else {
       req.flash("error", "🖕 😂 المبلغ المسحوب اكبر من المبلغ الباقي 😂 🖕");
     }
-  } else {
+    
+  } else {// في حالة إعادة الإستثمار
+    // Check the amount by comparing it to the restCase property
     if (withdraw.amount <= caisse.restCase) {
-      // const casee = await Case.findById(withdraw.caseId);
-      // const packchosen = await Pack.findById(pack);
-      // let endDate;
-      // if (packchosen.unite === "شهر") {
-      //   endDate = moment(withdraw.startDate)
-      //     .add(packchosen.period, "months")
-      //     .format("YYYY-MM-DD");
-      // } else if (packchosen.unite === "أسبوع") {
-      //   endDate = moment(withdraw.startDate)
-      //     .add(packchosen.period, "weeks")
-      //     .format("YYYY-MM-DD");
-      // } else {
-      //   endDate = moment(withdraw.startDate)
-      //     .add(packchosen.period, "days")
-      //     .format("YYYY-MM-DD");
-      // }
-      // const newCase = new Case({
-      //   reference: ref_id,
-      //   user: casee.user,
-      //   pack: pack,
-      //   initAmount: withdraw.amount,
-      //   description: withdraw.description,
-      //   startDate: withdraw.date,
-      //   endDate: endDate,
-      //   profit: 0,
-      // });
-      // await newCase.save();
+      // update the case by pushing a new reinvest object to the reinvests table
       await Case.findByIdAndUpdate(
         withdraw.caseId,
         {
           $push: {
-            reinvest: {
-              initAmount: withdraw.amount,
+            reinvests: {
+              amount: withdraw.amount,
               state: "قيد الإنتظار",
-              pack: pack || null,
+              pack: pack || undifined,
             },
           },
         },
@@ -115,10 +93,10 @@ module.exports.showCaseWithdraws = async (req, res) => {
   let reinvestCaisse = [];
   // // send it to the client
 
-  for (ref of caisse.reinvest) {
+  for (ref of caisse.reinvests) {
     reinvestCaisse.push({
       id: ref.id,
-      amount: ref.initAmount,
+      amount: ref.amount,
       pack: await Pack.findById(ref.pack),
       state: ref.state,
     });
@@ -130,8 +108,8 @@ module.exports.updateWithdraw = async (req, res) => {
   const { idCase, idWithdraw } = req.params;
   const { withdraw, choice, motif } = req.body;
   const { from } = req.query;
-  // if the request comes from the confirm button (completedwithdraw.ejs) in the show page
-
+  // if the request comes from the confirm button
+  //  (completedwithdraw.ejs) in the show page 
   if (choice) {
     await Case.findOneAndUpdate(
       { _id: idCase, "withdraws._id": idWithdraw },
@@ -144,7 +122,8 @@ module.exports.updateWithdraw = async (req, res) => {
       { new: true }
     );
   } else if (from == 0) {
-    // if the request comes from the edit withrow table
+    // if the request comes from the edit withrow table then from = 0
+    // so we cancel the acceptation of the withdraw
     await Case.findOneAndUpdate(
       { _id: idCase, "withdraws._id": idWithdraw },
       {

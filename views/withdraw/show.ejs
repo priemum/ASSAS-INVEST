@@ -123,9 +123,13 @@
         <td scope="row" class="data"><%= withdraw.description %></td>
 
         <td>
-          <% if (withdraw.state==="تم الدفع"||withdraw.state==="مرفوض" ) {%> <%-
-          include("./edit") %> <%}else{%> <%- include("./completedwithdraw") %>
-          <%- include("./edit") %> <%- include("./delete",{withdraw}) %> <%}%>
+          <% if (withdraw.state==="تم الدفع"||withdraw.state==="مرفوض" ) {%> 
+            <%- include("./edit") %>
+          <%}else{%>
+            <%- include("./completedwithdraw") %>
+            <%- include("./edit") %>
+            <%- include("./delete",{withdraw}) %> 
+          <%}%>
         </td>
       </tr>
       <%}%>
@@ -133,7 +137,7 @@
   </table>
 </div>
 
-<% } if(caisse.reinvest.length>0) {%>
+<% } if(caisse.reinvests.length>0) {%>
 <h1 class="fs-2 text-success text-center my-3">سجل طلبات إعادة الإستثمار</h1>
 <div class="table-responsive shadow-sm mx-5">
   <table
@@ -150,7 +154,9 @@
       </tr>
     </thead>
     <tbody id="tablebody">
-      <% var j=1 %> <% for (rCaisse of reinvestCaisse){ if(caisse){%>
+      <% var j=1 %> 
+      <% for (rCaisse of reinvestCaisse){%>
+        <% if(rCaisse){%>
       <tr>
         <th
           scope="row"
@@ -195,7 +201,7 @@
           </div>
         </td>
 
-        <%}else{%>
+        <%}else if(rCaisse.state==="مرفوض"){%>
         <td
           scope="row"
           class="clickable"
@@ -205,19 +211,34 @@
             مرفوض
           </div>
         </td>
-        <%}%>
+        <%}else{%>
+          <td
+          scope="row"
+          class="clickable"
+          onclick="window.location='/withdraw/<%=rCaisse.id%>'"
+        >
+          <div class="rounded-3 bg-success progress-bar-striped text-white">
+            مقبول
+          </div>
+        </td>
+
+          <% } %>
         <td>
-          <% if (rCaisse.state==="مقبول"||rCaisse.state==="مرفوض" ) {%> <%-
-          include("./reinvest/edit") %> <%}else{%> <%-
-          include("./reinvest/completedwithdraw") %> <%-
-          include("./reinvest/edit") %> <%- include("./reinvest/delete") %>
+          <% if (rCaisse.state==="مقبول" || rCaisse.state==="مرفوض" ) {%> 
+            <%- include("./reinvest/edit") %>
+          <%}else{%> 
+            <%- include("./reinvest/completedwithdraw") %> 
+            <%- include("./reinvest/edit") %>
+            <%- include("./reinvest/delete") %>
           <%}%>
         </td>
       </tr>
-      <%}}%>
+      <%}%>
+      <%}%>
     </tbody>
   </table>
 </div>
 <!-- when the two table are empty we display nothing -->
 <% } if(reinvestCaisse.length<=0 && caisse.withdraws.length<=0) {%>
-<%-include('../partials/nothingDipslay')%> <% } %>
+  <%-include('../partials/nothingDipslay')%>
+<% } %>

@@ -1,5 +1,7 @@
 const express = require("express");
-const router = express.Router();
+// To keep the parent req.params,
+// you need to add { mergeParams: true } in to the child router.
+const router = express.Router({ mergeParams: true });
 const catchAsync = require("../utils/catchAsync");
 const { isLoggedIn, isAdmin } = require("../middleware/middleware");
 const { updateUserDemande } = require("../controllers/caseOperation");

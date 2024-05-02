@@ -56,14 +56,18 @@ const Case = new Schema(
       default: Date.now,
     },
     endDate: Date,
-    reinvest: [
+    reinvests: [
       {
-        reference: { type: Schema.Types.ObjectId, default: null },
-        initAmount: Number,
-        pack: { type: Schema.Types.ObjectId, ref: "Pack", default: null },
+        reference: { type: String, default: undefined },
+        amount: Number,
+        pack: { type: Schema.Types.ObjectId, ref: "Pack", default: undefined },
         state: {
           type: String,
           default: "قيد الإنتظار",
+        },
+        motif: {
+          type: String,
+          default: "",
         },
         date: {
           type: Date,
@@ -139,16 +143,18 @@ Case.virtual("restCase").get(function () {
     this.profit -
     this.withdraws.reduce((acc, currentvalue) => {
       if (currentvalue.state != "مرفوض") return acc + currentvalue.amount;
+      return 0;
     }, 0) -
-    this.reinvest.reduce(
-      (acc, currentvalue) => acc + currentvalue.initAmount,
-      0
-    );
+    this.reinvests.reduce((acc, currentvalue) => {
+      if (currentvalue.state != "مرفوض") return acc + currentvalue.amount;return 0;
+    }, 0);
   return restCase;
 });
 Case.virtual("totalWithdraw").get(function () {
   const totalWithdraw = this.withdraws.reduce(
-    (acc, currentvalue) => acc + currentvalue.amount,
+    (acc, currentvalue) => {
+      if (currentvalue.state != "مرفوض") return acc + currentvalue.amount;return 0;
+    },
     0
   );
   return totalWithdraw;
