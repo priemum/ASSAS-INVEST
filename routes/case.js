@@ -16,14 +16,14 @@ const {
 router
   .route("/")
   .get(isLoggedIn, isAdmin, catchAsync(caseList))
-  .post(isLoggedIn, isAdmin,catchAsync(createCase));
+  .post(isLoggedIn, isAdmin, catchAsync(createCase));
 router.route("/new").get(isLoggedIn, isAdmin, catchAsync(showCreationForm));
 router
-  .route("/:id")
+  .route("/:idct")
   .get(isLoggedIn, catchAsync(showCase))
   .put(isLoggedIn, isAdmin, catchAsync(updateCase))
   .delete(isLoggedIn, isAdmin, catchAsync(deleteCase));
-  router.route("/:id/cases").get(isLoggedIn, catchAsync(showUserCases));
+router.route("/:id/cases").get(isLoggedIn, catchAsync(showUserCases));
 router.route("/:id/edit").get(isLoggedIn, isAdmin, catchAsync(showUpdateForm));
 router.route("/:id/main").get(isLoggedIn, catchAsync(showUserMain));
 module.exports = router;

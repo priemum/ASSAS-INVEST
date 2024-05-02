@@ -14,14 +14,13 @@ const {
 } = require("../controllers/withdraw");
 router
   .route("/")
-  .post(isLoggedIn, isAdmin,catchAsync(createWithdraw))
+  .post(isLoggedIn, catchAsync(createWithdraw))
   .get(isLoggedIn, isAdmin, catchAsync(withdrawList));
-  
+
 router.route("/new").get(isLoggedIn, isAdmin, catchAsync(showCreationForm));
+router.route("/:id").get(isLoggedIn, catchAsync(showCaseWithdraws));
 router
-  .route("/:id")
-  .get(isLoggedIn, catchAsync(showCaseWithdraws));
-  router.route("/:idCase/:idWithdraw")
+  .route("/:idCase/:idWithdraw")
   .put(isLoggedIn, isAdmin, catchAsync(updateWithdraw))
   .delete(isLoggedIn, isAdmin, catchAsync(deleteWithdraw));
 router.route("/:id/edit").get(isLoggedIn, isAdmin, catchAsync(showUpdateForm));

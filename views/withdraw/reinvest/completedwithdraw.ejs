@@ -2,7 +2,7 @@
   type="button"
   class="btn btn-outline-greenSea bg-gradient px-2 py-1"
   data-bs-toggle="modal"
-  data-bs-target="#cwithdraw-<%= withdraw.id %>"
+  data-bs-target="#reinvest-<%= rCaisse.id %>"
 >
   <i class="bi bi-check-circle"></i>
 </button>
@@ -10,7 +10,7 @@
 <!-- Modal -->
 <div
   class="modal fade"
-  id="cwithdraw-<%= withdraw.id %>"
+  id="reinvest-<%= rCaisse.id %>"
   data-bs-keyboard="true"
   tabindex="-1"
   aria-labelledby="staticBackdropLabel"
@@ -20,7 +20,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="staticBackdropLabel">
-          تأكيد/ رفض الدفع لمرجع :<%=withdraw.reference %>
+          تأكيد/ رفض الدفع لمرجع :<%=rCaisse.reference %>
         </h5>
         <button
           type="button"
@@ -40,34 +40,58 @@
             alt="confirmed"
           />
           <p class="mt-3 ms-2">
-            تأكيد/ رفض دفع مبلغ <%=withdraw.amount.toLocaleString('de-DE', {
+            تأكيد/ رفض دفع مبلغ <%=rCaisse.amount.toLocaleString('de-DE', {
             minimumFractionDigits: 2 }) %> دج %>
           </p>
         </div>
         <form
           class=""
           id="delete-form"
-          action="/withdraw/<%=caisse.id%>/<%=withdraw.id%>/?_method=PUT"
+          action="/case/<%=caisse.id%>/operation/<%=rCaisse.id%>/?_method=PUT&from=1"
           method="POST"
         >
           <div class="form-floating col-12 mb-2">
             <select
               id="choice"
-              name="choice"
+              name="state"
               class="form-select border border-success"
-              onchange="selectActe(this, '<%= caisse.reference %>')"
+              onchange="selectOperation(this, '<%= rCaisse.id %>','مقبول')"
               required
             >
               <option selected disabled class="option" value="">
                 إختيار العملية
               </option>
               <option class="option" value="مرفوض">رفض</option>
-              <option class="option" value="تم الدفع">دفع المبلغ</option>
+              <option class="option" value="مقبول">قبول</option>
             </select>
 
             <label for="choice" class="form-label">إختيار العملية</label>
             <div class="valid-feedback">صحيح</div>
           </div>
+          <div
+          class="form-floating col-12 mb-2"
+          id="pack-div-<%=rCaisse.id%>"
+          style="display: none"
+        >
+          <select
+            id="pack-<%=rCaisse.id%>"
+            name="pack"
+            class="form-select border border-success"
+          >
+            <option class="option" value="" disabled selected>
+              إختيار الباقة
+            </option>
+            <% for(pack of packs ){ %>
+
+            <option class="option" value="<%= pack.id%>">
+              <%=pack.title %>
+            </option>
+            <% } %>
+          </select>
+
+          <label for="technicien" class="form-label">إختيار الباقة</label>
+          <div class="valid-feedback">BIEN</div>
+        </div>
           <div class="form-floating mb-2 col-12">
             <input
               class="form-control border border-success"
