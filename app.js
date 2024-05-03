@@ -150,6 +150,18 @@ app.get("/test", async (req, res) => {
   const result = await Case.find({});
   res.send(result);
 });
+app.get("/testCase", async (req, res) => {
+  let totalWithdraws =[]
+  const cases = await Case.find({})
+    for(c of cases) {
+    totalWithdraws.push(c.withdraws.reduce((acc, withraw) => {
+      if (withraw.state === "تم الدفع") {
+        return acc + withraw.amount;
+      } else return 0;
+    }, 0))
+    }
+  res.send(totalWithdraws);
+});
 // app.all("*", (req, res, next) => {
 //   next(new ExpressError("page not found", 404));
 // });

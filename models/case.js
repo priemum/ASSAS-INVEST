@@ -138,25 +138,27 @@ Case.virtual("daysPastPersent").get(function () {
 });
 
 Case.virtual("restCase").get(function () {
+  // restCase = initAmount + profit - (withdraws + reinvests)
   const restCase =
     this.initAmount +
     this.profit -
-    this.withdraws.reduce((acc, currentvalue) => {
-      if (currentvalue.state != "مرفوض") return acc + currentvalue.amount;
-      return 0;
-    }, 0) -
-    this.reinvests.reduce((acc, currentvalue) => {
-      if (currentvalue.state != "مرفوض") return acc + currentvalue.amount;return 0;
-    }, 0);
+    (this.withdraws.reduce((acc, withraw) => {
+      if (withraw.state === "تم الدفع") {
+        return acc + withraw.amount;
+      } else return 0;
+    }, 0) +
+      this.reinvests.reduce((acc, reinvest) => {
+        if (reinvest.state === "مقبول") return acc + reinvest.amount;
+        else return 0;
+      }, 0));
   return restCase;
 });
-Case.virtual("totalWithdraw").get(function () {
-  const totalWithdraw = this.withdraws.reduce(
-    (acc, currentvalue) => {
-      if (currentvalue.state != "مرفوض") return acc + currentvalue.amount;return 0;
-    },
-    0
-  );
-  return totalWithdraw;
+Case.virtual("totalWithdraws").get(function () {
+  const totalWithdraws = this.withdraws.reduce((acc, withdraw) => {
+    if (withdraw.state === "تم الدفع") return acc + withdraw.amount;
+    else return 0;
+  }, 0);
+  console.log(totalWithdraws);
+  return totalWithdraws;
 });
 module.exports = mongoose.model("Case", Case);
