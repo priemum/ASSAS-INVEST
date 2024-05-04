@@ -37,6 +37,7 @@ module.exports.updateUserDemande = async (req, res) => {
         .format("YYYY-MM-DD");
     }
     const newCase = new Case({
+      _id: idct,
       reference: ref_id,
       initAmount: amount,
       user: casee.user,
@@ -45,6 +46,7 @@ module.exports.updateUserDemande = async (req, res) => {
       endDate: endDate,
       profit: 0,
     });
+
     await newCase.save();
     await Case.findOneAndUpdate(
       { _id: id, "reinvests._id": idct },
@@ -53,6 +55,8 @@ module.exports.updateUserDemande = async (req, res) => {
           "reinvests.$.reference": ref_id,
           "reinvests.$.state": state,
           "reinvests.$.motif": motif,
+          "reinvests.$.pack": pack,
+          "reinvests.$.user": casee.user,
         },
       },
       { new: true }
@@ -95,6 +99,8 @@ module.exports.updateReinvest = async (req, res) => {
       },
       { new: true }
     );
+
+    await Case.findByIdAndDelete(idct);
     // edit the user demande details such as the date, amount...
   } else if (f == 1) {
     if (reinvest.amount <= caisse.restCase) {

@@ -1,7 +1,7 @@
 function selectOperation(choice, id, compareTo) {
   let packDiv = document.getElementById("pack-div-" + id);
   let pack = document.getElementById("pack-" + id);
-  let description = document.getElementById("withdrawDescription");
+  let description = document.getElementById("description");
   if (choice.value === compareTo) {
     packDiv.style.display = "";
     description.style.display = "none";
@@ -12,17 +12,15 @@ function selectOperation(choice, id, compareTo) {
     description.style.display = "";
   }
 }
-function selectOperation2(id, choice, compareTo) {
-  let packDiv = document.getElementById("pack-div-" + id);
-  let pack = document.getElementById("pack-" + id);
-  let description = document.getElementById("withdrawDescription");
+function selectOperation2(choice, compareTo) {
+  console.log("asdasd");
+  let description = document.getElementById("description");
   if (choice.value === compareTo) {
-    packDiv.style.display = "";
+    console.log("entre");
     description.style.display = "none";
-    pack.setAttribute("required", "");
+    description.removeAttribute("required");
   } else {
-    pack.removeAttribute("required");
-    packDiv.style.display = "";
+    description.setAttribute("required", "");
     description.style.display = "";
   }
 }

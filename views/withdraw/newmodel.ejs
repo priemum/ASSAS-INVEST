@@ -52,7 +52,7 @@
               id="choice"
               name="choice"
               class="form-select border border-success"
-              onchange="selectOperation(this, '<%= caisse.reference %>','إعادة الإستثمار')"
+              onchange="selectOperation2(this,'إعادة الإستثمار')"
               required
             >
               <option selected disabled class="option" value="">
@@ -66,30 +66,6 @@
 
             <label for="choice" class="form-label">إختيار العملية</label>
             <div class="valid-feedback">صحيح</div>
-          </div>
-          <div
-            class="form-floating col-12 mb-2"
-            id="pack-div-<%=caisse.reference%>"
-            style="display: none"
-          >
-            <select
-              id="pack-<%=caisse.reference%>"
-              name="pack"
-              class="form-select border border-success"
-            >
-              <option class="option" value="" disabled selected>
-                إختيار الباقة
-              </option>
-              <% for(pack of packs ){ %>
-
-              <option class="option" value="<%= pack.id%>">
-                <%=pack.title %>
-              </option>
-              <% } %>
-            </select>
-
-            <label for="technicien" class="form-label">إختيار الباقة</label>
-            <div class="valid-feedback">BIEN</div>
           </div>
 
           <div class="form-floating mb-2 col-6">
@@ -126,7 +102,7 @@
               type="text"
               id="description"
               name="withdraw[description]"
-              placeholder="تفاصيل السحب"
+              placeholder="بيانات الدفع"
               rows="4"
               required
             ></textarea>
@@ -140,7 +116,7 @@
             >
               إلغاء
             </button>
-            <button class="btn btn-outline-success">سحب</button>
+            <button class="btn btn-outline-success">تأكيد</button>
           </div>
         </form>
       </div>

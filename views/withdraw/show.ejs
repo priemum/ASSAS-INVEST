@@ -68,11 +68,13 @@
       <tr>
         <th scope="col">الرقم</th>
         <th scope="col">رقم مرجع السحب</th>
-        <th scope="col">تاريخ السحب</th>
         <th scope="col">المبلغ</th>
+        <th scope="col">تاريخ السحب</th>
         <th scope="col">الحالة</th>
         <th scope="col">الوصف</th>
+        <% if(currentUser.role.includes("أدمين")) {%>
         <th scope="col">العمليات</th>
+        <% } %>
       </tr>
     </thead>
     <tbody id="tablebody">
@@ -80,12 +82,13 @@
       <tr>
         <th scope="row" scope="row"><%= i%> <% i=i+1; %></th>
         <td scope="row" class="data"><%=withdraw.reference %></td>
-        <td scope="row" class="data">
-          <%= moment(withdraw.date).format("YYYY-MM-DD")%>
-        </td>
+
         <td scope="row" class="data">
           <%=withdraw.amount.toLocaleString('de-DE', { minimumFractionDigits: 2
           })%> دج %>
+        </td>
+        <td scope="row" class="data">
+          <%= moment(withdraw.date).format("YYYY-MM-DD")%>
         </td>
         <% if (withdraw.state==="تم الدفع" ){%>
         <td
@@ -125,12 +128,13 @@
           include("./commentViewer",{message:withdraw.description,id:withdraw.id})
           %>
         </td>
-
+        <% if(currentUser.role.includes("أدمين")) {%>
         <td>
           <% if (withdraw.state==="تم الدفع"||withdraw.state==="مرفوض" ) {%> <%-
           include("./edit") %> <%}else{%> <%- include("./completedwithdraw") %>
           <%- include("./edit") %> <%- include("./delete",{withdraw}) %> <%}%>
         </td>
+        <%}%>
       </tr>
       <%}%>
     </tbody>
@@ -149,9 +153,11 @@
         <th scope="col">الباقة / المدة</th>
         <th scope="col">المبلغ</th>
         <th scope="col">تاريخ الطلب</th>
-        <th scope="col">حالة الباقة</th>
+        <th scope="col">الحالة</th>
         <th scope="col">الوصف</th>
+        <% if(currentUser.role.includes("أدمين")) {%>
         <th scope="col">العمليات</th>
+        <%} %>
       </tr>
     </thead>
     <tbody id="tablebody">
@@ -161,14 +167,15 @@
           scope="row"
           scope="row"
           class="clickable"
-          onclick="window.location='/case/<%=rCaisse.id%>'"
+          onclick="window.location='/case/<%=rCaisse.user%>/cases'"
         >
           <%= j++ %>
         </th>
+
         <td
           scope="row"
           class="clickable"
-          onclick="window.location='/case/<%=rCaisse.id%>'"
+          onclick="window.location='/case/<%=rCaisse.user%>/cases'"
         >
           <%= rCaisse.pack.title%> / <%= rCaisse.pack.period%> <%=
           rCaisse.pack.unite%>
@@ -176,7 +183,7 @@
         <td
           scope="row"
           class="clickable"
-          onclick="window.location='/case/<%=rCaisse.id%>'"
+          onclick="window.location='/case/<%=rCaisse.user%>/cases'"
         >
           <%= rCaisse.amount.toLocaleString('de-DE', { minimumFractionDigits: 2
           })%> دج
@@ -184,7 +191,7 @@
         <td
           scope="row"
           class="clickable"
-          onclick="window.location='/case/<%=rCaisse.id%>'"
+          onclick="window.location='/case/<%=rCaisse.user%>/cases'"
         >
           <%= moment(rCaisse.date).format("YYYY-MM-DD")%>
         </td>
@@ -193,7 +200,7 @@
         <td
           scope="row"
           class="clickable"
-          onclick="window.location='/case/<%=rCaisse.id%>'"
+          onclick="window.location='/case/<%=rCaisse.user%>/cases'"
         >
           <div class="rounded-3 bg-warning progress-bar-striped text-white">
             قيد الإنتظار
@@ -204,7 +211,7 @@
         <td
           scope="row"
           class="clickable"
-          onclick="window.location='/case/<%=rCaisse.id%>'"
+          onclick="window.location='/case/<%=rCaisse.user%>/cases'"
         >
           <div class="rounded-3 bg-danger progress-bar-striped text-white">
             مرفوض
@@ -214,7 +221,7 @@
         <td
           scope="row"
           class="clickable"
-          onclick="window.location='/case/<%=rCaisse.id%>'"
+          onclick="window.location='/case/<%=rCaisse.user%>/cases'"
         >
           <div class="rounded-3 bg-success progress-bar-striped text-white">
             مقبول
@@ -226,13 +233,15 @@
           <%- include("./commentViewer",{message:rCaisse.motif,id:rCaisse.id})
           %>
         </td>
+        <% if(currentUser.role.includes("أدمين")) { %>
         <td>
-          <% if (rCaisse.state==="مقبول" || rCaisse.state==="مرفوض" ) {%> <%-
-          include("./reinvest/edit") %> <%}else{%> <%-
+          <% if (rCaisse.state=="مقبول" || rCaisse.state=="مرفوض" ) {%> <%-
+          include("./reinvest/edit") %> <% }else{%> <%-
           include("./reinvest/completedwithdraw") %> <%-
           include("./reinvest/edit") %> <%- include("./reinvest/delete") %>
           <%}%>
         </td>
+        <%}%>
       </tr>
       <%}%> <%}%>
     </tbody>
