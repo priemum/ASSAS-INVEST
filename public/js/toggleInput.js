@@ -1,7 +1,10 @@
-function selectActe(choice, id) {
+function selectOperation(choice, id,compareTo) {
+  console.log(choice,id,compareTo);
+  console.log(choice.value === compareTo);
+
   let packDiv = document.getElementById("pack-div-" + id);
   let pack = document.getElementById("pack-" + id);
-  if (choice.value === "إعادة الإستثمار") {
+  if (choice.value === compareTo) {
     packDiv.style.display = "";
     pack.setAttribute("required", "");
   } else {
@@ -9,7 +12,7 @@ function selectActe(choice, id) {
     packDiv.style.display = "none";
   }
 }
-function selectActe2(id, choice) {
+function selectOperation2(id, choice,compareTo) {
   let pack2 = document.getElementById("pack-" + id);
   let select = document.getElementById(id).value;
 
