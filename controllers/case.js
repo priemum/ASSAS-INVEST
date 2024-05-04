@@ -86,12 +86,17 @@ module.exports.showUpdateForm = async (req, res) => {
 };
 module.exports.showCase = async (req, res) => {
   const { id } = req.params;
-  const caisses = await Case.find({ user: id }).populate(["pack"]);
+  const caisses = await Case.find({
+    user: id,
+    state: { $eq: "نشطة" },
+  }).populate(["pack"]);
   res.render("case/show", { caisses, moment });
 };
 module.exports.showUserCases = async (req, res) => {
   const { id } = req.params;
-  const caisses = await Case.find({ user: id }).populate(["pack"]);
+  const caisses = await Case.find({ user: id })
+    .populate(["pack"])
+    .sort({ startDate: -1, state: 1 });
   res.render("case/indexuser", { caisses, moment });
 };
 module.exports.showUsersCase = async (req, res) => {

@@ -3,6 +3,7 @@ const crypto = require("crypto");
 const Case = require("../models/case");
 const Pack = require("../models/pack");
 const User = require("../models/user");
+const { isUndefined } = require("util");
 
 module.exports.withdrawList = async (req, res) => {
   const caisses = await Case.find({}).populate(["user", "pack"]);
@@ -51,7 +52,7 @@ module.exports.createWithdraw = async (req, res) => {
             reinvests: {
               amount: withdraw.amount,
               state: "قيد الإنتظار",
-              pack: pack || undifined,
+              pack: pack || caisse.pack,
             },
           },
         },
@@ -101,10 +102,11 @@ module.exports.showCaseWithdraws = async (req, res) => {
       state: ref.state,
       motif: ref.motif,
       date: ref.date,
+      user: caisse.user.id,
     });
   }
   res.render("withdraw/show", { caisse, moment, packs, reinvestCaisse });
-  // res.send(caisse);
+  // res.send(reinvestCaisse);
 };
 module.exports.updateWithdraw = async (req, res) => {
   const { idCase, idWithdraw } = req.params;

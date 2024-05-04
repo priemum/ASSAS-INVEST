@@ -19,7 +19,7 @@ router
   .post(isLoggedIn, isAdmin, catchAsync(createCase));
 router.route("/new").get(isLoggedIn, isAdmin, catchAsync(showCreationForm));
 router
-  .route("/:idct")
+  .route("/:id")
   .get(isLoggedIn, catchAsync(showCase))
   .put(isLoggedIn, isAdmin, catchAsync(updateCase))
   .delete(isLoggedIn, isAdmin, catchAsync(deleteCase));
