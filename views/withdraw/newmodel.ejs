@@ -5,7 +5,7 @@
   data-bs-toggle="modal"
   data-bs-target="#staticBackdropWithdraw"
 >
-سحب جديد <i class="bi bi-coin"></i></i>
+  طلب سحب / إعادة الإستثمار <i class="bi bi-coin"></i>
 </button>
 
 <!-- Modal -->
@@ -21,7 +21,9 @@
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">سحب لمستثمر <%= caisse.user.fullname%>: <%= caisse.reference%>  </h5>
+        <h5 class="modal-title" id="staticBackdropLabel">
+          طلب سحب / إعادة الإستثمار <%= caisse.user.fullname%>
+        </h5>
         <button
           type="button"
           class="btn-close"
@@ -36,59 +38,117 @@
               id="caseId"
               name="withdraw[caseId]"
               class="form-select border border-success"
-            > 
+            >
               <option selected class="option" value="<%= caisse.id%>">
-                <%= caisse.reference%> / <%= caisse.user.fullname%> / العوائد :<%=
-            caisse.restCase%> دج
+                <%= caisse.reference%> / <%= caisse.user.fullname%> / العوائد
+                :<%= caisse.restCase%> دج
               </option>
-            
             </select>
             <label for="caseId" class="form-label">رقم المرجع</label>
             <div class="valid-feedback">صحيح</div>
           </div>
-            <div class="form-floating mb-2 col-6">
-              <input class="form-control border border-success" type="date"
-              id="startDate" name="withdraw[date]" placeholder="date"
-              value="<%=moment().format("YYYY-MM-DD")%>" required />
-              <label for="startDate" class="form-labelfs-6">تاريخ السحب:</label>
-              <div class="valid-feedback">صحيح</div>
-            </div>
-            <div class="form-floating mb-2 col-6">
-              <input
-                class="form-control border border-success"
-                type="number"
-                id="Amount"
-                min="1"
-                 max="<%=caisse.restCase%>"
-                name="withdraw[amount]"
-                placeholder="المبلغ"
-                value="<%= caisse.restCase%>"
-                required
-              />
-              <label for="initAmount" class="form-labelfs-6">المبلغ:</label>
-              <div class="valid-feedback">صحيح</div>
-            </div>
-      
-            <div class="mb-2">
-              <textarea
-                class="form-control border border-success"
-                type="text"
-                id="description"
-                name="withdraw[description]"
-                placeholder="تفاصيل السحب"
-                rows="4"
-                required
-              ></textarea>
-              <div class="valid-feedback">صحيح</div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
-            إلغاء
-          </button>
-          <button  class="btn btn-outline-success">سحب</button>
-        </div>
-          </form>
+          <div class="form-floating col-12 mb-2">
+            <select
+              id="choice"
+              name="choice"
+              class="form-select border border-success"
+              onchange="selectOperation(this, '<%= caisse.reference %>','إعادة الإستثمار')"
+              required
+            >
+              <option selected disabled class="option" value="">
+                إختيار العملية
+              </option>
+              <option class="option" value="سحب">سحب</option>
+              <option class="option" value="إعادة الإستثمار">
+                إعادة الإستثمار
+              </option>
+            </select>
+
+            <label for="choice" class="form-label">إختيار العملية</label>
+            <div class="valid-feedback">صحيح</div>
           </div>
+          <div
+            class="form-floating col-12 mb-2"
+            id="pack-div-<%=caisse.reference%>"
+            style="display: none"
+          >
+            <select
+              id="pack-<%=caisse.reference%>"
+              name="pack"
+              class="form-select border border-success"
+            >
+              <option class="option" value="" disabled selected>
+                إختيار الباقة
+              </option>
+              <% for(pack of packs ){ %>
+
+              <option class="option" value="<%= pack.id%>">
+                <%=pack.title %>
+              </option>
+              <% } %>
+            </select>
+
+            <label for="technicien" class="form-label">إختيار الباقة</label>
+            <div class="valid-feedback">BIEN</div>
+          </div>
+
+          <div class="form-floating mb-2 col-6">
+            <% if(currentUser.role.includes("أدمين")) {%> <input
+            class="form-control border border-success" type="date"
+            id="startDate" name="withdraw[date]" placeholder="date"
+            value="<%=moment().format("YYYY-MM-DD")%>" required /> <% }else{ %>
+            <input class="form-control border border-success" type="date"
+            id="startDate" name="withdraw[date]" placeholder="date"
+            value="<%=moment().format("YYYY-MM-DD")%>" required
+            readonly="readonly" /> <% } %>
+            <label for="startDate" class="form-labelfs-6">تاريخ السحب:</label>
+            <div class="valid-feedback">صحيح</div>
+          </div>
+          <div class="form-floating mb-2 col-6">
+            <input
+              class="form-control border border-success"
+              type="number"
+              id="Amount"
+              min="1"
+              max="<%=caisse.restCase%>"
+              name="withdraw[amount]"
+              placeholder="المبلغ"
+              value="<%= caisse.restCase%>"
+              required
+            />
+            <label for="initAmount" class="form-labelfs-6">المبلغ:</label>
+            <div class="valid-feedback">صحيح</div>
+          </div>
+
+          <div class="mb-2" id="withdrawDescription">
+            <textarea
+              class="form-control border border-success"
+              type="text"
+              id="description"
+              name="withdraw[description]"
+              placeholder="تفاصيل السحب"
+              rows="4"
+              required
+            ></textarea>
+            <div class="valid-feedback">صحيح</div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-outline-danger"
+              data-bs-dismiss="modal"
+            >
+              إلغاء
+            </button>
+            <button class="btn btn-outline-success">سحب</button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </div>
+<script>
+  $("#choice").on("shown.bs.modal", function () {
+    $(this).find("[autofocus]").focus();
+  });
+</script>

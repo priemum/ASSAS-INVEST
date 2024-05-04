@@ -37,6 +37,7 @@ const userRoutes = require("./routes/user");
 const announcementRoutes = require("./routes/announcement");
 const packRoutes = require("./routes/pack");
 const caseRoutes = require("./routes/case");
+const caseOperRoutes = require("./routes/caseOperation");
 const profitsRoutes = require("./routes/profits");
 const courierRoutes = require("./routes/courier");
 const withdrawRoutes = require("./routes/withdraw");
@@ -77,7 +78,6 @@ app.use(passport.session());
 passport.use(
   "local",
   new LocalStrategy((email, password, done) => {
-    console.log("Welcome");
     User.findOne({ email: email.toLowerCase() }).then((user, err) => {
       if (err) {
         return done(err);
@@ -90,9 +90,6 @@ passport.use(
         );
       } else {
         if (user.approved) {
-          console.log("id:", user.id);
-          console.log("firstname:", user.firstname);
-          console.log("email:", user.email);
           return done(null, user);
         } else {
           return done(null, false, "تم تعطيل حسابك يرجى الاتصال بالادمين");
@@ -116,6 +113,7 @@ passport.deserializeUser((user, done) => {
 app.use(locals);
 app.use(cors());
 app.use("/case", caseRoutes);
+app.use("/case/:id/", caseOperRoutes);
 app.use("/announcement", announcementRoutes);
 app.use("/pack", packRoutes);
 app.use("/withdraw", withdrawRoutes);
@@ -135,7 +133,11 @@ app.get("/about", async (req, res) => {
 app.get("/test", async (req, res) => {
   const cases = await Case.find({}).then(function (documents) {
     for (document of documents) {
-      if (document.restDays == 0) {
+      if (
+        document.restDays == 0 &&
+        document.state == "نشطة" &&
+        document.pastDays > 0
+      ) {
         document.state = "قيد الإنتظار";
         document.save();
       }
@@ -143,6 +145,20 @@ app.get("/test", async (req, res) => {
   });
   const result = await Case.find({});
   res.send(result);
+});
+app.get("/testCase", async (req, res) => {
+  let totalWithdraws = [];
+  const cases = await Case.find({});
+  for (c of cases) {
+    totalWithdraws.push(
+      c.withdraws.reduce((acc, withraw) => {
+        if (withraw.state != "مرفوض") {
+          return acc + withraw.amount;
+        } else return 0;
+      }, 0)
+    );
+  }
+  res.send(totalWithdraws);
 });
 // app.all("*", (req, res, next) => {
 //   next(new ExpressError("page not found", 404));
@@ -156,10 +172,13 @@ app.listen(port, () => {
   console.log(`   ----- SERVER IS RUNNING ON PORT ${port} ----`);
   console.log("===================================================");
   const job = schedule.scheduleJob("0 0 0 * * *", async function () {
-    console.log("Check user cases state !!!");
     const cases = await Case.find({}).then(function (documents) {
       for (document of documents) {
-        if (document.restDays == 0 && document.state == "نشطة") {
+        if (
+          document.restDays == 0 &&
+          document.state == "نشطة" &&
+          document.pastDays > 0
+        ) {
           document.state = "قيد الإنتظار";
           document.save();
         }

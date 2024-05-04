@@ -4,7 +4,6 @@ const moment = require("moment");
 // ======================== showLoginForm ==========================
 module.exports.showUserForm = async (req, res) => {
   const user = await User.findById(req.params.id);
-  // console.log(user)
   res.render("user/editProfile", { user });
 };
 // ================== showLoginForm =============================
@@ -89,7 +88,6 @@ module.exports.logout = (req, res) => {
 module.exports.updateUser = async (req, res) => {
   const { user, approved } = req.body;
   const id = req.query.id;
-  console.log(user.approved);
   // res.send(id)
   const updatedUser = await User.findByIdAndUpdate(
     id,

@@ -14,8 +14,7 @@
           class="form-select border border-success"
         >
           <option selected disabled value="">رقم المرجع</option>
-          <% for (caisse of caisses){%>
-          <% if (caisse.restDays == 0 ){ %>
+          <% for (caisse of caisses){%> <% if (caisse.restDays == 0 ){ %>
           <option class="option" value="<%= caisse.id%>">
             <%= caisse.reference%> / <%= caisse.user.fullname%> / العوائد :<%=
             caisse.restCase%> دج
@@ -38,7 +37,7 @@
           type="number"
           id="Amount"
           min="1"
-           max="<%=caisse.initAmount%>"
+          max="<%=caisse.initAmount%>"
           name="withdraw[amount]"
           placeholder=""
           required
