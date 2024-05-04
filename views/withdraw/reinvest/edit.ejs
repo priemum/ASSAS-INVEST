@@ -4,7 +4,7 @@
   type="button"
   class="btn btn-outline-warning bg-gradient px-2 py-1"
   data-bs-toggle="modal"
-  data-bs-target="#uwithdraw-<%= caisse.id %>"
+  data-bs-target="#uwithdraw-<%= rCaisse.id %>"
 >
   <i class="bi bi-pencil-fill"></i>
 </button>
@@ -12,7 +12,7 @@
 <!-- Modal -->
 <div
   class="modal fade"
-  id="uwithdraw-<%= caisse.id %>"
+  id="uwithdraw-<%= rCaisse.id %>"
   data-bs-backdrop="static"
   data-bs-keyboard="false"
   tabindex="-1"
@@ -31,17 +31,19 @@
         ></button>
       </div>
       <div class="modal-body">
-        <% if (caisse.state =="قيد الإنتظار"){ %>
+        <% if (rCaisse.state =="قيد الإنتظار"){ %>
         <form
           class="row p-2 needs-validation"
-          action="/withdraw/<%=caisse.id%>/<%=caisse.id%>/?_method=PUT"
+          action="/case/<%=caisse.id%>/<%=rCaisse.id%>/operation/?_method=PUT&f=1"
           method="POST"
         >
           <div class="form-floating mb-2 col-6">
             <input class="form-control border border-success" type="date"
-            id="startDate" name="withdraw[date]" placeholder="date"
-            value="<%=moment(caisse.date).format("YYYY-MM-DD")%>" required />
-            <label for="startDate" class="form-labelfs-6">تاريخ السحب:</label>
+            id="startDate" name="reinvest[date]" placeholder="date"
+            value="<%=moment(rCaisse.date).format("YYYY-MM-DD")%>" required />
+            <label for="startDate" class="form-labelfs-6"
+              >تاريخ إعادة الاستثمار</label
+            >
             <div class="valid-feedback">صحيح</div>
           </div>
           <div class="form-floating mb-2 col-6">
@@ -50,9 +52,9 @@
               type="number"
               id="Amount"
               min="1"
-              max="<%=caisse.restCase + caisse.amount%>"
-              name="withdraw[amount]"
-              value="<%= caisse.amount %>"
+              max="<%=caisse.restCase%>"
+              name="reinvest[amount]"
+              value="<%= rCaisse.amount %>"
               required
             />
             <label for="initAmount" class="form-labelfs-6">المبلغ:</label>
@@ -63,12 +65,12 @@
               class="form-control border border-success"
               type="text"
               id="description"
-              name="withdraw[description]"
+              name="reinvest[description]"
               placeholder="تفاصيل السحب"
               rows="4"
               required
             >
- <%= caisse.description %></textarea
+ <%= rCaisse.description %></textarea
             >
             <div class="valid-feedback">صحيح</div>
           </div>
@@ -98,7 +100,7 @@
         <form
           class=""
           id="delete-form"
-          action="/withdraw/<%=caisse.id%>/<%=caisse.id%>/?_method=PUT&confirmed=0"
+          action="/case/<%=caisse.id%>/<%=rCaisse.id%>/operation/?_method=PUT&f=0"
           method="POST"
         >
           <div class="modal-footer mt-4">

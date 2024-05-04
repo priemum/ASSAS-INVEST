@@ -310,7 +310,7 @@
       $("#selectedUser").change(function () {
         var selectedUser = $("#selectedUser").val();
         var clientmsg = "بدأ محادثة جديدة";
-        console.log("selected user: " + selectedUser);
+
         $.ajax({
           url: "/courier",
           type: "POST",
@@ -328,7 +328,6 @@
           if (state === "part2") {
             var id_selectedUser = localStorage.getItem("selectedUser");
             id_selectedUser = "#" + id_selectedUser;
-            console.log("selected user after R: " + id_selectedUser);
             $(id_selectedUser).trigger("click");
             localStorage.removeItem("State");
           }

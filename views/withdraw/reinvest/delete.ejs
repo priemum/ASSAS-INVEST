@@ -20,7 +20,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="staticBackdropLabel">
-          حذف <%=caisse.reference %>
+          حذف <%=rCaisse.reference %>
         </h5>
 
         <button
@@ -45,7 +45,7 @@
         <form
           class=""
           id="delete-form"
-          action="/case/<%=caisse.id%>/operation/<%=rCaisse.id%>/?_method=DELETE"
+          action="/case/<%=caisse.id%>/<%=rCaisse.id%>/?_method=DELETE"
           method="POST"
         >
           <div class="modal-footer mt-4">

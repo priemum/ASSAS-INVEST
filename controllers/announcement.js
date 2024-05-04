@@ -9,16 +9,15 @@ module.exports.showAnnouncements = async (req, res) => {
 };
 module.exports.addAnnouncement = async (req, res) => {
   // get the Announcement id from the materiels table
-  console.log("before announcement: ")
+
   const { creationDate, title, resume, description } = req.body.announcement;
-  
+
   const newAnnouncement = new Announcement({
     creationDate,
     title,
     resume,
-    description
+    description,
   });
-  console.log("before announcement: ")
   // res.send(req.file.path);
 
   newAnnouncement.picture = {
@@ -31,7 +30,6 @@ module.exports.addAnnouncement = async (req, res) => {
   res.redirect("/announcement");
 };
 module.exports.showAnnouncement = async (req, res) => {
-
   const { idannouncement } = req.params;
   const announcement = await Announcement.findById(idannouncement);
   // send it to the client

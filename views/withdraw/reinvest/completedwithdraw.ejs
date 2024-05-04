@@ -47,7 +47,7 @@
         <form
           class=""
           id="delete-form"
-          action="/case/<%=caisse.id%>/operation/<%=rCaisse.id%>/?_method=PUT&from=1"
+          action="/case/<%=caisse.id%>/<%=rCaisse.id%>/?_method=PUT&from=1"
           method="POST"
         >
           <div class="form-floating col-12 mb-2">
@@ -69,29 +69,29 @@
             <div class="valid-feedback">صحيح</div>
           </div>
           <div
-          class="form-floating col-12 mb-2"
-          id="pack-div-<%=rCaisse.id%>"
-          style="display: none"
-        >
-          <select
-            id="pack-<%=rCaisse.id%>"
-            name="pack"
-            class="form-select border border-success"
+            class="form-floating col-12 mb-2"
+            id="pack-div-<%=rCaisse.id%>"
+            style="display: none"
           >
-            <option class="option" value="" disabled selected>
-              إختيار الباقة
-            </option>
-            <% for(pack of packs ){ %>
+            <select
+              id="pack-<%=rCaisse.id%>"
+              name="pack"
+              class="form-select border border-success"
+            >
+              <option class="option" value="" disabled selected>
+                إختيار الباقة
+              </option>
+              <% for(pack of packs ){ %>
 
-            <option class="option" value="<%= pack.id%>">
-              <%=pack.title %>
-            </option>
-            <% } %>
-          </select>
+              <option class="option" value="<%= pack.id%>">
+                <%=pack.title %>
+              </option>
+              <% } %>
+            </select>
 
-          <label for="technicien" class="form-label">إختيار الباقة</label>
-          <div class="valid-feedback">BIEN</div>
-        </div>
+            <label for="technicien" class="form-label">إختيار الباقة</label>
+            <div class="valid-feedback">BIEN</div>
+          </div>
           <div class="form-floating mb-2 col-12">
             <input
               class="form-control border border-success"

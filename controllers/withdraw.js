@@ -15,7 +15,7 @@ module.exports.createWithdraw = async (req, res) => {
   ref_id = ref_id + year;
   // Find the case
   const caisse = await Case.findById(withdraw.caseId);
-  console.log("test caisse:", caisse.restCase);
+
   // في حالة السحب
   if (choice == "سحب") {
     // Check the amount by comparing it to the restCase property
@@ -39,8 +39,8 @@ module.exports.createWithdraw = async (req, res) => {
     } else {
       req.flash("error", "🖕 😂 المبلغ المسحوب اكبر من المبلغ الباقي 😂 🖕");
     }
-    
-  } else {// في حالة إعادة الإستثمار
+  } else {
+    // في حالة إعادة الإستثمار
     // Check the amount by comparing it to the restCase property
     if (withdraw.amount <= caisse.restCase) {
       // update the case by pushing a new reinvest object to the reinvests table
@@ -99,6 +99,8 @@ module.exports.showCaseWithdraws = async (req, res) => {
       amount: ref.amount,
       pack: await Pack.findById(ref.pack),
       state: ref.state,
+      motif: ref.motif,
+      date: ref.date,
     });
   }
   res.render("withdraw/show", { caisse, moment, packs, reinvestCaisse });
@@ -109,7 +111,7 @@ module.exports.updateWithdraw = async (req, res) => {
   const { withdraw, choice, motif } = req.body;
   const { from } = req.query;
   // if the request comes from the confirm button
-  //  (completedwithdraw.ejs) in the show page 
+  //  (completedwithdraw.ejs) in the show page
   if (choice) {
     await Case.findOneAndUpdate(
       { _id: idCase, "withdraws._id": idWithdraw },

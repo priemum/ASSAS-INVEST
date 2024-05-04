@@ -4,18 +4,16 @@ const express = require("express");
 const router = express.Router({ mergeParams: true });
 const catchAsync = require("../utils/catchAsync");
 const { isLoggedIn, isAdmin } = require("../middleware/middleware");
-const { updateUserDemande,deleteUserReinvest } = require("../controllers/caseOperation");
-// router
-//   .route("/")
-//   .post(isLoggedIn, catchAsync(createWithdraw))
-//   .get(isLoggedIn, isAdmin, catchAsync(withdrawList));
-
-// router.route("/new").get(isLoggedIn, isAdmin, catchAsync(showCreationForm));
+const {
+  updateUserDemande,
+  deleteUserReinvest,
+  updateReinvest,
+} = require("../controllers/caseOperation");
 router
   .route("/:idct")
-  //   .get(isLoggedIn, catchAsync(showCaseWithdraws))
   .put(isLoggedIn, isAdmin, catchAsync(updateUserDemande))
   .delete(isLoggedIn, catchAsync(deleteUserReinvest));
-
-// router.route("/:id/edit").get(isLoggedIn, isAdmin, catchAsync(showUpdateForm));
+router
+  .route("/:idct/operation")
+  .put(isLoggedIn, isAdmin, catchAsync(updateReinvest));
 module.exports = router;

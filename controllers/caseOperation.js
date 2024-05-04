@@ -14,15 +14,12 @@ module.exports.updateUserDemande = async (req, res) => {
   ref_id = ref_id + year;
   // state:مقبول /مرفوض
   if (state == "مقبول") {
-    console.log("مقبول");
     const casee = await Case.findById(id);
     let amount;
     for (c of casee.reinvests) {
       if (c.id === idct) {
         amount = c.amount;
       }
-      console.log("amount:", amount);
-      console.log(typeof amount);
     }
     const packchosen = await Pack.findById(pack);
     let endDate;
@@ -62,8 +59,7 @@ module.exports.updateUserDemande = async (req, res) => {
     );
   } else {
     // مرفوض
-    console.log("مرفوض");
-    console.log("idct:", idct);
+
     await Case.findOneAndUpdate(
       { _id: id, "reinvests._id": idct },
       {
@@ -81,10 +77,49 @@ module.exports.updateUserDemande = async (req, res) => {
   res.redirect(redirectUrl);
   // res.send("dsadsad")
 };
+module.exports.updateReinvest = async (req, res) => {
+  const { id, idct } = req.params;
+  const { reinvest } = req.body;
+  const { f } = req.query;
+  const caisse = await Case.findById(id);
+  // if we want to cancel the operation of the reinvest
+  // ex: مرفوض => قيد الانتظار
+  // مقبول => قيد الانتظار
+  if (f == 0) {
+    await Case.findOneAndUpdate(
+      { _id: id, "reinvests._id": idct },
+      {
+        $set: {
+          "reinvests.$.state": "قيد الإنتظار",
+        },
+      },
+      { new: true }
+    );
+    // edit the user demande details such as the date, amount...
+  } else if (f == 1) {
+    if (reinvest.amount <= caisse.restCase) {
+      // if the request comes from the
+      await Case.findOneAndUpdate(
+        { _id: id, "reinvests._id": idct },
+        {
+          $set: {
+            "reinvests.$.date": reinvest.date,
+            "reinvests.$.amount": reinvest.amount,
+            "reinvests.$.description": reinvest.description,
+          },
+        },
+        { new: true }
+      );
+    }
+  }
+  const redirectUrl = `back`;
+  req.flash("success", "تم تحديث السحب بنجاح");
+  res.redirect(redirectUrl);
+  // res.send("request recieved");
+};
 module.exports.deleteUserReinvest = async (req, res) => {
   const { id, idct } = req.params;
-  console.log("deleteUserReinvest")
- await Case.findByIdAndUpdate(
+  await Case.findByIdAndUpdate(
     id,
     { $pull: { reinvests: { _id: idct } } },
     { new: true }

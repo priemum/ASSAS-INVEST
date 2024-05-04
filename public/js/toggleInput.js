@@ -1,24 +1,28 @@
-function selectOperation(choice, id,compareTo) {
-  console.log(choice,id,compareTo);
-  console.log(choice.value === compareTo);
-
+function selectOperation(choice, id, compareTo) {
   let packDiv = document.getElementById("pack-div-" + id);
   let pack = document.getElementById("pack-" + id);
+  let description = document.getElementById("withdrawDescription");
   if (choice.value === compareTo) {
     packDiv.style.display = "";
+    description.style.display = "none";
     pack.setAttribute("required", "");
   } else {
     pack.removeAttribute("required");
     packDiv.style.display = "none";
+    description.style.display = "";
   }
 }
-function selectOperation2(id, choice,compareTo) {
-  let pack2 = document.getElementById("pack-" + id);
-  let select = document.getElementById(id).value;
-
-  if (choice === "إعادة الإستثمار" || select === "إعادة الإستثمار") {
-    pack2.style.display = "";
+function selectOperation2(id, choice, compareTo) {
+  let packDiv = document.getElementById("pack-div-" + id);
+  let pack = document.getElementById("pack-" + id);
+  let description = document.getElementById("withdrawDescription");
+  if (choice.value === compareTo) {
+    packDiv.style.display = "";
+    description.style.display = "none";
+    pack.setAttribute("required", "");
   } else {
-    pack2.style.display = "none";
+    pack.removeAttribute("required");
+    packDiv.style.display = "";
+    description.style.display = "";
   }
 }
