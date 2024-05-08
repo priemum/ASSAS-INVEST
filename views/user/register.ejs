@@ -1,12 +1,10 @@
 <% layout('layouts/boilerplate')%>
 <div
-  class="d-flex justify-content-center align-items-center mx-5 "
+  class="d-flex justify-content-center align-items-center mx-3"
   id="register-box"
 >
-  <div class=" p-3 shadow-sm border rounded-3 bg-light">
-   
-       <h1 class="text-success text-center  mb-3">إضافة مستثمر جديد</h1>
-     
+  <div class="p-2 shadow-sm border rounded-3 bg-light">
+    <h1 class="text-success text-center mb-3">إضافة مستثمر جديد</h1>
 
     <form
       class="row g-3 needs-validation"
@@ -14,97 +12,92 @@
       id="personal"
       method="POST"
       novalidate
-      
     >
-    <div class="form-floating">
-      <select
-        id="role"
-        name="user[role]"
-        class="form-select border border-success"
-        required
-      >
-        <option selected disabled value="">الدور</option>
-        <option class="option" value="أدمين">أدمين</option>
-        <option class="option" value="مستثمر">مستثمر</option>
-      </select>
-      <label for="role" class="form-label">الدور</label>
-      <div class="valid-feedback">صحيح</div>
-    </div>
-    <div class="form-floating col-md-6 mb-2">
-      <input
-        type="text"
-        name="user[firstname]"
-        class="form-control border border-success"
-        id="firstname"
-        placeholder="الإسم"
-      />
-      <label for="firstname" class="form-label">الإسم</label>
-      <div class="valid-feedback">صحيح</div>
-    </div>
-    <div class="form-floating col-md-6 mb-2">
-      <input
-        type="text"
-        name="user[lastname]"
-        class="form-control border border-success"
-        id="lastname"
-        placeholder="اللقب"
-        
-      />
-      <label for="lastname" class="form-label">اللقب</label>
-      <div class="valid-feedback">صحيح</div>
-    </div>
+      <div class="form-floating col-12">
+        <select
+          id="role"
+          name="user[role]"
+          class="form-select border border-success"
+          required
+        >
+          <option selected disabled value="">الدور</option>
+          <option class="option" value="أدمين">أدمين</option>
+          <option class="option" value="مستثمر">مستثمر</option>
+        </select>
+        <label for="role" class="form-label">الدور</label>
+        <div class="valid-feedback">صحيح</div>
+      </div>
+      <div class="form-floating col-sm-12 col-md-6 col-lg-6 mb-2">
+        <input
+          type="text"
+          name="user[firstname]"
+          class="form-control border border-success"
+          id="firstname"
+          placeholder="الإسم"
+        />
+        <label for="firstname" class="form-label">الإسم</label>
+        <div class="valid-feedback">صحيح</div>
+      </div>
+      <div class="form-floating col-sm-12 col-md-6 col-lg-6 mb-2">
+        <input
+          type="text"
+          name="user[lastname]"
+          class="form-control border border-success"
+          id="lastname"
+          placeholder="اللقب"
+        />
+        <label for="lastname" class="form-label">اللقب</label>
+        <div class="valid-feedback">صحيح</div>
+      </div>
 
-    <div class="form-floating col-md-6 mb-2">
-      <input
-        type="text"
-        name="user[phone]"
-        class="form-control border border-success"
-        id="phone"
-        placeholder="الهاتف"
-        
-      />
-      <label for="phone" class="form-label">الهاتف</label>
-      <div class="valid-feedback">صحيح</div>
-    </div>
-    <div class="form-floating col-md-6 mb-2">
-      <input
-        type="text"
-        name="user[adress]"
-        class="form-control border border-success"
-        id="adress"
-        placeholder="العنوان"
-        
-      />
-      <label for="adress" class="form-label">العنوان</label>
-      <div class="valid-feedback">صحيح</div>
-    </div>
-    
-    <div class="form-floating col-md-6 mb-2">
-      <input id="BirthDate" name="user[birthdate]" type="date"
-      class="form-control border border-success" max="<%= moment().format("YYYY-MM-DD") %>"
-      min="<%= moment('01/01/1900').format('YYYY-MM-DD')%>" />
-      <label for="BirthDate" class="form-label"
-        >تاريخ الميلاد
-      </label>
-      <div class="valid-feedback">صحيح</div>
-    </div>
+      <div class="form-floating col-sm-12 col-md-6 col-lg-6 mb-2">
+        <input
+          type="text"
+          name="user[phone]"
+          class="form-control border border-success"
+          id="phone"
+          placeholder="الهاتف"
+        />
+        <label for="phone" class="form-label">الهاتف</label>
+        <div class="valid-feedback">صحيح</div>
+      </div>
+      <div class="form-floating col-sm-12 col-md-6 col-lg-6 mb-2">
+        <input
+          type="text"
+          name="user[adress]"
+          class="form-control border border-success"
+          id="adress"
+          placeholder="العنوان"
+        />
+        <label for="adress" class="form-label">العنوان</label>
+        <div class="valid-feedback">صحيح</div>
+      </div>
 
-    <div class="form-floating col-md-6">
-      <select
-        id="gender"
-        name="user[gender]"
-        class="form-select border border-success"
-        required
-      >
-        <option selected disabled value="">الجنس</option>
-        <option class="option" value="ذكر">ذكر</option>
-        <option class="option" value="أنثى">أنثى</option>
-      </select>
-      <label for="gender" class="form-label">الجنس</label>
-      <div class="valid-feedback">صحيح</div>
-    </div>
+      <div class="form-floating col-sm-12 col-md-6 col-lg-6 mb-2">
+        <input id="BirthDate" name="user[birthdate]" type="date"
+        class="form-control border border-success" max="<%=
+        moment().format("YYYY-MM-DD") %>" min="<%=
+        moment('01/01/1900').format('YYYY-MM-DD')%>" />
+        <label for="BirthDate" class="form-label">تاريخ الميلاد </label>
+        <div class="valid-feedback">صحيح</div>
+      </div>
 
-      <div class="form-floating col-md-6 mb-2">
+      <div class="form-floating col-sm-12 col-md-6 col-lg-6">
+        <select
+          id="gender"
+          name="user[gender]"
+          class="form-select border border-success"
+          required
+        >
+          <option selected disabled value="">الجنس</option>
+          <option class="option" value="ذكر">ذكر</option>
+          <option class="option" value="أنثى">أنثى</option>
+        </select>
+        <label for="gender" class="form-label">الجنس</label>
+        <div class="valid-feedback">صحيح</div>
+      </div>
+
+      <div class="form-floating col-sm-12 col-md-6 col-lg-6 mb-2">
         <input
           type="email"
           name="user[email]"
@@ -116,8 +109,7 @@
         <label for="email" class="form-label"> البريد الإلكتروني</label>
         <div class="valid-feedback">صحيح</div>
       </div>
-      <div class="form-floating col-md-6 mb-2">
-       
+      <div class="form-floating col-sm-12 col-md-6 col-lg-6 mb-2">
         <input
           name="user[password]"
           type="text"
@@ -130,9 +122,7 @@
       </div>
 
       <div class="d-grid">
-        <button class="btn btn-success py-2" type="submit">
-          إضافة
-        </button>
+        <button class="btn btn-success py-2" type="submit">إضافة</button>
       </div>
     </form>
   </div>

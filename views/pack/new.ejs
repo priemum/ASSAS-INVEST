@@ -7,7 +7,7 @@
     <h1 class="display-6 text-success text-center mb-3">إضافة باقة جديدة</h1>
 
     <form class="row g-3 m-2 needs-validation" action="/pack" method="POST">
-      <div class="form-floating col-md-6 mb-2">
+      <div class="form-floating col-sm-12 col-12 mb-2">
         <input
           dir="rtl"
           class="form-control border border-success"
@@ -21,7 +21,7 @@
         <div class="valid-feedback">صحيح</div>
       </div>
 
-      <div class="form-floating mb-2 col-3">
+      <div class="form-floating mb-2 col-sm-12 col-md-6 col-lg-6">
         <input
           class="form-control border border-success"
           type="number"
@@ -30,11 +30,11 @@
           placeholder="مدة الباقة"
           required
         />
-        <label for="period" class="form-labelfs-6">المدة:</label>
+        <label for="period" class="form-label fs-6">المدة:</label>
         <div class="valid-feedback">صحيح</div>
       </div>
 
-      <div class="form-floating col-3 mb-2">
+      <div class="form-floating col-sm-12 col-md-6 col-lg-6 mb-2">
         <select
           id="unite"
           name="pack[unite]"
