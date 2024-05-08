@@ -120,8 +120,6 @@ app.use("/withdraw", withdrawRoutes);
 app.use("/profits", profitsRoutes);
 app.use("/user", userRoutes);
 app.use("/courier", courierRoutes);
-
-// app.use("/user/:id/transaction", userRoutes);
 // === Home Page ===
 app.get("/", async (req, res) => {
   const packs = await Packs.find({});
@@ -160,10 +158,10 @@ app.get("/testCase", async (req, res) => {
   }
   res.send(totalWithdraws);
 });
-// app.all("*", (req, res, next) => {
-//   next(new ExpressError("page not found", 404));
-// });
-// app.use(errorPage);
+app.all("*", (req, res, next) => {
+  next(new ExpressError("page not found", 404));
+});
+app.use(errorPage);
 // the PORT variable is in .env file but it won't be added to the deployed site
 const port = process.env.PORT || 8888;
 
