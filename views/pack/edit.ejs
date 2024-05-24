@@ -1,7 +1,7 @@
 <!-- Button trigger modal -->
 <button
   type="button"
-  class="me-3 btn btn-outline-warning bg-gradient px-2 py-1"
+  class="btn btn-outline-warning bg-gradient px-2 py-1"
   data-bs-toggle="modal"
   data-bs-target="#pack-<%= pack.id %>"
 >
@@ -36,7 +36,7 @@
           action="/pack/<%= pack.id %>/?_method=PUT"
           method="POST"
         >
-          <div class="form-floating col-md-6 mb-2">
+          <div class="form-floating mb-2">
             <input
               dir="rtl"
               class="form-control border border-success"
@@ -47,11 +47,11 @@
               placeholder="اسم الباقة"
               required
             />
-            <label for="title" class="form-labelfs-6">إسم الباقة:</label>
+            <label for="title" class="form-label fs-6">إسم الباقة:</label>
             <div class="valid-feedback">صحيح</div>
           </div>
 
-          <div class="form-floating mb-2 col-3">
+          <div class="form-floating mb-2 col-sm-12 col-md-6 col-lg-6">
             <input
               class="form-control border border-success"
               type="number"
@@ -61,10 +61,10 @@
               placeholder="مدة الباقة"
               required
             />
-            <label for="period" class="form-labelfs-6">المدة:</label>
+            <label for="period" class="form-label fs-6">المدة:</label>
             <div class="valid-feedback">صحيح</div>
           </div>
-          <div class="form-floating col-3 mb-2">
+          <div class="form-floating col-sm-12 col-md-6 col-lg-6 mb-2">
             <select
               id="unite"
               name="pack[unite]"

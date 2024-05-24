@@ -128,6 +128,15 @@ app.get("/", async (req, res) => {
 app.get("/about", async (req, res) => {
   res.render("about/about");
 });
+app.get("/soon", async (req, res) => {
+  const launchDate = moment("2024/12/12").format("DD/MM/YYYYY");
+  const product = {
+    name: "Assas Invest",
+    description:
+      "نحن نقدم لكم منصة متكاملة تجمع بين الخبرة العميقة والتحليل الدقيق لتحقيق أفضل العوائد المالية",
+  };
+  res.render("commingSoon/commingSoon", { product, launchDate });
+});
 app.get("/test", async (req, res) => {
   const cases = await Case.find({}).then(function (documents) {
     for (document of documents) {

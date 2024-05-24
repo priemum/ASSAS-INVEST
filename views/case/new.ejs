@@ -7,7 +7,7 @@
     <h1 class="display-6 text-success text-center mb-3">إضافة باقة لمستثمر</h1>
 
     <form class="row g-3 m-2 needs-validation" action="/case" method="POST">
-      <div class="form-floating col-4 mb-2">
+      <div class="form-floating mb-2 col-sm-12 col-md-6 col-lg-4">
         <input
           class="form-control border border-success"
           type="text"
@@ -22,7 +22,7 @@
         <div class="valid-feedback">صحيح</div>
       </div>
 
-      <div class="form-floating mb-2 col-4">
+      <div class="form-floating mb-2 col-sm-12 col-md-6 col-lg-4">
         <input
           class="form-control border border-success"
           type="number"
@@ -35,7 +35,7 @@
         <div class="valid-feedback">صحيح</div>
       </div>
 
-      <div class="form-floating mb-2 col-4">
+      <div class="form-floating mb-2 col-sm-12 col-md-6 col-lg-4">
         <input class="form-control border border-success" type="date"
         id="startDate" name="casee[startDate]" placeholder=""
         value="<%=moment().format("YYYY-MM-DD")%>" required />
@@ -43,7 +43,7 @@
         <div class="valid-feedback">صحيح</div>
       </div>
 
-      <div class="form-floating col-6 mb-2">
+      <div class="form-floating col-sm-12 col-md-6 col-lg-6 mb-2">
         <select
           id="user"
           name="casee[user]"
@@ -59,7 +59,7 @@
         <label for="user" class="form-label">المستثمر</label>
         <div class="valid-feedback">صحيح</div>
       </div>
-      <div class="form-floating col-6 mb-2">
+      <div class="form-floating col-sm-12 col-md-12 col-lg-6 mb-2">
         <select
           id="pack"
           name="casee[pack]"
