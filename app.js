@@ -52,13 +52,11 @@ const { sessionConfig } = require("./config/sessionConfig");
 
 const { locals } = require("./config/local");
 const app = express();
-//const helmet = require("helmet");
+
 
 // =========================== App Configuration =========================
 app.set("trust proxy", true);
 app.disable("x-powered-by");
-
-//app.use(helmet());
 app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));

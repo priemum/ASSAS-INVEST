@@ -54,6 +54,9 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://momentjs.com/downloads/moment.min.js"></script>
     <script>
+      let currentUser = <%- JSON.stringify(currentUser) %>;
+    </script>
+    <script>
       $(document).ready(function () {
         $("#search").on("keyup", function () {
           var value = $(this).val().toLowerCase();
@@ -115,7 +118,6 @@
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/toggleInput.js"></script>
     <script src="/js/sortable.js"></script>
-    <script src="/js/commingSoon.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
       AOS.init();

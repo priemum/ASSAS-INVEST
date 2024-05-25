@@ -1,4 +1,4 @@
-const Invest = require("../models/case");
+const Case = require("../models/case");
 const Pack = require("../models/pack");
 module.exports.errorPage = (err, req, res, next) => {
   const { statusCode = 500 } = err;
@@ -19,7 +19,7 @@ module.exports.isAdmin = async (req, res, next) => {
   }
   next();
 };
-module.exports.isLoggedIn = (req, res, next) => {
+module.exports.isLoggedIn = async (req, res, next) => {
   if (!req.isAuthenticated()) {
     req.session.returnTo = req.originalUrl;
     req.flash("error", "You must be signed in first!");
@@ -29,7 +29,7 @@ module.exports.isLoggedIn = (req, res, next) => {
 };
 module.exports.isAuthor = async (req, res, next) => {
   const { id } = req.params;
-  const invest = await Invest.findById(id);
+  const invest = await Case.findById(id);
   if (!invest.user._id.equals(req.user._id)) {
     // console.log("is the same user");
     req.flash("error", "You do not have permission to do that!");

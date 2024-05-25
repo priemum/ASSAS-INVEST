@@ -31,7 +31,8 @@
       </tr>
     </thead>
     <tbody id="tablebody">
-      <% var i=1 %> <% for (caisse of caisses){%> <% if (caisse.state === "قيد الإنتظار"){ %>
+      <% var i=1 %> <% for (caisse of caisses){%> 
+      <% if (caisse.state === "قيد الإنتظار"){ %>
       <tr>
         <th
           scope="row"
