@@ -15,6 +15,7 @@ module.exports.showUserMain = async (req, res) => {
   res.render("case/main", { caisse, moment }); //fix global initamount
 };
 module.exports.profitsList = async (req, res) => {
+  console.log(res.locals.announceProfits)
   const caisses = await Case.find({}).populate(["user", "pack"]);
   res.render("case/profits/index", { caisses, moment });
 };

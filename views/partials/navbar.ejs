@@ -158,8 +158,11 @@
                 >
               </li>
               <li>
-                <a class="dropdown-item text-dark fs-5" href="/profits"
-                  >إعلان أرباح الباقة</a
+                <a class="dropdown-item text-dark fs-5" href="/profits" 
+                  > <% if(announceProfits!=0) {%> 
+                    <span class="badge bg-lightCoral"> <%=announceProfits %></span>
+                    <% } %> 
+                    إعلان أرباح الباقة</a
                 >
               </li>
               <li>

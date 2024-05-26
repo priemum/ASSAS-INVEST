@@ -1,109 +1,179 @@
 <% layout('layouts/boilerplate')%>
-  <!-- Button trigger modal -->
-  <button type="button" class="btn btn-outline-warning bg-gradient px-2 py-1" data-bs-toggle="modal"
-    data-bs-target="#nuser-<%= user.id %>">
-    <i class="bi bi-pencil-fill"></i>
-  </button>
+<!-- Button trigger modal -->
+<button
+  type="button"
+  class="btn btn-outline-warning bg-gradient px-2 py-1 me-2"
+  data-bs-toggle="modal"
+  data-bs-target="#nuser-<%= user.id %>"
+>
+  <i class="bi bi-pencil-fill"></i>
+</button>
 
-  <!-- Modal -->
-  <div class="modal fade" id="nuser-<%= user.id %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="staticBackdropLabel">تعديل معلومات مستثمر</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form class="row p-2 needs-validation" action="/user/<%= user.id %>/?_method=PUT&id=<%= user.id %>"
-            method="POST">
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="nuser-<%= user.id %>"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div
+    class="modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable"
+  >
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">
+          تعديل معلومات مستثمر
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form
+          class="row p-2 needs-validation"
+          action="/user/<%= user.id %>/?_method=PUT&id=<%= user.id %>"
+          method="POST"
+        >
+          <div class="form-floating mb-2">
+            <select
+              id="role"
+              name="user[role]"
+              class="form-select border border-success"
+              required
+            >
+              <option selected disabled value="">الدور</option>
+              <% if (user.role=="أدمين" ){%>
+              <option class="option" value="أدمين" selected>أدمين</option>
+              <option class="option" value="مستثمر">مستثمر</option>
+              <% }else{ %>
+              <option class="option" value="أدمين">أدمين</option>
+              <option class="option" value="مستثمر" selected>مستثمر</option>
+              <% } %>
+            </select>
+            <label for="role" class="form-label">الدور</label>
+            <div class="valid-feedback">صحيح</div>
+          </div>
+          <div class="form-floating col-md-6 mb-2">
+            <input
+              type="text"
+              name="user[firstname]"
+              class="form-control border border-success"
+              id="firstname"
+              placeholder="الإسم"
+              value="<%= user.firstname %>"
+            />
+            <label for="firstname" class="form-label">الإسم</label>
+            <div class="valid-feedback">صحيح</div>
+          </div>
+          <div class="form-floating col-md-6 mb-2">
+            <input
+              type="text"
+              name="user[lastname]"
+              class="form-control border border-success"
+              id="lastname"
+              placeholder="اللقب"
+              value="<%= user.lastname %>"
+            />
+            <label for="lastname" class="form-label">اللقب</label>
+            <div class="valid-feedback">صحيح</div>
+          </div>
 
+          <div class="form-floating col-md-6 mb-2">
+            <input
+              type="text"
+              name="user[phone]"
+              class="form-control border border-success"
+              id="phone"
+              placeholder="الهاتف"
+              value="<%= user.phone %>"
+            />
+            <label for="phone" class="form-label">الهاتف</label>
+            <div class="valid-feedback">صحيح</div>
+          </div>
+          <div class="form-floating col-md-6 mb-2">
+            <input
+              type="text"
+              name="user[adress]"
+              class="form-control border border-success"
+              id="adress"
+              placeholder="العنوان"
+              value="<%=user.adress%>"
+            />
+            <label for="adress" class="form-label">العنوان</label>
+            <div class="valid-feedback">صحيح</div>
+          </div>
 
-            <div class="form-floating mb-2">
-              <select id="role" name="user[role]" class="form-select border border-success" required>
-                <option selected disabled value="">الدور</option>
-                <% if (user.role=="أدمين" ){%>
-                  <option class="option" value="أدمين" selected>أدمين</option>
-                  <option class="option" value="مستثمر">مستثمر</option>
-                  <% }else{ %>
-                    <option class="option" value="أدمين">أدمين</option>
-                    <option class="option" value="مستثمر" selected>مستثمر</option>
-                    <% } %>
-              </select>
-              <label for="role" class="form-label">الدور</label>
-              <div class="valid-feedback">صحيح</div>
-            </div>
-            <div class="form-floating col-md-6 mb-2">
-              <input type="text" name="user[firstname]" class="form-control border border-success" id="firstname"
-                placeholder="الإسم" value="<%= user.firstname %>" />
-              <label for="firstname" class="form-label">الإسم</label>
-              <div class="valid-feedback">صحيح</div>
-            </div>
-            <div class="form-floating col-md-6 mb-2">
-              <input type="text" name="user[lastname]" class="form-control border border-success" id="lastname"
-                placeholder="اللقب" value="<%= user.lastname %>" />
-              <label for="lastname" class="form-label">اللقب</label>
-              <div class="valid-feedback">صحيح</div>
-            </div>
+          <div class="form-floating col-md-6 mb-2">
+            <input id="BirthDate" name="user[birthdate]" type="date" value="<%=
+            user.birthdate %>" class="form-control border border-success"
+            max="<%= moment().format(" YYYY-MM-DD") %>" min="<%=
+            moment('01/01/1900').format('YYYY-MM-DD')%>" />
+            <label for="BirthDate" class="form-label">تاريخ الميلاد </label>
+            <div class="valid-feedback">صحيح</div>
+          </div>
 
-            <div class="form-floating col-md-6 mb-2">
-              <input type="text" name="user[phone]" class="form-control border border-success" id="phone"
-                placeholder="الهاتف" value="<%= user.phone %>" />
-              <label for="phone" class="form-label">الهاتف</label>
-              <div class="valid-feedback">صحيح</div>
+          <div class="form-floating col-md-6">
+            <select
+              id="gender"
+              name="user[gender]"
+              class="form-select border border-success"
+              required
+            >
+              <option selected disabled value="">الجنس</option>
+              <% if (user.gender=="ذكر" ){%>
+              <option class="option" value="ذكر" selected>ذكر</option>
+              <option class="option" value="أنثى">أنثى</option>
+              <% }else{ %>
+              <option class="option" value="ذكر">ذكر</option>
+              <option class="option" value="أنثى" selected>أنثى</option>
+              <% }%>
+            </select>
+            <label for="gender" class="form-label">الجنس</label>
+            <div class="valid-feedback">صحيح</div>
+          </div>
+          <div class="form-floating">
+            <div class="d-flex align-item-start form-check form-switch ms-2">
+              <% if (user.approved){%>
+              <input
+                class="form-check-input me-2"
+                type="checkbox"
+                name="approved"
+                role="switch"
+                id="externe"
+                checked
+              />
+              <% }else{ %>
+              <input
+                class="form-check-input me-2"
+                type="checkbox"
+                name="approved"
+                role="switch"
+                id="externe"
+              />
+              <% } %>
+              <label class="form-check-label" for="externe">تفعيل الحساب</label>
+              <div class="valid-feedback">BIEN</div>
             </div>
-            <div class="form-floating col-md-6 mb-2">
-              <input type="text" name="user[adress]" class="form-control border border-success" id="adress"
-                placeholder="العنوان" value="<%=user.adress%>" />
-              <label for="adress" class="form-label">العنوان</label>
-              <div class="valid-feedback">صحيح</div>
-            </div>
+          </div>
 
-            <div class="form-floating col-md-6 mb-2">
-              <input id="BirthDate" name="user[birthdate]" type="date" value="<%= user.birthdate %>"
-                class="form-control border border-success" max="<%= moment().format(" YYYY-MM-DD") %>" min="<%=
-                moment('01/01/1900').format('YYYY-MM-DD')%>" />
-                <label for="BirthDate" class="form-label">تاريخ الميلاد
-                </label>
-                <div class="valid-feedback">صحيح</div>
-            </div>
-
-            <div class="form-floating col-md-6">
-              <select id="gender" name="user[gender]" class="form-select border border-success" required>
-                <option selected disabled value="">الجنس</option>
-                <% if (user.gender=="ذكر" ){%>
-                  <option class="option" value="ذكر" selected>ذكر</option>
-                  <option class="option" value="أنثى">أنثى</option>
-                  <% }else{ %>
-                    <option class="option" value="ذكر">ذكر</option>
-                    <option class="option" value="أنثى" selected>أنثى</option>
-                    <% }%>
-              </select>
-              <label for="gender" class="form-label">الجنس</label>
-              <div class="valid-feedback">صحيح</div>
-            </div>
-            <div class="form-floating">
-              <div class="d-flex align-item-start form-check form-switch ms-2">
-                <% if (user.approved){%>
-                  <input class="form-check-input me-2" type="checkbox" name="approved" role="switch" id="externe"
-                    checked />
-                  <% }else{ %>
-                    <input class="form-check-input me-2" type="checkbox" name="approved" role="switch" id="externe" />
-                    <% } %>
-                      <label class="form-check-label" for="externe">تفعيل الحساب</label>
-                      <div class="valid-feedback">BIEN</div>
-              </div>
-            </div>
-
-
-            <div class="modal-footer">
-              <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
-                إلغاء
-              </button>
-              <button class="btn btn-outline-warning">تعديل</button>
-            </div>
-          </form>
-        </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-outline-danger"
+              data-bs-dismiss="modal"
+            >
+              إلغاء
+            </button>
+            <button class="btn btn-outline-warning">تعديل</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
+</div>

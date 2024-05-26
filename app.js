@@ -52,13 +52,11 @@ const { sessionConfig } = require("./config/sessionConfig");
 
 const { locals } = require("./config/local");
 const app = express();
-//const helmet = require("helmet");
+
 
 // =========================== App Configuration =========================
 app.set("trust proxy", true);
 app.disable("x-powered-by");
-
-//app.use(helmet());
 app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -120,8 +118,6 @@ app.use("/withdraw", withdrawRoutes);
 app.use("/profits", profitsRoutes);
 app.use("/user", userRoutes);
 app.use("/courier", courierRoutes);
-
-// app.use("/user/:id/transaction", userRoutes);
 // === Home Page ===
 app.get("/", async (req, res) => {
   const packs = await Packs.find({});
@@ -129,6 +125,15 @@ app.get("/", async (req, res) => {
 });
 app.get("/about", async (req, res) => {
   res.render("about/about");
+});
+app.get("/soon", async (req, res) => {
+  const launchDate = moment("2024/12/12").format("DD/MM/YYYYY");
+  const product = {
+    name: "Assas Invest",
+    description:
+      "نحن نقدم لكم منصة متكاملة تجمع بين الخبرة العميقة والتحليل الدقيق لتحقيق أفضل العوائد المالية",
+  };
+  res.render("commingSoon/commingSoon", { product, launchDate });
 });
 app.get("/test", async (req, res) => {
   const cases = await Case.find({}).then(function (documents) {
@@ -160,10 +165,10 @@ app.get("/testCase", async (req, res) => {
   }
   res.send(totalWithdraws);
 });
-// app.all("*", (req, res, next) => {
-//   next(new ExpressError("page not found", 404));
-// });
-// app.use(errorPage);
+app.all("*", (req, res, next) => {
+  next(new ExpressError("page not found", 404));
+});
+app.use(errorPage);
 // the PORT variable is in .env file but it won't be added to the deployed site
 const port = process.env.PORT || 8888;
 
