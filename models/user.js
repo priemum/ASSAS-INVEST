@@ -36,6 +36,11 @@ const User = new Schema(
       type: Boolean,
       default: true,
     },
+    archived: {
+      type: Boolean,
+      default: false,
+    },
+    
     loggedIn: [
       {
         type: Date,

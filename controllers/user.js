@@ -86,12 +86,12 @@ module.exports.logout = (req, res) => {
 };
 // =============== updateUser ==============================
 module.exports.updateUser = async (req, res) => {
-  const { user, approved } = req.body;
+  const { user, approved} = req.body;
   const id = req.query.id;
   // res.send(id)
   const updatedUser = await User.findByIdAndUpdate(
     id,
-    { ...user, approved: approved == "on" ? true : false },
+    { ...user, approved: approved == "on" ? true : false},
     { new: true }
   );
   req.flash("success", "تم التعديل بنجاح");

@@ -53,7 +53,6 @@ const { sessionConfig } = require("./config/sessionConfig");
 const { locals } = require("./config/local");
 const app = express();
 
-
 // =========================== App Configuration =========================
 app.set("trust proxy", true);
 app.disable("x-powered-by");

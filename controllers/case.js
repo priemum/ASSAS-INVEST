@@ -15,7 +15,7 @@ module.exports.showUserMain = async (req, res) => {
   res.render("case/main", { caisse, moment }); //fix global initamount
 };
 module.exports.profitsList = async (req, res) => {
-  console.log(res.locals.announceProfits)
+  console.log(res.locals.announceProfits);
   const caisses = await Case.find({}).populate(["user", "pack"]);
   res.render("case/profits/index", { caisses, moment });
 };
@@ -49,6 +49,8 @@ module.exports.createCase = async (req, res) => {
   });
 
   await newCase.save();
+  // add the case to the user cases list
+  await User.findByIdAndUpdate(casee.user, { $push: { cases: newCase._id } });
   res.redirect("/case");
 };
 module.exports.createProfits = async (req, res) => {
