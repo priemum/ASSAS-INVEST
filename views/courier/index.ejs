@@ -14,11 +14,11 @@
           <select id="selectedUser" name="selectedUser" class="form-select border border-success">
               <option selected disabled value="">اسم المستثمر</option>
               <% for (user of users){%>
-
+                <%if (user.id !=  currentUser.id){%>
                   <option class="option" value="<%= user.id%>">
                       <%= user.fullname%> / <%= user.email%>
                   </option>
-                  <%}%>
+                  <%}}%>
           </select>
           <label for="selectedUser" class="form-label">رسالة جديدة</label>
           <div class="valid-feedback">صحيح</div>
@@ -40,6 +40,7 @@
           style="overflow-y:scroll;overflow-x: hidden;height:56vh;">
           <!-- Each user should be a link that can be clicked to select the chat -->
           <% for (user of couriers){ %>
+           
             <div class="collapse show text-center">
               <div class="listed-user m-2 p-3 fs-5 fw-bold border border-secondary rounded-3 "
                 id="<%=user.user.id%>">
@@ -47,7 +48,7 @@
               </div>
 
             </div>
-            <% } %>
+            <% }%>
         </div>
       </div>
       <div class="col-12 col-md-8">
