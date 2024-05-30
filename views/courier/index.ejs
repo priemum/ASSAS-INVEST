@@ -3,7 +3,7 @@
   <!-- ---------------------------------------------- -->
   <div class="container bg-Chinesesilver p-3 rounded-3 mb-5">
     <div class="mb-5">
-      <h3 class="display-6 text-center text-success">سجل المحادثات</h3>
+      <h3 class="display-6 text-center text-success">سجل المحادثات </h3>
       
 
     </div>
@@ -39,12 +39,18 @@
         <div class=" border border-secondary bg-Chinesesilver" id="user-list-collapsed"
           style="overflow-y:scroll;overflow-x: hidden;height:56vh;">
           <!-- Each user should be a link that can be clicked to select the chat -->
-          <% for (user of couriers){ %>
+          <% for (courier of couriers){ %>
            
             <div class="collapse show text-center">
               <div class="listed-user m-2 p-3 fs-5 fw-bold border border-secondary rounded-3 "
-                id="<%=user.user.id%>">
-                <%= user.user.fullname %>
+                id="<%=courier.document.user.id%>">
+                <%= courier.document.user.fullname %>
+              <% if (courier.unread > 0){ %>
+                <span class="badge  bg-lightCoral" id="unreadmessage-<%=courier.document.user.id%>">
+                  <%=courier.unread%>
+                </span>
+ 
+               <% } %>
               </div>
 
             </div>

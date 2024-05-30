@@ -5,10 +5,12 @@ const Pack = require("../models/pack");
 const User = require("../models/user");
 
 module.exports.caseList = async (req, res) => {
+
   const caisses = await Case.find({}).populate(["user", "pack"]);
   res.render("case/index", { caisses, moment });
 };
 module.exports.showUserMain = async (req, res) => {
+
   const { id } = req.params;
   const caisse = await Case.find({ user: id }).populate(["pack"]);
 

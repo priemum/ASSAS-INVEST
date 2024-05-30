@@ -194,8 +194,13 @@
         </li>
         <li class="nav-item pe-2">
           <a class="nav-link text-secondary fs-5" href="/courier"
-            >سجل المحادثات</a
-          >
+            >سجل المحادثات 
+            <% if(unreadUser !=0 && !currentUser.role.includes('أدمين')) {%>
+            <span class="badge bg-lightCoral" id="unreadmessageuser"><%= unreadUser %></span>
+            <% }else if (unreadAdmin !=0){ %>
+              <span class="badge bg-lightCoral"><%= unreadAdmin %></span>
+              <% } %>
+            </a>
         </li>
       </ul>
       <div class="dropdown float-left">

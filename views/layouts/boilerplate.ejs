@@ -140,11 +140,12 @@
         var userId = currentUser.id;
         $(document).ready(function () {
           var time = moment().format("YYYY-MM-DD hh:mm");
-
+          
+          $("#unreadmessageuser").hide();
           $.ajax({
             url: "/courier/show",
             type: "POST",
-            data: JSON.stringify({ userId: userId }),
+            data: JSON.stringify({ userId: userId, consultedBy: 'المستثمر' }),
             contentType: "application/json",
             success: function (data) {
               $("#userchatbox").empty();
@@ -168,7 +169,7 @@
                 {
                   scrollTop: $("#userchatbox").prop("scrollHeight"),
                 },
-                800
+                2000
               );
             },
             error: function (error) {
@@ -206,7 +207,7 @@
             {
               scrollTop: $("#userchatbox").prop("scrollHeight"),
             },
-            800
+            2000
           );
           $("#usercourier03").attr("value", "");
           $("#usercourier03").val("");
@@ -228,11 +229,13 @@
 
           var time = moment().format("YYYY-MM-DD hh:mm");
           var userId = $(this).attr("id");
+          var hideUserId = "#unreadmessage-"+userId;
+          $(hideUserId).hide();
 
           $.ajax({
             url: "/courier/show",
             type: "POST",
-            data: JSON.stringify({ userId: userId }),
+            data: JSON.stringify({ userId: userId, consultedBy: 'أدمين'}),
             contentType: "application/json",
             success: function (data) {
               // Clear the div
@@ -311,7 +314,7 @@
               {
                 scrollTop: $("#adminchatbox").prop("scrollHeight"),
               },
-              800
+              2000
             );
             $("#usercourier02").attr("value", "");
             $("#usercourier02").val("");

@@ -5,34 +5,74 @@ const moment = require("moment");
 module.exports.showCouriers = async (req, res) => {
   const users = await User.find({});
   const couriers = await Courier.find({}).populate(["user"]);
-  // db.foo.find().sort({_id:1}).limit(50);
-  // send it to the client
-
-  res.render("courier/index", { couriers, users });
+  let total = 0;
+  let UsersNewMessages = [];
+  for (let i = 0; i < couriers.length; i++) {
+    total = couriers[i].message.reduce((acc, message) => {
+      if (!message.consultedByAdmin) return acc + 1;
+      else return acc;
+    }, 0);
+    
+      UsersNewMessages.push({ document: couriers[i], unread: total });
+    
+  }
+  UsersNewMessages.sort((a, b) => b.unread - a.unread);
+  res.render("courier/index", { couriers:UsersNewMessages, users });
+  // res.send(UsersNewMessages);
+  
 };
 
 module.exports.showUserCouriers = async (req, res) => {
   const userId = req.body.userId;
+  const consultedBy = req.body.consultedBy;
+  let couriers;
 
-  const couriers = await Courier.findOne({ user: userId });
-  // db.foo.find().sort({_id:1}).limit(50);
-  // send it to the client
+  if (consultedBy === "أدمين") {
+    couriers = await Courier.find({ user: userId }).then(function (documents) {
+      for (document of documents) {
+        for (message of document.message) {
+          message.consultedByAdmin = true;
+        }
+        document.save();
+      }
+    });
+  } else {
+    couriers = await Courier.find({ user: userId }).then(function (documents) {
+      for (document of documents) {
+        for (message of document.message) {
+          message.consultedByUser = true;
+        }
+        document.save();
+      }
+    });
+  }
 
+  couriers = await Courier.findOne({ user: userId });
   res.send(couriers);
 };
 
 module.exports.addCourier = async (req, res) => {
-  // get the Courier id from the materiels table
-  let sender;
   if (req.user.role.includes("أدمين")) {
-    sender = req.user.fullname;
+    message = {
+      $push: {
+        message: {
+          content: req.body.message,
+          createdby: req.user.fullname,
+          consultedByUser: false,
+        },
+      },
+    };
   } else {
-    sender = "المستثمر";
+    message = {
+      $push: {
+        message: {
+          content: req.body.message,
+          createdby: "المستثمر",
+          consultedByAdmin: false,
+        },
+      },
+    };
   }
-
-  const message = {
-    $push: { message: { content: req.body.message, createdby: sender } },
-  };
   await Courier.updateOne(
     { user: req.body.userId },
     message,

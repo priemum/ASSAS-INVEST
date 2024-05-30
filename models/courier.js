@@ -26,13 +26,33 @@ const Courier = new Schema({
       type: Date,
       default: Date.now,
     },
-    consulted: {
-      //read by admin or user (false not read, true read)
+    consultedByAdmin:{
+      //read by admin (false not read, true read)
       type: Boolean, //read
-      default: false,
+      
+    },
+    consultedByUser: {
+      //read by user (false not read, true read)
+      type: Boolean, //read
+      
     },
   },], //the message
 
+});
+Courier.virtual("unreadUser").get(function () {
+  const unreadUser = this.message.reduce((acc, message) => {
+    if (!message.consultedByUser) return acc + 1;
+    else return acc;
+  }, 0);
+  return unreadUser;
+});
+
+Courier.virtual("unreadAdmin").get(function () {
+  const unreadAdmin = this.message.reduce((acc, message) => {
+    if (!message.consultedByAdmin) return acc + 1;
+    else return acc;
+  }, 0);
+  return unreadAdmin;
 });
 
 module.exports = mongoose.model("Courier", Courier);
