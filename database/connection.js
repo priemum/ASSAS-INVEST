@@ -15,28 +15,26 @@ mongoose.connect(dbUrl, {
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", async () => {
-  const userExist = await User.findOne({ email: process.env.ADMIN_EMAIL });
-  if (userExist) {
-    console.log("user already exist");
-    console.log("Database connected");
-  } else {
+    const userExist = await User.findOne({ email: process.env.ADMIN_EMAIL });
+    if (userExist) {
+      console.log("user already exist");
+      console.log("Database connected");
+    } else {
     const user = new User({
       firstname: process.env.ADMIN_FIRSTNAME,
       lastname: process.env.ADMIN_LASTNAME,
       email: process.env.ADMIN_EMAIL,
-    
+      hash: process.env.ADMIN_PASSWORD,
     });
-  //  user.replaceOne.push("أدمين");
-   user.role.push("أدمين","سوبر أدمين");
-    User.register(user, process.env.ADMIN_PASSWORD, function (err, user) {
+    //  user.replaceOne.push("أدمين");
+    user.role.push("أدمين", "سوبر أدمين");
+    await user.save().then((usr, err) => {
       if (err) {
-        console.error(err);
+        console.log(err);
       } else {
-        console.log("تم الإضافة بنجاح");
+        console.log("Database connected");
+        console.log("user created");
       }
     });
-
-    console.log("Database connected");
-    console.log("user created");
   }
 });

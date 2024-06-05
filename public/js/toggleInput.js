@@ -13,10 +13,8 @@ function selectOperation(choice, id, compareTo) {
   }
 }
 function selectOperation2(choice, compareTo) {
-  console.log("asdasd");
   let description = document.getElementById("description");
   if (choice.value === compareTo) {
-    console.log("entre");
     description.style.display = "none";
     description.removeAttribute("required");
   } else {

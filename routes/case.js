@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const catchAsync = require("../utils/catchAsync");
 const { isLoggedIn, isAdmin } = require("../middleware/middleware");
+const passport = require("passport");
 const {
   caseList,
   showUserCases,
@@ -15,7 +16,10 @@ const {
 } = require("../controllers/case");
 router
   .route("/")
-  .get(isLoggedIn, isAdmin, catchAsync(caseList))
+  .get(
+    passport.authenticate("jwt", { session: false }),
+    catchAsync(caseList)
+  )
   .post(isLoggedIn, isAdmin, catchAsync(createCase));
 router.route("/new").get(isLoggedIn, isAdmin, catchAsync(showCreationForm));
 router
