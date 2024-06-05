@@ -1,5 +1,7 @@
 // ================ this is a Base Schema for all other users Type =================
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
+
 const moment = require("moment");
 const opts = {
   toJSON: {
@@ -20,7 +22,12 @@ const User = new Schema(
     birthdate: String,
     phone: String,
     accounts: [accountSchema],
-
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true,
+    },
     gender: String,
     adress: {
       type: String,
@@ -40,18 +47,40 @@ const User = new Schema(
       type: Boolean,
       default: false,
     },
-    
+
     loggedIn: [
       {
         type: Date,
         default: Date.now,
       },
     ],
+
+    hash: {
+      type: String,
+      required: true,
+    },
+    salt: {
+      type: String,
+      required: true,
+      default: "undefined",
+    },
+    resetToken: {
+      token: String,
+      createdAt: {
+        type: Date,
+        default: Date.now(),
+      },
+      expires: {
+        type: Date,
+        default: Date.now(),
+      },
+    },
   },
   opts
 );
 // creating a virtual field named fullname and it's made of firstname and lastname
 // this virtual property is not stored in the mongo DB
+User.plugin(passportLocalMongoose);
 User.virtual("fullname").get(function () {
   return this.lastname + " " + this.firstname;
 });
@@ -60,14 +89,13 @@ User.virtual("age").get(function () {
   var bday = moment(this.birthdate);
   return Math.round(now.diff(bday, "years", true));
 });
-
-User.index({
-  lastname: "text",
-  firstname: "text",
+User.pre("save", async function (next) {
+  const salt = await bcrypt.genSalt();
+  this.salt = salt;
+  this.hash = bcrypt.hash(this.hash, salt);
+  next();
 });
-// this gonna add a password field to the user schema.
-
-User.plugin(passportLocalMongoose, {
-  usernameField: "email",
-});
+User.methods.verifyPassword = function (password, hash) {
+  return bcrypt.compareSync(password, hash);
+};
 module.exports = mongoose.model("User", User);

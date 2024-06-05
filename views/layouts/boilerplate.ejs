@@ -23,14 +23,12 @@
       referrerpolicy="no-referrer"
     />
     <link
-      href="https://fonts.googleapis.com/css?family=Lato:400,900&display=swap"
-      rel="stylesheet"
-    />
-    <!-- Material ui icons - google web fonts -->
-    <link
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet"
-    />
+    href="https://fonts.googleapis.com/css?family=Lato:400,900&display=swap"
+    rel="stylesheet"
+  />
+  <!-- Material ui icons - google web fonts -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
     <link rel="stylesheet" href="/css/bootstrap.rtl.min.css" />
     <link rel="stylesheet" href="/css/package.css" />
@@ -49,12 +47,16 @@
 
   <body class="d-flex flex-column">
     <%- include("../partials/navbar")%>
-    <main class=""><%- include("../partials/flash")%> <%- body %></main>
+    <main class="">
+      <%- include("../partials/flash")%> <%- body %>
+    </main>
     <%-include("../partials/footer") %>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://momentjs.com/downloads/moment.min.js"></script>
-
+    <script>
+      let currentUser = <%- JSON.stringify(currentUser) %>;
+    </script>
     <script>
       $(document).ready(function () {
         $("#search").on("keyup", function () {

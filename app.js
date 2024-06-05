@@ -5,7 +5,7 @@ const express = require("express");
 const moment = require("moment");
 const path = require("path");
 
-// <<ejs-mate>> is layout, partial and block template functions for the EJS template engine.
+// <<ejs-mate>> is layout, partial and block template functions for the EJS template engine. like this <% layout('boilerplate') -%>
 const ejsMate = require("ejs-mate");
 // <<method-override>> Lets you use HTTP verbs such as PUT or DELETE in places
 // where the client doesn't support it.
@@ -75,7 +75,7 @@ app.use(passport.session());
 passport.use(
   "local",
   new LocalStrategy((email, password, done) => {
-    User.findOne({ email: email.toLowerCase() }).then((user, err) => {
+    User.findOne({ email: email.toLowerCase() }).select("+salt +hash").then((user, err) => {
       if (err) {
         return done(err);
       }
@@ -86,11 +86,19 @@ passport.use(
           "يرجي التأكد من البريد الالكتروني او كلمة السر"
         );
       } else {
+        if(user.verifyPassword(password,user.hash)){
         if (user.approved) {
           return done(null, user);
         } else {
           return done(null, false, "تم تعطيل حسابك يرجى الاتصال بالادمين");
         }
+      }else{
+        return done(
+          null,
+          false,
+          "يرجي التأكد من كلمة السر"
+        );
+      }
       }
     });
   })

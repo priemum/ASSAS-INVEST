@@ -5,8 +5,9 @@ const Pack = require("../models/pack");
 const User = require("../models/user");
 
 module.exports.caseList = async (req, res) => {
-  const caisses = await Case.find({}).populate(["user", "pack"]);
-  res.render("case/index", { caisses, moment });
+  // const caisses = await Case.find({}).populate(["user", "pack"]);
+  // res.render("case/index", { caisses, moment });
+  res.send("good")
 };
 module.exports.showUserMain = async (req, res) => {
   const { id } = req.params;
@@ -15,7 +16,6 @@ module.exports.showUserMain = async (req, res) => {
   res.render("case/main", { caisse, moment }); //fix global initamount
 };
 module.exports.profitsList = async (req, res) => {
-  console.log(res.locals.announceProfits);
   const caisses = await Case.find({}).populate(["user", "pack"]);
   res.render("case/profits/index", { caisses, moment });
 };
