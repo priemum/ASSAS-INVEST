@@ -24,7 +24,7 @@ module.exports.sendMail = (email, token) => {
     text:
       "الرجاء الضغط على الرابط لتغيير كلمة المرور: " +
       process.env.SERVER_URL +
-      ":8888/user/reset-password/" +
+      "user/reset-password/" +
       token,
   });
 };
