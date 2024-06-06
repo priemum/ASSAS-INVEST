@@ -92,7 +92,8 @@ User.virtual("age").get(function () {
 User.pre("save", async function (next) {
   const salt = await bcrypt.genSalt();
   this.salt = salt;
-  this.hash = bcrypt.hash(this.hash, salt);
+  this.hash = await bcrypt.hash(this.hash, salt);
+
   next();
 });
 User.methods.verifyPassword = function (password, hash) {

@@ -31,7 +31,6 @@ module.exports.isAuthor = async (req, res, next) => {
   const { id } = req.params;
   const invest = await Case.findById(id);
   if (!invest.user._id.equals(req.user._id)) {
-    // console.log("is the same user");
     req.flash("error", "You do not have permission to do that!");
     return res.redirect(`/investments/${id}`);
   }
