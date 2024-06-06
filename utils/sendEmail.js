@@ -3,13 +3,16 @@ const nodemailer = require("nodemailer");
 
 // Create a reusable transporter object using the default SMTP transport
 const transporter = nodemailer.createTransport({
-  service: "Gmail",
-  host: "smtp.gmail.com",
-  port: 465,
-  secure: true,
+  host: process.env.EMAIL_HOST,
+  port: process.env.EMAIL_PORT,
+  secureConnection: process.env.SECURE_CONNECTION,
   auth: {
     user: process.env.SENDER_EMAIL,
     pass: process.env.APP_PASSWORD,
+  },
+  tls: {
+    ciphers: "SSLv3",
+    secureProtocol: "TLSv1_method", // Add this line
   },
 });
 module.exports.sendMail = (email, token) => {
@@ -19,7 +22,9 @@ module.exports.sendMail = (email, token) => {
     to: email,
     subject: "Password Reset",
     text:
-      "الرجاء الضغط على الرابط لتغيير كلمة المرور: http://192.168.1.85:8888/user/reset-password/" +
+      "الرجاء الضغط على الرابط لتغيير كلمة المرور: " +
+      process.env.SERVER_URL +
+      ":8888/user/reset-password/" +
       token,
   });
 };
