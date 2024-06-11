@@ -23,37 +23,41 @@
       novalidate
       style="direction: rtl"
     >
-      <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label"
-          >بريد الإلكتروني</label
-        >
+      <div class="form-floating input-group mb-3">
         <input
           type="email"
           name="username"
           class="form-control border border-success"
-          id="exampleInputEmail1"
+          id="username"
           aria-describedby="emailHelp"
           required
         />
+        <label for="username" class="form-label">بريد الإلكتروني</label>
+        <div class="valid-feedback">BIEN</div>
       </div>
-      <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label"
-          >كلمة المرور</label
-        >
+      <div class="form-floating input-group mb-3">
         <input
           name="password"
           type="password"
           class="form-control border border-success"
-          id="exampleInputPassword1"
+          id="loginPassword"
           required
         />
+        <label for="password" class="form-label">كلمة المرور</label>
+        <div class="valid-feedback">BIEN</div>
+        <div class="input-group-text border border-success">
+          <span id="show_hide_login">
+            <i id="icon-eye" class="bi bi-eye-fill"></i>
+          </span>
+        </div>
       </div>
+
       <div class="d-grid">
         <button class="btn btn-success px-3 py-2" type="submit">
           تسجيل الدخول
         </button>
       </div>
     </form>
-    <a  href="/user/reset-password">هل نسيت كلمة المرور ؟</a>
+    <a href="/user/reset-password">هل نسيت كلمة المرور ؟</a>
   </div>
 </div>

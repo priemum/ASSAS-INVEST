@@ -39,7 +39,7 @@ module.exports.register = async (req, res) => {
       birthdate,
       phone,
       gender,
-      adress,
+      address,
       role,
     } = req.body.user;
     const userExist = await User.findOne({ email: email });
@@ -55,7 +55,7 @@ module.exports.register = async (req, res) => {
         birthdate: birthdate,
         phone: phone,
         gender: gender,
-        adress: adress.toLowerCase(),
+        address: address.toLowerCase(),
         role: role,
       });
       await user.save().then((usr, err) => {

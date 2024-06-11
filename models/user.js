@@ -29,7 +29,7 @@ const User = new Schema(
       lowercase: true,
     },
     gender: String,
-    adress: {
+    address: {
       type: String,
     },
     role: [String], // a user could be an admin or normal user
@@ -54,6 +54,14 @@ const User = new Schema(
         default: Date.now,
       },
     ],
+    createdAt: {
+      type: String,
+      default: Date.now,
+    },
+    createdBy: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
 
     hash: {
       type: String,

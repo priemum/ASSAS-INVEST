@@ -16,10 +16,7 @@ const {
 } = require("../controllers/case");
 router
   .route("/")
-  .get(
-    passport.authenticate("jwt", { session: false }),
-    catchAsync(caseList)
-  )
+  .get(isLoggedIn, isAdmin, catchAsync(caseList))
   .post(isLoggedIn, isAdmin, catchAsync(createCase));
 router.route("/new").get(isLoggedIn, isAdmin, catchAsync(showCreationForm));
 router

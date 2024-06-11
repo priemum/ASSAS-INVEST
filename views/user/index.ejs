@@ -30,30 +30,32 @@
     </thead>
     <tbody id="tablebody">
       <% var i=1 %> <% for (user of users){%>
-        <tr>
-          <th scope="row"><%= i%> <% i=i+1; %></th>
-          
+      <tr>
+        <th scope="row"><%= i%> <% i=i+1; %></th>
+
         <td scope="row">
-          <%= user.fullname%>
-          <% if(!user.approved) {%>
-            <span class="badge bg-lightCoral">معطل</span>
-            <% } %>
+          <%= user.fullname%> <% if(!user.approved) {%>
+          <span class="badge bg-lightCoral">معطل</span>
+          <% } %>
         </td>
         <td scope="row"><%=user.birthdate %></td>
         <td scope="row"><%= user.phone %></td>
         <td scope="row"><%= user.role %></td>
-        <td scope="row"><%= user.adress %></td>
+        <td scope="row"><%= user.address %></td>
         <td scope="row"><%= user.gender %></td>
         <td scope="row"><%-include("./accounts")%></td>
         <td scope="row"><%-include("./logs")%></td>
 
-        <td scope="row" class="d-flex justify-content-center align-items-center">
-          <% if(!user.role.includes("سوبر أدمين")){ %>
-              <%-include("./edit")%>
-              <%- include("./delete") %>
-            <% }else{ %>
-              <span class="px-2 py-1 fw-2" scope="row">/</span>
-              <% } %>
+        <td
+          scope="row"
+          class="d-flex justify-content-center align-items-center"
+        >
+          <% if(!user.role.includes("سوبر أدمين")){ %> 
+            <%-include("./edit")%>
+            <%- include("./delete") %>
+          <% }else{ %>
+            <span class="px-2 py-1 fw-2" scope="row">/</span>
+          <% } %>
         </td>
       </tr>
       <%}%>

@@ -22,3 +22,58 @@ function selectOperation2(choice, compareTo) {
     description.style.display = "";
   }
 }
+$(document).ready(function () {
+  // if ($("#patientRole : selected").val() != "Père") $("#bebe-info").hide();
+  // else $("#bebe-info").show();
+
+  $("#show_hide_login").on("click", function () {
+    var passInput = $("#loginPassword");
+    if (passInput.attr("type") === "password") {
+      passInput.attr("type", "text");
+      $("#icon-eye").toggleClass("bi-eye-slash-fill");
+    } else {
+      passInput.attr("type", "password");
+      $("#icon-eye").toggleClass("bi-eye-slash-fill");
+    }
+  });
+  $("#show_hide_new_password").on("click", function () {
+    var passInput = $("#newPassword");
+    if (passInput.attr("type") === "password") {
+      passInput.attr("type", "text");
+      $("#icon-eye-new-password").toggleClass("bi-eye-slash-fill");
+    } else {
+      passInput.attr("type", "password");
+      $("#icon-eye-new-password").toggleClass("bi-eye-slash-fill");
+    }
+  });
+  $("#show_hide_old_password").on("click", function () {
+    var passInput = $("#oldPassword");
+    if (passInput.attr("type") === "password") {
+      passInput.attr("type", "text");
+      $("#icon-eye-old-password").toggleClass("bi-eye-slash-fill");
+    } else {
+      passInput.attr("type", "password");
+      $("#icon-eye-old-password").toggleClass("bi-eye-slash-fill");
+    }
+  });
+  $("#show_hide_reset_password").on("click", function () {
+    var passInput = $("#resetPassword");
+    if (passInput.attr("type") === "password") {
+      passInput.attr("type", "text");
+      $("#icon-eye-reset-password").toggleClass("bi-eye-slash-fill");
+    } else {
+      passInput.attr("type", "password");
+      $("#icon-eye-reset-password").toggleClass("bi-eye-slash-fill");
+    }
+  });
+  $("#show_hide_confirm_password").on("click", function () {
+    var passInput = $("#confirmPassword");
+    if (passInput.attr("type") === "password") {
+      passInput.attr("type", "text");
+      $("#icon-eye-confirm-password").toggleClass("bi-eye-slash-fill");
+    } else {
+      passInput.attr("type", "password");
+      $("#icon-eye-confirm-password").toggleClass("bi-eye-slash-fill");
+    }
+  });
+});
