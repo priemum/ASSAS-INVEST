@@ -4,8 +4,6 @@ const moment = require("moment");
 
 const crypto = require("crypto");
 const bcrypt = require("bcrypt");
-const passport = require("passport");
-const jwt = require("jsonwebtoken");
 const { sendMail } = require("../utils/sendEmail");
 // ======================== showLoginForm ==========================
 module.exports.showUserForm = async (req, res) => {
@@ -18,7 +16,12 @@ module.exports.showLoginForm = async (req, res) => {
 };
 // ================== showUsers =============================
 module.exports.showUsers = async (req, res) => {
-  const users = await User.find({});
+  let users;
+  if (!req.user.role.includes("سوبر أدمين")) {
+    users = await User.find({ role: "مستثمر" });
+  } else {
+    users = await User.find({});
+  }
   res.render("user/index", { users, moment });
 };
 // ================== showRegisterForm ============================
@@ -107,7 +110,7 @@ module.exports.updateUser = async (req, res) => {
   const { user, approved } = req.body;
   const id = req.query.id;
   // res.send(id)
-  const updatedUser = await User.findByIdAndUpdate(
+  await User.findByIdAndUpdate(
     id,
     { ...user, approved: approved == "on" ? true : false },
     { new: true }
@@ -118,15 +121,37 @@ module.exports.updateUser = async (req, res) => {
 // =============== deleteUser ==============================
 module.exports.deleteUser = async (req, res) => {
   const { id } = req.params;
-  await User.findById(id).then((document) => {
-    if ((document.cases.length = 0)) {
-      document.deleteOne();
-      req.flash("success", "تم الحذف بنجاح");
-    } else {
-      req.flash("error", "المستثمر لديه سجل باقات");
-    }
-    res.redirect("/user");
-  });
+  await User.findById(id)
+    .populate("cases")
+    .then(async (document) => {
+      // check if the user has cases
+      let hasCaises = false;
+      if (document.cases.length > 0) {
+        for (const caisse of document.cases) {
+          console.log("isAfter: ", moment(caisse.endDate).isAfter(moment()));
+          if (moment(caisse.endDate).isAfter(moment())) {
+            hasCaises = true;
+            break;
+          }
+        }
+        console.log("hasCaises: ", hasCaises);
+        if (hasCaises) {
+          console.log("hasCaises: entered");
+          
+          req.flash("error", "لا يمكن الحذف المستثمر لديه باقة سارية");
+        } else {
+          console.log("hasCaises: not entered");
+
+          document.archived = true;
+          document.updateOne({ _id: id });
+          req.flash("success", "تم الحذف بنجاح");
+        }
+      } else {
+        document.deleteOne();
+        req.flash("success", "تم الحذف بنجاح");
+      }
+      res.redirect("/user");
+    });
 };
 // =============== showProfile ==============================
 module.exports.showProfile = async (req, res) => {
@@ -145,7 +170,7 @@ module.exports.sendEmail = async (req, res) => {
         resetToken: {
           token: generateResetToken(),
           createdAt: moment(),
-          expires: moment().add(1, "d"),
+          expires: moment(moment().add(1, "d")),
         },
       },
       { new: true }

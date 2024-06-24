@@ -16,7 +16,7 @@
     class="table table-sm table-striped table-hover table-borderless text-center sortable"
   >
     <thead class="table-greenSea">
-      <tr>
+      <tr class="text-nowrap">
         <th scope="col">الرقم</th>
         <th scope="col">رقم مرجع الباقة</th>
         <th scope="col">رقم مرجع السحب</th>
@@ -35,7 +35,7 @@
     <tbody id="tablebody">
       <% var i=1 %> <% for (caisse of caisses){%> <% for (withdraw of
       caisse.withdraws){%>
-      <tr>
+      <tr class="text-nowrap">
         <th scope="row" class="data"><%= i%> <% i=i+1; %></th>
         <td scope="row" class="data"><%= caisse.reference%></td>
         <td scope="row" class="data"><%= withdraw.reference%></td>

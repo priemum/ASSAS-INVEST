@@ -64,6 +64,7 @@
         <!--    <li class="nav-item px-2">
               <a class="nav-link text-secondary fs-5" href="/case/<%= currentUser.id %>/main">واجهة المستخدم</a>
             </li> -->
+        <% if(!currentUser.role.includes("أدمين")){%>
         <li class="nav-item dropdown pe-2">
           <a
             class="nav-link dropdown-toggle text-secondary fs-5 ms-2"
@@ -93,8 +94,7 @@
             </div>
           </ul>
         </li>
-
-        <% if (currentUser.role.includes('أدمين')){ %>
+        <% } if (currentUser.role.includes('أدمين')){ %>
         <li class="nav-item dropdown pe-2">
           <a
             class="nav-link dropdown-toggle text-secondary fs-5"
@@ -158,11 +158,12 @@
                 >
               </li>
               <li>
-                <a class="dropdown-item text-dark fs-5" href="/profits" 
-                  > <% if(announceProfits!=0) {%> 
-                    <span class="badge bg-lightCoral"> <%=announceProfits %></span>
-                    <% } %> 
-                    إعلان أرباح الباقة</a
+                <a class="dropdown-item text-dark fs-5" href="/profits">
+                  <% if(announceProfits!=0) {%>
+                  <span class="badge bg-lightCoral">
+                    <%=announceProfits %></span
+                  >
+                  <% } %> إعلان أرباح الباقة</a
                 >
               </li>
               <li>
@@ -194,13 +195,15 @@
         </li>
         <li class="nav-item pe-2">
           <a class="nav-link text-secondary fs-5" href="/courier"
-            >سجل المحادثات 
-            <% if(unreadUser !=0 && !currentUser.role.includes('أدمين')) {%>
-            <span class="badge bg-lightCoral" id="unreadmessageuser"><%= unreadUser %></span>
+            >سجل المحادثات <% if(unreadUser !=0 &&
+            !currentUser.role.includes('أدمين')) {%>
+            <span class="badge bg-lightCoral" id="unreadmessageuser"
+              ><%= unreadUser %></span
+            >
             <% }else if (unreadAdmin !=0){ %>
-              <span class="badge bg-lightCoral"><%= unreadAdmin %></span>
-              <% } %>
-            </a>
+            <span class="badge bg-lightCoral"><%= unreadAdmin %></span>
+            <% } %>
+          </a>
         </li>
       </ul>
       <div class="dropdown float-left">
@@ -222,13 +225,14 @@
           </span>
         </a>
         <ul class="dropdown-menu text-small">
-          
-              <li>
-                <a class="dropdown-item" href="/user/<%= currentUser.id %>/profile">معلوماتي الشخصية</a>
-              </li>
-              <li>
-                <hr class="dropdown-divider" />
-              </li>
+          <li>
+            <a class="dropdown-item" href="/user/<%= currentUser.id %>/profile"
+              >معلوماتي الشخصية</a
+            >
+          </li>
+          <li>
+            <hr class="dropdown-divider" />
+          </li>
           <li><a class="dropdown-item" href="/user/logout">تسجيل الخروج</a></li>
         </ul>
       </div>

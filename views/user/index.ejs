@@ -15,7 +15,7 @@
     class="table table-sm table-striped table-hover table-borderless text-center sortable"
   >
     <thead class="table-greenSea">
-      <tr>
+      <tr class="text-nowrap">
         <th scope="col">الرقم</th>
         <th scope="col">الإسم و اللقب</th>
         <th scope="col">تاريخ الميلاد</th>
@@ -30,7 +30,7 @@
     </thead>
     <tbody id="tablebody">
       <% var i=1 %> <% for (user of users){%>
-      <tr>
+      <tr class="text-nowrap">
         <th scope="row"><%= i%> <% i=i+1; %></th>
 
         <td scope="row">

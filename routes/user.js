@@ -11,7 +11,6 @@ const {
   login,
   register,
   showUsers,
-  showUserForm,
   showRegisterForm,
   showProfile,
   showLoginForm,
@@ -22,7 +21,7 @@ const {
   sendEmail,
   showResetPasswordForm,
   passwordReset,
-  changePassword
+  changePassword,
 } = require("../controllers/user");
 
 router.route("/").get(isLoggedIn, isAdmin, catchAsync(showUsers));
@@ -55,9 +54,7 @@ router
   .route("/reset-password/:token")
   .get(catchAsync(showResetPasswordForm))
   .post(catchAsync(passwordReset));
-  router
-  .route("/:id/reset-password/")
-  .put(catchAsync(changePassword))
+router.route("/:id/reset-password/").put(catchAsync(changePassword));
 // router
 //   .route("/:id")
 //   .get(catchAsync(showUserForm))

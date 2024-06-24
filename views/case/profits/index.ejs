@@ -16,7 +16,7 @@
     class="table table-sm table-striped table-hover table-borderless text-center sortable"
   >
     <thead class="table-greenSea">
-      <tr>
+      <tr class="text-nowrap">
         <th scope="col">الرقم</th>
         <th scope="col">رقم المرجع</th>
         <th scope="col">الاسم الكامل</th>
@@ -33,7 +33,7 @@
     <tbody id="tablebody">
       <% var i=1 %> <% for (caisse of caisses){%> 
       <% if (caisse.state === "قيد الإنتظار"){ %>
-      <tr>
+      <tr class="text-nowrap">
         <th
           scope="row"
           scope="row"

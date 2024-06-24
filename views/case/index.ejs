@@ -16,7 +16,7 @@
     class="table table-sm table-smtable-striped table-hover table-borderless text-center sortable"
   >
     <thead class="table-greenSea">
-      <tr>
+      <tr class="text-nowrap">
         <th scope="col">الرقم</th>
         <th scope="col">رقم المرجع</th>
         <th scope="col">الاسم الكامل</th>
@@ -31,9 +31,9 @@
         <th scope="col">العمليات</th>
       </tr>
     </thead>
-    <tbody id="tablebody">
+    <tbody id="tablebody" >
       <% var i=1 %> <% for (caisse of caisses){%>
-      <tr>
+      <tr class="text-nowrap">
         <th
           scope="row"
           scope="row"
@@ -167,6 +167,7 @@
         <% } %>
 
         <td class="d-flex justify-content-center align-items-center">
+          <%- include("./caseDetail") %>
           <%- include("./edit") %> 
           <%- include("./delete") %>
         </td>

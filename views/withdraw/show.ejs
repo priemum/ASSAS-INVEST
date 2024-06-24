@@ -70,7 +70,7 @@
     class="table table-sm table-striped table-hover table-borderless text-center sortable"
   >
     <thead class="table-greenSea">
-      <tr>
+      <tr class="text-nowrap">
         <th scope="col">الرقم</th>
         <th scope="col">رقم مرجع السحب</th>
         <th scope="col">المبلغ</th>
@@ -84,7 +84,7 @@
     </thead>
     <tbody id="tablebody">
       <% var i=1 %> <% for (withdraw of caisse.withdraws){%>
-      <tr>
+      <tr class="text-nowrap">
         <th scope="row" scope="row"><%= i%> <% i=i+1; %></th>
         <td scope="row" class="data"><%=withdraw.reference %></td>
 
@@ -153,7 +153,7 @@
     class="table table-sm table-striped table-hover table-borderless text-center sortable"
   >
     <thead class="table-greenSea">
-      <tr>
+      <tr class="text-nowrap">
         <th scope="col">الرقم</th>
         <th scope="col">الباقة / المدة</th>
         <th scope="col">المبلغ</th>
@@ -167,7 +167,7 @@
     </thead>
     <tbody id="tablebody">
       <% var j=1 %> <% for (rCaisse of reinvestCaisse){%> <% if(rCaisse){%>
-      <tr>
+      <tr class="text-nowrap">
         <th
           scope="row"
           scope="row"

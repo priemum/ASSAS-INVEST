@@ -20,9 +20,12 @@
           class="form-select border border-success"
           required
         >
-          <option selected disabled value="">الدور</option>
-          <option class="option" value="أدمين">أدمين</option>
+          <option disabled value="">الدور</option>
+          <% if (currentUser.role.includes("سوبر أدمين")){ %>
+          <option class="option" value="أدمين" selected>أدمين</option>
           <option class="option" value="مستثمر">مستثمر</option>
+          <%}%>
+          <option class="option" value="مستثمر" selected>مستثمر</option>
         </select>
         <label for="role" class="form-label">الدور</label>
         <div class="valid-feedback">صحيح</div>
@@ -34,6 +37,7 @@
           class="form-control border border-success"
           id="firstname"
           placeholder="الإسم"
+          maxlength="100"
         />
         <label for="firstname" class="form-label">الإسم</label>
         <div class="valid-feedback">صحيح</div>
@@ -45,6 +49,7 @@
           class="form-control border border-success"
           id="lastname"
           placeholder="اللقب"
+          maxlength="100"
         />
         <label for="lastname" class="form-label">اللقب</label>
         <div class="valid-feedback">صحيح</div>
@@ -57,6 +62,7 @@
           class="form-control border border-success"
           id="phone"
           placeholder="الهاتف"
+          maxlength="10"
         />
         <label for="phone" class="form-label">الهاتف</label>
         <div class="valid-feedback">صحيح</div>
@@ -68,6 +74,7 @@
           class="form-control border border-success"
           id="address"
           placeholder="العنوان"
+          maxlength="200"
         />
         <label for="address" class="form-label">العنوان</label>
         <div class="valid-feedback">صحيح</div>
@@ -105,6 +112,7 @@
           id="email"
           style="direction: rtl"
           placeholder="البريد الإلكتروني"
+          maxlength="100"
         />
         <label for="email" class="form-label"> البريد الإلكتروني</label>
         <div class="valid-feedback">صحيح</div>
@@ -116,6 +124,7 @@
           class="form-control border border-success"
           id="exampleInputPassword1"
           placeholder="كلمة المرور"
+          maxlength="100"
         />
         <label for="password" class="form-label">كلمةالمرور</label>
         <div class="valid-feedback">صحيح</div>

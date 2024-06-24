@@ -14,7 +14,7 @@
     class="table table-sm table-striped table-hover table-borderless text-center sortable"
   >
     <thead class="table-greenSea">
-      <tr>
+      <tr class="text-nowrap">
         <th scope="col">الرقم</th>
         <th scope="col">اسم الباقة</th>
         <th scope="col">المدة</th>
@@ -25,7 +25,7 @@
     </thead>
     <tbody id="tablebody">
       <% var i=1 %> <% for (pack of packs){%>
-      <tr>
+      <tr class="text-nowrap">
         <th scope="row" scope="row"><%= i%> <% i=i+1; %></th>
 
         <td scope="row"><%= pack.title%></td>

@@ -9,7 +9,6 @@ module.exports.caseList = async (req, res) => {
   res.render("case/index", { caisses, moment });
 };
 module.exports.showUserMain = async (req, res) => {
-
   const { id } = req.params;
   const caisse = await Case.find({ user: id }).populate(["pack"]);
 
@@ -55,7 +54,7 @@ module.exports.createCase = async (req, res) => {
 };
 module.exports.createProfits = async (req, res) => {
   let { caisse } = req.body;
-  const newProfits = await Case.findByIdAndUpdate(
+  await Case.findByIdAndUpdate(
     caisse.profitsId,
     {
       profit: caisse.amount,
@@ -67,7 +66,7 @@ module.exports.createProfits = async (req, res) => {
 };
 module.exports.showCreationForm = async (req, res) => {
   const packs = await Pack.find({});
-  const users = await User.find({});
+  const users = await User.find({ role: "مستثمر" });
   var ref_id = crypto.randomBytes(4).toString("hex").toUpperCase();
   const year = moment().format("YY");
   ref_id = ref_id + year;
