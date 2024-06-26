@@ -18,7 +18,7 @@ module.exports.showLoginForm = async (req, res) => {
 module.exports.showUsers = async (req, res) => {
   let users;
   if (!req.user.role.includes("سوبر أدمين")) {
-    users = await User.find({ role: "مستثمر" });
+    users = await User.find({ role: "مستثمر", archived: false });
   } else {
     users = await User.find({});
   }
@@ -128,22 +128,17 @@ module.exports.deleteUser = async (req, res) => {
       let hasCaises = false;
       if (document.cases.length > 0) {
         for (const caisse of document.cases) {
-          console.log("isAfter: ", moment(caisse.endDate).isAfter(moment()));
           if (moment(caisse.endDate).isAfter(moment())) {
             hasCaises = true;
             break;
           }
         }
-        console.log("hasCaises: ", hasCaises);
         if (hasCaises) {
-          console.log("hasCaises: entered");
-          
           req.flash("error", "لا يمكن الحذف المستثمر لديه باقة سارية");
         } else {
-          console.log("hasCaises: not entered");
-
           document.archived = true;
-          document.updateOne({ _id: id });
+
+          await User.findByIdAndUpdate(document.id, { archived: true });
           req.flash("success", "تم الحذف بنجاح");
         }
       } else {
