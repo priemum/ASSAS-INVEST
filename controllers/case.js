@@ -5,8 +5,13 @@ const Pack = require("../models/pack");
 const User = require("../models/user");
 
 module.exports.caseList = async (req, res) => {
+  const packs = await Pack.find({state:"مفعلة"});
   const caisses = await Case.find({}).populate(["user", "pack"]);
-  res.render("case/index", { caisses, moment });
+  const users = await User.find({ role: "مستثمر" });
+  var ref_id = crypto.randomBytes(4).toString("hex").toUpperCase();
+  const year = moment().format("YY");
+  ref_id = ref_id + year;
+  res.render("case/index", { packs,caisses, moment, users, ref_id });
 };
 module.exports.showUserMain = async (req, res) => {
   const { id } = req.params;
@@ -65,7 +70,7 @@ module.exports.createProfits = async (req, res) => {
   res.redirect("/profits");
 };
 module.exports.showCreationForm = async (req, res) => {
-  const packs = await Pack.find({});
+  const packs = await Pack.find({state:"مفعلة"});
   const users = await User.find({ role: "مستثمر" });
   var ref_id = crypto.randomBytes(4).toString("hex").toUpperCase();
   const year = moment().format("YY");

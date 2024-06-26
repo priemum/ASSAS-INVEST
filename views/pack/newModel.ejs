@@ -1,0 +1,113 @@
+<!-- Button trigger modal -->
+<button
+  type="button"
+  class="btn btn-outline-greenSea bg-gradient px-5 py-1 ms-2"
+  data-bs-toggle="modal"
+  data-bs-target="#update-password"
+>
+  <span class="text-black px-5">إضافة باقة جديدة <i class="bi bi-person-fill-add"></i></span>
+</button>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="update-password"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">إضافة باقة جديدة</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form class="row g-3 m-2 needs-validation" action="/pack" method="POST">
+            <div class="form-floating col-sm-12 col-12 mb-2">
+              <input
+                dir="rtl"
+                class="form-control border border-success"
+                type="text"
+                id="title"
+                name="pack[title]"
+                placeholder="اسم الباقة"
+                required
+              />
+              <label for="title" class="form-labelfs-6">إسم الباقة:</label>
+              <div class="valid-feedback">صحيح</div>
+            </div>
+      
+            <div class="form-floating mb-2 col-sm-12 col-md-6 col-lg-6">
+              <input
+                class="form-control border border-success"
+                type="number"
+                id="period"
+                name="pack[period]"
+                placeholder="مدة الباقة"
+                required
+              />
+              <label for="period" class="form-label fs-6">المدة:</label>
+              <div class="valid-feedback">صحيح</div>
+            </div>
+      
+            <div class="form-floating col-sm-12 col-md-6 col-lg-6 mb-2">
+              <select
+                id="unite"
+                name="pack[unite]"
+                class="form-select border border-success"
+              >
+                <option selected disabled value="">الوحدة</option>
+                <% for(unit of units) {%>
+                <option class="option" value="<%= unit %>"><%= unit %></option>
+                <% } %>
+              </select>
+              <label for="unite" class="form-label">الوحدة</label>
+              <div class="valid-feedback">صحيح</div>
+            </div>
+      
+            <div class="mb-2">
+              <textarea
+                class="form-control border border-success"
+                type="text"
+                id="description"
+                name="pack[description]"
+                placeholder="تفاصيل الباقة"
+                rows="4"
+                required
+              ></textarea>
+              <div class="valid-feedback">صحيح</div>
+            </div>
+            <div class="form-check form-switch mb-2">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                name="pack[state]"
+                role="switch"
+                id="state"
+                checked
+              />
+              <label class="form-check-label" for="state"> تفعيل الباقة؟</label>
+            </div>
+            <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-outline-danger px-5 py-1"
+                  data-bs-dismiss="modal"
+                >
+                  إلغاء
+                </button>
+                <button class="btn btn-outline-greenSea px-5 py-1" type="submit">إضافة</button>
+              </div>
+          </form>
+      </div>
+    </div>
+  </div>
+</div>

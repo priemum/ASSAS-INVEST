@@ -1,5 +1,6 @@
 <% layout('layouts/boilerplate')%>
 <h1 class="display-6 text-success text-center mb-3">سجل باقات المستثمرين</h1>
+<%- include("./newModel")%>
 <form class="d-flex shadow-sm mx-2">
   <input
     id="search"
@@ -31,7 +32,7 @@
         <th scope="col">العمليات</th>
       </tr>
     </thead>
-    <tbody id="tablebody" >
+    <tbody id="tablebody">
       <% var i=1 %> <% for (caisse of caisses){%>
       <tr class="text-nowrap">
         <th
@@ -167,9 +168,8 @@
         <% } %>
 
         <td class="d-flex justify-content-center align-items-center">
-          <%- include("./caseDetail") %>
-          <%- include("./edit") %> 
-          <%- include("./delete") %>
+          <%- include("./caseDetail") %> <%- include("./edit") %> <%-
+          include("./delete") %>
         </td>
       </tr>
       <%}%>

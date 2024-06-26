@@ -1,0 +1,135 @@
+<!-- Button trigger modal -->
+<button
+  type="button"
+  class="btn btn-outline-greenSea bg-gradient px-5 py-1 mb-2 ms-2"
+  data-bs-toggle="modal"
+  data-bs-target="#update-password"
+>
+  <span class="text-black px-5"
+    >إضافة باقة لمستثمر <i class="bi bi-person-fill-add"></i
+  ></span>
+</button>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="update-password"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div
+    class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable"
+  >
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">إضافة باقة لمستثمر</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form class="row g-3 m-2 needs-validation" action="/case" method="POST">
+          <div class="form-floating mb-2 col-sm-12 col-md-6 col-lg-4">
+            <input
+              class="form-control border border-success"
+              type="text"
+              id="reference"
+              name="casee[reference]"
+              value="<%= ref_id%>"
+              placeholder=""
+              readonly
+              required
+            />
+            <label for="reference" class="form-labelfs-6">رقم المرجع:</label>
+            <div class="valid-feedback">صحيح</div>
+          </div>
+
+          <div class="form-floating mb-2 col-sm-12 col-md-6 col-lg-4">
+            <input
+              class="form-control border border-success"
+              type="number"
+              id="initAmount"
+              name="casee[initAmount]"
+              placeholder=""
+              required
+            />
+            <label for="initAmount" class="form-labelfs-6">المبلغ:</label>
+            <div class="valid-feedback">صحيح</div>
+          </div>
+
+          <div class="form-floating mb-2 col-sm-12 col-md-6 col-lg-4">
+            <input class="form-control border border-success" type="date"
+            id="startDate" name="casee[startDate]" placeholder=""
+            value="<%=moment().format("YYYY-MM-DD")%>" required />
+            <label for="startDate" class="form-labelfs-6">تاريخ البداية:</label>
+            <div class="valid-feedback">صحيح</div>
+          </div>
+
+          <div class="form-floating col-sm-12 col-md-6 col-lg-6 mb-2">
+            <select
+              id="user"
+              name="casee[user]"
+              class="form-select border border-success"
+            >
+              <option selected disabled value="">المستثمر</option>
+              <% for (user of users){%>
+              <option class="option" value="<%= user.id%>">
+                <%= user.email%> <%= user.fullname%> <%= user.phone%>
+              </option>
+              <%}%>
+            </select>
+            <label for="user" class="form-label">المستثمر</label>
+            <div class="valid-feedback">صحيح</div>
+          </div>
+          <div class="form-floating col-sm-12 col-md-12 col-lg-6 mb-2">
+            <select
+              id="pack"
+              name="casee[pack]"
+              class="form-select border border-success"
+            >
+              <option selected disabled value="">الباقة</option>
+              <% for (pack of packs){%> <% if (pack.state==="مفعلة"){%>
+              <option class="option" value="<%= pack.id%>">
+                <%= pack.title%> <%= pack.period%> <%= pack.unite%>
+              </option>
+              <%}}%>
+            </select>
+            <label for="pack" class="form-label">المستثمر</label>
+            <div class="valid-feedback">صحيح</div>
+          </div>
+
+          <div class="mb-2">
+            <textarea
+              class="form-control border border-success"
+              type="text"
+              id="description"
+              name="casee[description]"
+              placeholder="تفاصيل الباقة"
+              rows="4"
+              required
+            ></textarea>
+            <div class="valid-feedback">صحيح</div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-outline-danger px-5 py-1"
+              data-bs-dismiss="modal"
+            >
+              إلغاء
+            </button>
+            <button class="btn btn-outline-greenSea px-5 py-1" type="submit">
+              إضافة
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
