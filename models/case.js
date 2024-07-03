@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
     this model describe all the investemts of a user and 
     thier state(active, inactive...) and their time left
   
-*/
+*/         
 const opts = {
   toJSON: {
     virtuals: true,
